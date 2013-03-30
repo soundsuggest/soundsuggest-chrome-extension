@@ -1,0 +1,52 @@
+{
+    "name"              : "Last.fm Recommendations",
+    "version"           : "1.0",
+    "manifest_version"  : 2,
+    "description"       : "Last.fm API recommendations list.",
+    "background"        :
+    {
+        "page"       : "background.html",
+        "persistent" : false
+    },
+    "content_scripts" :
+    [
+        {
+            "matches" :
+            [
+                "http://www.last.fm/home*"
+            ],
+            "exclude_matches" :
+            [
+                
+            ],
+            "css" :
+            [
+                "main.css"
+            ],
+            "js" :
+            [
+                "js/lib/jquery/jquery-1.8.3.js",
+                "js/lib/purl/purl.js",
+                "js/lastfm.api.chrome.js",
+                "js/main.js"
+            ]
+        }
+    ],
+    "permissions" :
+    [
+        "tabs",
+        "storage",
+        "*://ws.audioscrobbler.com/2.0/",
+        "http://www.last.fm/home*"
+    ],
+    "page_action" :
+    {
+        "default_icon" :
+        {
+            "19" : "data/img/icon19.png",
+            "38" : "data/img/icon38.png"
+        },
+        "default_title": "Last.fm Recommendations"
+    },
+    "content_security_policy" : "script-src 'self' https://ws.audioscrobbler.com/2.0/; object-src 'self'"
+}
