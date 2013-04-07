@@ -1,0 +1,101 @@
+/* 
+    Document   : infovis.whitebox.cf
+    Created on : 2-apr-2013, 12:00:59
+    Author     : Joris Schelfaut
+    Description:
+        This stylesheet corresponds to the infovis.whitebox.cf.js JavaScript script.
+        To create a custom stylesheet, add this file as an import in the
+        header of the custom CSS stylesheet.
+*/
+
+.user {
+    cursor: pointer;
+}
+
+.user:hover {
+    color: #d62728;
+}
+
+.user-activeuser {
+    color: #1f77b4;
+}
+
+svg {
+    background-color: #eee;
+}
+
+path.arc {
+    fill: #fff;
+}
+
+.node {
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.node:hover {
+    fill: #d62728;
+}
+
+.link {
+    fill: none;
+    stroke: #666699;
+    stroke-opacity: .4;
+    pointer-events: none;
+}
+
+.link-activeuser {
+    stroke: #1f77b4;
+    fill: none;
+    stroke-opacity: 1;
+    stroke-width: 2px;
+}
+
+.node.target {
+    fill: #d62728 !important;
+}
+
+.link.source {
+    stroke: #d62728;
+}
+
+.link.source, .link.target {
+    stroke-opacity: 1;
+    stroke-width: 2px;
+}
+
+.user-item-mouseover {
+    color: #d62728;
+}
+
+.link-item-clicked {
+    stroke-opacity: 1;
+    stroke-width: 2px;
+    stroke: #d62728;
+}
+
+.node-item-clicked {
+    fill: #d62728 !important;
+}
+
+.user-item-clicked {
+    color: #d62728;
+}
+
+.user-clicked {
+    color: #d62728;
+}
+
+.link-user-clicked {
+    stroke-opacity: 1;
+    stroke-width: 2px;
+    stroke: #d62728;
+}
+
+.node-user-clicked {
+    fill: #d62728 !important;
+}
+
+button {
+    cursor: pointer;
+}
