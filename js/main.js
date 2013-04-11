@@ -217,3 +217,7 @@ itemInfo = function(itemname, isrecommendation, user) {
             }
         });
 };
+
+userInfo = function(userName, isActiveUser, activeuser) {
+    
+};

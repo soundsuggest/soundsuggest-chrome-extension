@@ -89,3 +89,24 @@ root {
 .item-info p {
     padding-bottom: 5px;
 }
+
+#user-info {
+    margin-left: 10px;
+    width: 238px;
+    float: left;
+}
+
+.user-info {
+    padding: 5px 5px 5px 5px;
+    border: 1px solid #eee;
+}
+
+.user-info h3 {
+    font-weight: bold;
+    font-size: medium;
+    margin-bottom: 10px;
+}
+
+.user-info p {
+    padding-bottom: 5px;
+}

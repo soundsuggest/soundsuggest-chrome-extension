@@ -153,7 +153,7 @@ function Whitebox() {
                         return d.x < 180 ? null : "rotate(180)";
                     })
                     .text(function(d) {
-                        return decodeName(d.key);
+                        return decodeItemName(d.key);
                     })
                     .on("mouseover", mouseoverItem)
                     .on("mouseout", mouseoutItem)
@@ -243,29 +243,29 @@ function Whitebox() {
                 .attr('id', 'item-' + itemName);
             div.append('h3')
                 .classed("item-recommendation", isRecommendation)
-                .text(decodeName(itemName));
+                .text(decodeItemName(itemName));
             div.append('div')
                 .attr('id', 'item-info-description');
             div.append('div')
                 .attr('id', 'item-info-controls');
-            itemInfo(decodeName(itemName), isRecommendation, activeuser);
+            itemInfo(decodeItemName(itemName), isRecommendation, activeuser);
         }
         
-        function decodeName(artistname) {
+        function decodeItemName(artistname) {
             return artistname.toString().replace(/_/g, " ");
         }
         
         function itemDeselect(d) {
             svg.selectAll(".node-item-clicked")
-                    .classed("node-item-clicked", false);
-                svg.selectAll(".link-item-clicked")
-                    .classed("link-item-clicked", false);
-                svg.selectAll(".item-clicked")
-                    .classed("item-clicked", false);
-                jQuery(".user-item-clicked")
-                    .removeClass("user-item-clicked");
-                jQuery(".item-info")
-                    .remove();
+                .classed("node-item-clicked", false);
+            svg.selectAll(".link-item-clicked")
+                .classed("link-item-clicked", false);
+            svg.selectAll(".item-clicked")
+                .classed("item-clicked", false);
+            jQuery(".user-item-clicked")
+                .removeClass("user-item-clicked");
+            jQuery(".item-info")
+                .remove();
         }
         
         function clickItem(d) {
@@ -278,7 +278,9 @@ function Whitebox() {
                     .classed("link-user-clicked", false);
                 jQuery(".user-clicked")
                     .removeClass("user-clicked");
-
+                jQuery(".user-info")
+                    .remove();
+                
                 itemSelect(d);
             } else if (svg.select("#node-" + d.key).classed("item-clicked")) {
                 itemDeselect(d);
@@ -309,8 +311,28 @@ function Whitebox() {
                 .classed("node-user-clicked", true);
             jQuery("#user-" + user.name)
                 .addClass("user-clicked");
+            userInfoDiv(user.name, user.active);
         }
-    
+        
+        function userInfoDiv(userName, isActiveUser) {
+            var div = d3.select('#user-info')
+                .append('div')
+                .classed('user-info', true)
+                .attr('id', 'user-info-' + decodeUserName(userName));
+            div.append('h3')
+                .classed("user-info-active", isActiveUser)
+                .text(decodeUserName(userName));
+            div.append('div')
+                .attr('id', 'user-info-description');
+            div.append('div')
+                .attr('id', 'user-info-controls');
+            userInfo(decodeUserName(userName), isActiveUser, activeuser);
+        }
+        
+        function decodeUserName(username) {
+            return username;
+        }
+        
         function userDeselect(user) {
             svg.selectAll(".link-user-clicked")
                 .classed("link-user-clicked", false);
@@ -318,6 +340,8 @@ function Whitebox() {
                 .classed("node-user-clicked", false);
             jQuery(".user-clicked")
                 .removeClass("user-clicked");
+            jQuery(".user-info")
+                .remove();
         }
 
         function clickUser(user) {
