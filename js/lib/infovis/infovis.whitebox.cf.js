@@ -2,7 +2,8 @@ function Whitebox() {
     
     this.destroy = function() {
         d3.select(".item-info").remove();
-        d3.select('#chart svg').remove();
+        d3.select("#users ul").remove();
+        d3.select('svg').remove();
         return null;
     };
     
@@ -12,7 +13,8 @@ function Whitebox() {
         h = w,
         rx = w / 2,
         ry = h / 2,
-        userMap = {};
+        userMap = {},
+        activeuser;
 
         var cluster = d3.layout.cluster()
             .size([360, ry - 120])
@@ -49,6 +51,7 @@ function Whitebox() {
             user.owned.forEach(function(item) {
                 userMap[user.name].items.push(item.split(".")[1]);
             });
+            if (user.active) activeuser = user.name;
         });
 
         var packages = {
@@ -213,26 +216,61 @@ function Whitebox() {
             jQuery(".user-owns-" + d.key)
                 .removeClass("user-item-mouseover");
         }
-
+        
         function updateNodes(name, value) {
             return function(d) {
                 if (value) this.parentNode.appendChild(this);
                 svg.select("#node-" + d[name].key).classed(name, value);
             };
         }
-
+        
+        function itemSelect(d) {
+            svg.selectAll("path.link.target-" + d.key)
+                .classed("link-item-clicked", true);
+            svg.selectAll("path.link.source-" + d.key)
+                .classed("link-item-clicked", true);
+            svg.select("#node-" + d.key)
+                .classed("item-clicked", true);
+            itemInfoDiv(d.key, d.recommendation);
+            jQuery(".user-owns-" + d.key)
+                .addClass("user-item-clicked");
+        }
+        
+        function itemInfoDiv(itemName, isRecommendation) {
+            var div = d3.select('#item-info')
+                .append('div')
+                .classed('item-info', true)
+                .attr('id', 'item-' + itemName);
+            div.append('h3')
+                .classed("item-recommendation", isRecommendation)
+                .text(decodeName(itemName));
+            div.append('div')
+                .attr('id', 'item-info-description');
+            div.append('div')
+                .attr('id', 'item-info-controls');
+            itemInfo(decodeName(itemName), isRecommendation, activeuser);
+        }
+        
+        function decodeName(artistname) {
+            return artistname.toString().replace(/_/g, " ");
+        }
+        
+        function itemDeselect(d) {
+            svg.selectAll(".node-item-clicked")
+                    .classed("node-item-clicked", false);
+                svg.selectAll(".link-item-clicked")
+                    .classed("link-item-clicked", false);
+                svg.selectAll(".item-clicked")
+                    .classed("item-clicked", false);
+                jQuery(".user-item-clicked")
+                    .removeClass("user-item-clicked");
+                jQuery(".item-info")
+                    .remove();
+        }
+        
         function clickItem(d) {
             if (svg.selectAll(".item-clicked").empty() && jQuery(".user-clicked").length === 0) {
-                svg.selectAll("path.link.target-" + d.key)
-                    .classed("link-item-clicked", true);
-                svg.selectAll("path.link.source-" + d.key)
-                    .classed("link-item-clicked", true);
-                svg.select("#node-" + d.key)
-                    .classed("item-clicked", true);
-                jQuery(createItemInfo(d))
-                    .appendTo("#item-info");
-                jQuery(".user-owns-" + d.key)
-                    .addClass("user-item-clicked");
+                itemSelect(d);
             } else if (jQuery(".user-clicked").length !== 0) {
                 svg.selectAll(".node-user-clicked")
                     .classed("node-user-clicked", false);
@@ -241,51 +279,12 @@ function Whitebox() {
                 jQuery(".user-clicked")
                     .removeClass("user-clicked");
 
-                jQuery(".user-clicked")
-                    .removeClass("user-clicked");
-                svg.selectAll("path.link.target-" + d.key)
-                    .classed("link-item-clicked", true);
-                svg.selectAll("path.link.source-" + d.key)
-                    .classed("link-item-clicked", true);
-                svg.select("#node-" + d.key)
-                    .classed("item-clicked", true);
-                jQuery(createItemInfo(d))
-                    .appendTo("#item-info");
-                jQuery(".user-owns-" + d.key)
-                    .addClass("user-item-clicked");
+                itemSelect(d);
             } else if (svg.select("#node-" + d.key).classed("item-clicked")) {
-                svg.selectAll(".node-item-clicked")
-                    .classed("node-item-clicked", false);
-                svg.selectAll(".link-item-clicked")
-                    .classed("link-item-clicked", false);
-                svg.selectAll(".item-clicked")
-                    .classed("item-clicked", false);
-                jQuery(".user-item-clicked")
-                    .removeClass("user-item-clicked");
-                jQuery(".item-info")
-                    .remove();
+                itemDeselect(d);
             } else {
-                svg.selectAll(".node-item-clicked")
-                    .classed("node-item-clicked", false);
-                svg.selectAll(".link-item-clicked")
-                    .classed("link-item-clicked", false);
-                svg.selectAll(".item-clicked")
-                    .classed("item-clicked", false);
-                jQuery(".user-item-clicked")
-                    .removeClass("user-item-clicked");
-                jQuery(".item-info")
-                    .remove();
-
-                svg.selectAll("path.link.target-" + d.key)
-                    .classed("link-item-clicked", true);
-                svg.selectAll("path.link.source-" + d.key)
-                    .classed("link-item-clicked", true);
-                svg.select("#node-" + d.key)
-                    .classed("item-clicked", true);
-                jQuery(createItemInfo(d))
-                    .appendTo("#item-info");
-                jQuery(".user-owns-" + d.key)
-                    .addClass("user-item-clicked");
+                itemDeselect(d);
+                itemSelect(d);
             }
         }
 
@@ -302,15 +301,28 @@ function Whitebox() {
             svg.selectAll("path.link.link-owner-" + user.name)
                 .classed("source", false);
         }
+    
+        function userSelect(user) {
+            svg.selectAll(".link-owner-" + user.name)
+                .classed("link-user-clicked", true);
+            svg.selectAll(".node-owner-" + user.name)
+                .classed("node-user-clicked", true);
+            jQuery("#user-" + user.name)
+                .addClass("user-clicked");
+        }
+    
+        function userDeselect(user) {
+            svg.selectAll(".link-user-clicked")
+                .classed("link-user-clicked", false);
+            svg.selectAll(".node-user-clicked")
+                .classed("node-user-clicked", false);
+            jQuery(".user-clicked")
+                .removeClass("user-clicked");
+        }
 
         function clickUser(user) {
             if (svg.selectAll(".item-clicked").empty() && jQuery(".user-clicked").length === 0) {
-                svg.selectAll(".link-owner-" + user.name)
-                    .classed("link-user-clicked", true);
-                svg.selectAll(".node-owner-" + user.name)
-                    .classed("node-user-clicked", true);
-                jQuery("#user-" + user.name)
-                    .addClass("user-clicked");
+                userSelect(user);
             } else if (! svg.selectAll(".item-clicked").empty()) {
                 svg.selectAll(".node-item-clicked")
                     .classed("node-item-clicked", false);
@@ -323,47 +335,13 @@ function Whitebox() {
                 jQuery(".item-info")
                     .remove();
 
-                svg.selectAll(".link-owner-" + user.name)
-                    .classed("link-user-clicked", true);
-                svg.selectAll(".node-owner-" + user.name)
-                    .classed("node-user-clicked", true);
-                jQuery("#user-" + user.name)
-                    .addClass("user-clicked");
+                userSelect(user);
             } else if (jQuery("#user-" + user.name).hasClass("user-clicked")) {
-                svg.selectAll(".link-user-clicked")
-                    .classed("link-user-clicked", false);
-                svg.selectAll(".node-user-clicked")
-                    .classed("node-user-clicked", false);
-                jQuery(".user-clicked")
-                    .removeClass("user-clicked");
+                userDeselect(user);
             } else {
-                svg.selectAll(".link-user-clicked")
-                    .classed("link-user-clicked", false);
-                svg.selectAll(".node-user-clicked")
-                    .classed("node-user-clicked", false);
-                jQuery(".user-clicked")
-                    .removeClass("user-clicked");
-
-                svg.selectAll(".link-owner-" + user.name)
-                    .classed("link-user-clicked", true);
-                svg.selectAll(".node-owner-" + user.name)
-                    .classed("node-user-clicked", true);
-                jQuery("#user-" + user.name)
-                    .addClass("user-clicked");
+                userDeselect(user);
+                userSelect(user);
             }
-        }
-
-        function createItemInfo(d) {
-            var info
-                    = "<div id=\"#item-" + d.key + "\" class=\"item-info\">"
-                    + "<h3 " + ((d.recommendation)?"class=\"item-recommendation\"":"") + ">" + decodeName(d.key) + "</h3>"
-                    + "<p>" + d.description + "</p>"
-                    + ((d.recommendation)?"<button onclick=\"addRecommendation('" + decodeName(d.key) + "');\">Add to library</button>":"");
-            return info + "</div>";
-        }
-        
-        function decodeName(artistname) {
-            return artistname.toString().replace(/_/g, " ");
         }
     };
 };
