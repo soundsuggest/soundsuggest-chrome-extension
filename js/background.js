@@ -119,6 +119,19 @@ function lastfmAction(action, request, sendResponse) {
                     console.error(data_error.error + " : " + data_error.message);
                 }
             });
+    }  else if (action === 'artist.getinfo') {
+        lastfm.artist.getInfo({
+            artist    : request.params.artist,
+            user      : request.params.user
+        },
+        {
+            success: function(data) {
+                sendResponse(data);
+            },
+            error: function(data) {
+                console.error(data.error + " " + data.message);
+            }
+        });
     } else {
         console.error('Undefined last.fm action.');
     }

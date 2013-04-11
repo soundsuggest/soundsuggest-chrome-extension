@@ -31,13 +31,27 @@ createLayout = function() {
     jQuery('<div class="soundsuggest" id="soundsuggest"></div>')
         .insertAfter('h1.heading');
     jQuery('#soundsuggest')
+        .append('<div id="soundsuggest-header"></div>');
+    jQuery('#soundsuggest-header')
+        .append('<h2 class="header">SoundSuggest</h2>');
+    d3.select('#soundsuggest-header')
+        .append('button')
+        .text('show/hide')
+        .attr('id', 'toggle-soundsuggest-content')
+        .on('click', toggle_hide);
+    jQuery('#soundsuggest')
+        .append('<div id="soundsuggest-content"></div>');
+    jQuery('#soundsuggest-content')
         .append('<div class="soundsuggest-chart" id="chart"></div>');
-    jQuery('#soundsuggest')
+    jQuery('#soundsuggest-content')
         .append('<div class="soundsuggest-users" id="users"></div>');
-    jQuery('#soundsuggest')
+    jQuery('#soundsuggest-content')
         .append('<div class="soundsuggest-item-info" id="item-info"></div>');
     jQuery('#chart')
         .append('<div id="spinner"></div>');
+    
+    jQuery('#soundsuggest')
+        .append('<div id="soundsuggest-footer"></div>');
 };
 
 /**
@@ -49,7 +63,7 @@ createLayout = function() {
  */
 loadVisualization = function() {
     if (DEBUG) console.log("main.js#loadVisualization");
-    chrome.extension.sendMessage({
+    /*chrome.extension.sendMessage({
         action  : 'lastfm.recommender.load',
         params  : {
             username : USERNAME
@@ -60,6 +74,7 @@ loadVisualization = function() {
         WHITEBOX = new Whitebox();
         WHITEBOX.create(data);
     });
+    */
 };
 
 /**
@@ -178,5 +193,27 @@ addRecommendation = function(artist) {
 
 toggle_hide = function() {
     if (DEBUG) console.log("main.js#toggle_hide");
-    // hides the visualization.
+    jQuery('#soundsuggest-content')
+        .toggle();
+};
+
+itemInfo = function(itemname, isrecommendation, user) {
+    lastfm.api.chrome.artist.getInfo({
+        artist    : itemname,
+        user      : user
+    }, function(data) {
+            var bio = data.artist.bio.summary;
+            jQuery('#item-info-description')
+                .append(bio);
+            if (isrecommendation) {
+                d3.select('#item-info-controls')
+                    .append('p')
+                    .classed('buttons', true)
+                    .attr('onclick', 'addRecommendation("' + itemname + '");')
+                    .append('a')
+                    .classed('lfmButton lfmBigButton lfmAddButton', true)
+                    .append('strong')
+                    .text('Add to Your Library');
+            }
+        });
 };
