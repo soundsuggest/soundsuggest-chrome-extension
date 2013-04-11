@@ -52,5 +52,5 @@
         },
         "default_title": "SoundSuggest"
     },
-    "content_security_policy" : "script-src 'self' https://ws.audioscrobbler.com/2.0/ https://1.x8-esoteric-code-c.appspot.com/; object-src 'self'"
+    "content_security_policy" : "script-src 'self' https://ws.audioscrobbler.com/2.0/ https://x8-esoteric-code-c.appspot.com/; object-src 'self'"
 }

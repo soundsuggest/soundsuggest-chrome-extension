@@ -24,7 +24,7 @@ var LAST_FM      = new LastFM({
     cache       : new LastFMCache(),
     apiUrl      : 'https://ws.audioscrobbler.com/2.0/'
 });
-var DATA_SERVICE = 'https://1.x8-esoteric-code-c.appspot.com/';
+var DATA_SERVICE = 'https://x8-esoteric-code-c.appspot.com/';
 var SESSION_KEY  = '';
 var USERNAME     = '';
 var DEBUG        = true;

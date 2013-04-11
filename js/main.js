@@ -65,7 +65,7 @@ createLayout = function() {
  */
 loadVisualization = function() {
     if (DEBUG) console.log("main.js#loadVisualization");
-    /*chrome.extension.sendMessage({
+    chrome.extension.sendMessage({
         action  : 'lastfm.recommender.load',
         params  : {
             username : USERNAME
@@ -76,7 +76,6 @@ loadVisualization = function() {
         WHITEBOX = new Whitebox();
         WHITEBOX.create(data);
     });
-    */
 };
 
 /**
