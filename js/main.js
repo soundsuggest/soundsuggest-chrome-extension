@@ -47,6 +47,8 @@ createLayout = function() {
         .append('<div class="soundsuggest-users" id="users"></div>');
     jQuery('#soundsuggest-content')
         .append('<div class="soundsuggest-item-info" id="item-info"></div>');
+    jQuery('#soundsuggest-content')
+        .append('<div class="soundsuggest-user-info" id="user-info"></div>');
     jQuery('#chart')
         .append('<div id="spinner"></div>');
     
