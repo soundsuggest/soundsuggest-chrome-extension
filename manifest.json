@@ -2,18 +2,18 @@
     "name"              : "SoundSuggest",
     "version"           : "1.0",
     "manifest_version"  : 2,
-    "description"       : "Last.fm API recommendations list.",
+    "description"       : "Last.fm API recommendations.",
     "background"        :
     {
         "page"       : "background.html",
-        "persistent" : false
+        "persistent" : true
     },
     "content_scripts" :
     [
         {
             "matches" :
             [
-                "*://www.last.fm/home/recs"
+                "*://www.last.fm/home/recs*"
             ],
             "exclude_matches" :
             [
@@ -21,13 +21,16 @@
             ],
             "css" :
             [
+                "css/infovis.whitebox.cf.css",
                 "css/style.css"
             ],
             "js" :
             [
                 "js/lib/jquery/jquery-1.8.3.js",
                 "js/lib/purl/purl.js",
-                "js/lastfm.api.chrome.js",
+                "js/lib/d3/d3.v3.min.js",
+                "js/lib/spin/spin.min.js",
+                "js/lib/lastfm/lastfm.api.chrome.js",
                 "js/lib/infovis/infovis.whitebox.cf.js",
                 "js/main.js"
             ]
@@ -37,8 +40,8 @@
     [
         "tabs",
         "storage",
-        "*://ws.audioscrobbler.com/2.0/",
-        "*://www.last.fm/home/recs"
+        "*://ws.audioscrobbler.com/2.0/*",
+        "*://www.last.fm/home/recs*"
     ],
     "page_action" :
     {
@@ -49,5 +52,5 @@
         },
         "default_title": "SoundSuggest"
     },
-    "content_security_policy" : "script-src 'self' https://ws.audioscrobbler.com/2.0/; object-src 'self'"
+    "content_security_policy" : "script-src 'self' https://ws.audioscrobbler.com/2.0/ https://1.x8-esoteric-code-c.appspot.com/; object-src 'self'"
 }

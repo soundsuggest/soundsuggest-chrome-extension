@@ -1,5 +1,5 @@
 var lastfm = {
-
+    
     api : {
 
         chrome : {
@@ -7,7 +7,7 @@ var lastfm = {
             album : {
                 addTags : function(params, session, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'album.addTags',
+                        action      : 'lastfm.album.addTags',
                         session     : session,
                         params      : params
                     },
@@ -15,42 +15,42 @@ var lastfm = {
                 },
                 getBuylinks : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'album.getBuylinks',
+                        action      : 'lastfm.album.getBuylinks',
                         params      : params
                     },
                     callback);
                 },
                 getInfo : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'album.getInfo',
+                        action      : 'lastfm.album.getInfo',
                         params      : params
                     },
                     callback);
                 },
                 getShouts : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'album.getShouts',
+                        action      : 'lastfm.album.getShouts',
                         params      : params
                     },
                     callback);
                 },
                 getTags : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'album.getTags',
+                        action      : 'lastfm.album.getTags',
                         params      : params
                     },
                     callback);
                 },
                 getTopTags : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'album.getTopTags',
+                        action      : 'lastfm.album.getTopTags',
                         params      : params
                     },
                     callback);
                 },
                 removeTag : function(params, session, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'album.removeTag',
+                        action      : 'lastfm.album.removeTag',
                         session     : session,
                         params      : params
                     },
@@ -58,14 +58,14 @@ var lastfm = {
                 },
                 search : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'album.search',
+                        action      : 'lastfm.album.search',
                         params      : params
                     },
                     callback);
                 },
                 share : function(params, session, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'album.share',
+                        action      : 'lastfm.album.share',
                         session     : session,
                         params      : params
                     },
@@ -76,7 +76,7 @@ var lastfm = {
             artist : {
                 addTags : function(params, session, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'artist.addTags',
+                        action      : 'lastfm.artist.addTags',
                         session     : session,
                         params      : params
                     },
@@ -84,105 +84,105 @@ var lastfm = {
                 },
                 getCorrection : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'artist.getCorrection',
+                        action      : 'lastfm.artist.getCorrection',
                         params      : params
                     },
                     callback);
                 },
                 getEvents : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'artist.getEvents',
+                        action      : 'lastfm.artist.getEvents',
                         params      : params
                     },
                     callback);
                 },
                 getInfo : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'artist.getInfo',
+                        action      : 'lastfm.artist.getInfo',
                         params      : params
                     },
                     callback);
                 },
                 getPastEvents : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'artist.getPastEvents',
+                        action      : 'lastfm.artist.getPastEvents',
                         params      : params
                     },
                     callback);
                 },
                 getPodcast : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'artist.getPodcast',
+                        action      : 'lastfm.artist.getPodcast',
                         params      : params
                     },
                     callback);
                 },
                 getShouts : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'artist.getShouts',
+                        action      : 'lastfm.artist.getShouts',
                         params      : params
                     },
                     callback);
                 },
                 getSimilar : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'artist.getSimilar',
+                        action      : 'lastfm.artist.getSimilar',
                         params      : params
                     },
                     callback);
                 },
                 getTags : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'artist.getTags',
+                        action      : 'lastfm.artist.getTags',
                         params      : params
                     },
                     callback);
                 },
                 getTopAlbums : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'artist.getTopAlbums',
+                        action      : 'lastfm.artist.getTopAlbums',
                         params      : params
                     },
                     callback);
                 },
                 getTopFans : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'artist.getTopFans',
+                        action      : 'lastfm.artist.getTopFans',
                         params      : params
                     },
                     callback);
                 },
                 getTopTags : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'artist.getTopTags',
+                        action      : 'lastfm.artist.getTopTags',
                         params      : params
                     },
                     callback);
                 },
                 getTopTracks : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'artist.getTopTracks',
+                        action      : 'lastfm.artist.getTopTracks',
                         params      : params
                     },
                     callback);
                 },
                 removeTag : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'artist.removeTag',
+                        action      : 'lastfm.artist.removeTag',
                         params      : params
                     },
                     callback);
                 },
                 search : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'artist.search',
+                        action      : 'lastfm.artist.search',
                         params      : params
                     },
                     callback);
                 },
                 share : function(params, session, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'artist.share',
+                        action      : 'lastfm.artist.share',
                         session     : session,
                         params      : params
                     },
@@ -190,7 +190,7 @@ var lastfm = {
                 },
                 shout : function(params, session, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'artist.shout',
+                        action      : 'lastfm.artist.shout',
                         session     : session,
                         params      : params
                     },
@@ -201,21 +201,21 @@ var lastfm = {
             auth : {
                 getMobileSession : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'auth.getMobileSession',
+                        action      : 'lastfm.auth.getMobileSession',
                         params      : params
                     },
                     callback);
                 },
                 getSession : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'auth.getSession',
+                        action      : 'lastfm.auth.getSession',
                         params      : params
                     },
                     callback);
                 },
                 getToken : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'auth.getToken',
+                        action      : 'lastfm.auth.getToken',
                         params      : params
                     },
                     callback);
@@ -225,42 +225,42 @@ var lastfm = {
             chart : {
                 getHypedArtists : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'chart.getHypedArtists',
+                        action      : 'lastfm.chart.getHypedArtists',
                         params      : params
                     },
                     callback);
                 },
                 getHypedTracks : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'chart.getHypedTracks',
+                        action      : 'lastfm.chart.getHypedTracks',
                         params      : params
                     },
                     callback);
                 },
                 getLovedTracks : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'chart.getLovedTracks',
+                        action      : 'lastfm.chart.getLovedTracks',
                         params      : params
                     },
                     callback);
                 },
                 getTopArtists : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'chart.getTopArtists',
+                        action      : 'lastfm.chart.getTopArtists',
                         params      : params
                     },
                     callback);
                 },
                 getTopTags : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'chart.getTopTags',
+                        action      : 'lastfm.chart.getTopTags',
                         params      : params
                     },
                     callback);
                 },
                 getTopTracks : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'chart.getTopTracks',
+                        action      : 'lastfm.chart.getTopTracks',
                         params      : params
                     },
                     callback);
@@ -270,7 +270,7 @@ var lastfm = {
             event : {
                 attend : function(params, session, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'event.attend',
+                        action      : 'lastfm.event.attend',
                         session     : session,
                         params      : params
                     },
@@ -278,28 +278,28 @@ var lastfm = {
                 },
                 getAttendees : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'event.getAttendees',
+                        action      : 'lastfm.event.getAttendees',
                         params      : params
                     },
                     callback);
                 },
                 getInfo : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'event.getInfo',
+                        action      : 'lastfm.event.getInfo',
                         params      : params
                     },
                     callback);
                 },
                 getShouts : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'event.getShouts',
+                        action      : 'lastfm.event.getShouts',
                         params      : params
                     },
                     callback);
                 },
                 share : function(params, session, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'event.share',
+                        action      : 'lastfm.event.share',
                         session     : session,
                         params      : params
                     },
@@ -307,7 +307,7 @@ var lastfm = {
                 },
                 shout : function(params, session, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'event.shout',
+                        action      : 'lastfm.event.shout',
                         session     : session,
                         params      : params
                     },
@@ -318,77 +318,77 @@ var lastfm = {
             geo : {
                 getEvents : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'geo.getEvents',
+                        action      : 'lastfm.geo.getEvents',
                         params      : params
                     },
                     callback);
                 },
                 getMetroArtistChart : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'geo.getMetroArtistChart',
+                        action      : 'lastfm.geo.getMetroArtistChart',
                         params      : params
                     },
                     callback);
                 },
                 getMetroHypeArtistChart : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'geo.getMetroHypeArtistChart',
+                        action      : 'lastfm.geo.getMetroHypeArtistChart',
                         params      : params
                     },
                     callback);
                 },
                 getMetroHypeTrackChart : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'geo.getMetroHypeTrackChart',
+                        action      : 'lastfm.geo.getMetroHypeTrackChart',
                         params      : params
                     },
                     callback);
                 },
                 getMetroTrackChart : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'geo.getMetroTrackChart',
+                        action      : 'lastfm.geo.getMetroTrackChart',
                         params      : params
                     },
                     callback);
                 },
                 getMetroUniqueArtistChart : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'geo.getMetroUniqueArtistChart',
+                        action      : 'lastfm.geo.getMetroUniqueArtistChart',
                         params      : params
                     },
                     callback);
                 },
                 getMetroUniqueTrackChart : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'geo.getMetroUniqueTrackChart',
+                        action      : 'lastfm.geo.getMetroUniqueTrackChart',
                         params      : params
                     },
                     callback);
                 },
                 getMetroWeeklyChartlist : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'geo.getMetroWeeklyChartlist',
+                        action      : 'lastfm.geo.getMetroWeeklyChartlist',
                         params      : params
                     },
                     callback);
                 },
                 getMetros : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'geo.getMetros',
+                        action      : 'lastfm.geo.getMetros',
                         params      : params
                     },
                     callback);
                 },
                 getTopArtists : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'geo.getTopArtists',
+                        action      : 'lastfm.geo.getTopArtists',
                         params      : params
                     },
                     callback);
                 },
                 getTopTracks : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'geo.getTopTracks',
+                        action      : 'lastfm.geo.getTopTracks',
                         params      : params
                     },
                     callback);
@@ -398,42 +398,42 @@ var lastfm = {
             group : {
                 getHype : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'group.getHype',
+                        action      : 'lastfm.group.getHype',
                         params      : params
                     },
                     callback);
                 },
                 getMembers : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'group.getMembers',
+                        action      : 'lastfm.group.getMembers',
                         params      : params
                     },
                     callback);
                 },
                 getWeeklyAlbumChart : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'group.getWeeklyAlbumChart',
+                        action      : 'lastfm.group.getWeeklyAlbumChart',
                         params      : params
                     },
                     callback);
                 },
                 getWeeklyArtistChart : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'group.getWeeklyArtistChart',
+                        action      : 'lastfm.group.getWeeklyArtistChart',
                         params      : params
                     },
                     callback);
                 },
                 getWeeklyChartList : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'group.getWeeklyChartList',
+                        action      : 'lastfm.group.getWeeklyChartList',
                         params      : params
                     },
                     callback);
                 },
                 getWeeklyTrackChart : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'group.getWeeklyTrackChart',
+                        action      : 'lastfm.group.getWeeklyTrackChart',
                         params      : params
                     },
                     callback);
@@ -443,7 +443,7 @@ var lastfm = {
             library : {
                 addAlbum : function(params, session, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'library.addAlbum',
+                        action  : 'lastfm.library.addAlbum',
                         session : session,
                         params  : params
                     },
@@ -451,7 +451,7 @@ var lastfm = {
                 },
                 addArtist : function(params, session, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'library.addArtist',
+                        action  : 'lastfm.library.addArtist',
                         session : session,
                         params  : params
                     },
@@ -459,7 +459,7 @@ var lastfm = {
                 },
                 addTrack : function(params, session, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'library.addTrack',
+                        action  : 'lastfm.library.addTrack',
                         session : session,
                         params  : params
                     },
@@ -467,28 +467,28 @@ var lastfm = {
                 },
                 getAlbums : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'library.getAlbums',
+                        action  : 'lastfm.library.getAlbums',
                         params  : params
                     },
                     callback);
                 },
                 getArtists : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'library.getArtists',
+                        action  : 'lastfm.library.getArtists',
                         params  : params
                     },
                     callback);
                 },
                 getTracks : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'library.getTracks',
+                        action  : 'lastfm.library.getTracks',
                         params  : params
                     },
                     callback);
                 },
                 removeAlbum : function(params, session, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'library.removeAlbum',
+                        action  : 'lastfm.library.removeAlbum',
                         session : session,
                         params  : params
                     },
@@ -496,7 +496,7 @@ var lastfm = {
                 },
                 removeArtist : function(params, session, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'library.removeArtist',
+                        action  : 'lastfm.library.removeArtist',
                         session : session,
                         params  : params
                     },
@@ -504,7 +504,7 @@ var lastfm = {
                 },
                 removeScrobble : function(params, session, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'library.removeScrobble',
+                        action  : 'lastfm.library.removeScrobble',
                         session : session,
                         params  : params
                     },
@@ -512,7 +512,7 @@ var lastfm = {
                 },
                 removeTrack : function(params, session, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'library.removeTrack',
+                        action  : 'lastfm.library.removeTrack',
                         session : session,
                         params  : params
                     },
@@ -523,7 +523,7 @@ var lastfm = {
             playlist : {
                 addTrack : function(params, session, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'playlist.addTrack',
+                        action  : 'lastfm.playlist.addTrack',
                         session : session,
                         params  : params
                     },
@@ -531,7 +531,7 @@ var lastfm = {
                 },
                 create : function(params, session, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'playlist.create',
+                        action  : 'lastfm.playlist.create',
                         session : session,
                         params  : params
                     },
@@ -542,21 +542,21 @@ var lastfm = {
             radio : {
                 getPlaylist : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'radio.getPlaylist',
+                        action  : 'lastfm.radio.getPlaylist',
                         params    : params
                     },
                     callback);
                 },
                 search : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'radio.search',
+                        action  : 'lastfm.radio.search',
                         params    : params
                     },
                     callback);
                 },
                 tune : function(params, session, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'radio.search',
+                        action  : 'lastfm.radio.search',
                         session : session,
                         params  : params
                     },
@@ -567,63 +567,63 @@ var lastfm = {
             tag : {
                 getInfo : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'tag.getInfo',
+                        action  : 'lastfm.tag.getInfo',
                         params    : params
                     },
                     callback);
                 },
                 getSimilar : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'tag.getSimilar',
+                        action  : 'lastfm.tag.getSimilar',
                         params    : params
                     },
                     callback);
                 },
                 getTopAlbums : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'tag.getTopAlbums',
+                        action  : 'lastfm.tag.getTopAlbums',
                         params    : params
                     },
                     callback);
                 },
                 getTopArtists : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'tag.getTopArtists',
+                        action  : 'lastfm.tag.getTopArtists',
                         params    : params
                     },
                     callback);
                 },
                 getTopTags : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'tag.getTopTags',
+                        action  : 'lastfm.tag.getTopTags',
                         params    : params
                     },
                     callback);
                 },
                 getTopTracks : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'tag.getTopTracks',
+                        action  : 'lastfm.tag.getTopTracks',
                         params    : params
                     },
                     callback);
                 },
                 getWeeklyArtistChart : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'tag.getWeeklyArtistChart',
+                        action  : 'lastfm.tag.getWeeklyArtistChart',
                         params    : params
                     },
                     callback);
                 },
                 getWeeklyChartList : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'tag.getWeeklyChartList',
+                        action  : 'lastfm.tag.getWeeklyChartList',
                         params    : params
                     },
                     callback);
                 },
                 search : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'tag.search',
+                        action  : 'lastfm.tag.search',
                         params    : params
                     },
                     callback);
@@ -633,14 +633,14 @@ var lastfm = {
             tasteometer : {
                 compare : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'tasteometer.compare',
+                        action  : 'lastfm.tasteometer.compare',
                         params    : params
                     },
                     callback);
                 },
                 compareGroup : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'tasteometer.compareGroup',
+                        action  : 'lastfm.tasteometer.compareGroup',
                         params    : params
                     },
                     callback);
@@ -650,7 +650,7 @@ var lastfm = {
             track : {
                 addTags : function(params, session, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'track.addTags',
+                        action      : 'lastfm.track.addTags',
                         session     : session,
                         params      : params
                     },
@@ -658,7 +658,7 @@ var lastfm = {
                 },
                 ban : function(params, session, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'track.ban',
+                        action      : 'lastfm.track.ban',
                         session     : session,
                         params      : params
                     },
@@ -666,70 +666,70 @@ var lastfm = {
                 },
                 getBuylinks : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'track.getWeeklyTrackChart',
+                        action      : 'lastfm.track.getWeeklyTrackChart',
                         params      : params
                     },
                     callback);
                 },
                 getCorrection : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'track.getCorrection',
+                        action      : 'lastfm.track.getCorrection',
                         params      : params
                     },
                     callback);
                 },
                 getFingerprintMetaparams : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'track.getFingerprintMetaparams',
+                        action      : 'lastfm.track.getFingerprintMetaparams',
                         params      : params
                     },
                     callback);
                 },
                 getInfo : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'track.getInfo',
+                        action      : 'lastfm.track.getInfo',
                         params      : params
                     },
                     callback);
                 },
                 getShouts : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'track.getShouts',
+                        action      : 'lastfm.track.getShouts',
                         params      : params
                     },
                     callback);
                 },
                 getSimilar : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'track.getSimilar',
+                        action      : 'lastfm.track.getSimilar',
                         params      : params
                     },
                     callback);
                 },
                 getTags : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'track.getTags',
+                        action      : 'lastfm.track.getTags',
                         params      : params
                     },
                     callback);
                 },
                 getTopFans : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'track.getTopFans',
+                        action      : 'lastfm.track.getTopFans',
                         params      : params
                     },
                     callback);
                 },
                 getTopTags : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'track.getTopTags',
+                        action      : 'lastfm.track.getTopTags',
                         params      : params
                     },
                     callback);
                 },
                 love : function(params, session, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'track.love',
+                        action      : 'lastfm.track.love',
                         session     : session,
                         params      : params
                     },
@@ -737,7 +737,7 @@ var lastfm = {
                 },
                 removeTag : function(params, session, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'track.removeTag',
+                        action      : 'lastfm.track.removeTag',
                         session     : session,
                         params      : params
                     },
@@ -745,7 +745,7 @@ var lastfm = {
                 },
                 scrobble : function(params, session, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'track.scrobble',
+                        action      : 'lastfm.track.scrobble',
                         session     : session,
                         params      : params
                     },
@@ -753,14 +753,14 @@ var lastfm = {
                 },
                 search : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'track.search',
+                        action      : 'lastfm.track.search',
                         params      : params
                     },
                     callback);
                 },
                 share : function(params, session, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'track.share',
+                        action      : 'lastfm.track.share',
                         session     : session,
                         params      : params
                     },
@@ -768,7 +768,7 @@ var lastfm = {
                 },
                 unban : function(params, session, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'track.unban',
+                        action      : 'lastfm.track.unban',
                         session     : session,
                         params      : params
                     },
@@ -776,7 +776,7 @@ var lastfm = {
                 },
                 unlove : function(params, session, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'track.unlove',
+                        action      : 'lastfm.track.unlove',
                         session     : session,
                         params      : params
                     },
@@ -784,7 +784,7 @@ var lastfm = {
                 },
                 updateNowPlaying : function(params, session, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'track.updateNowPlaying',
+                        action      : 'lastfm.track.updateNowPlaying',
                         session     : session,
                         params      : params
                     },
@@ -795,98 +795,98 @@ var lastfm = {
             user : {
                 getArtistTracks : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'user.getArtistTracks',
+                        action  : 'lastfm.user.getArtistTracks',
                         params    : params
                     },
                     callback);
                 },
                 getBannedTracks : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'user.getBannedTracks',
+                        action  : 'lastfm.user.getBannedTracks',
                         params    : params
                     },
                     callback);
                 },
                 getEvents : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'user.getEvents',
+                        action  : 'lastfm.user.getEvents',
                         params    : params
                     },
                     callback);
                 },
                 getFriends : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'user.getFriends',
+                        action  : 'lastfm.user.getFriends',
                         params    : params
                     },
                     callback);
                 },
                 getInfo : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'user.getInfo',
+                        action  : 'lastfm.user.getInfo',
                         params    : params
                     },
                     callback);
                 },
                 getLovedTracks : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'user.getLovedTracks',
+                        action  : 'lastfm.user.getLovedTracks',
                         params    : params
                     },
                     callback);
                 },
                 getNeighbours : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'user.getNeighbours',
+                        action  : 'lastfm.user.getNeighbours',
                         params    : params
                     },
                     callback);
                 },
                 getNewReleases : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'user.getNewReleases',
+                        action  : 'lastfm.user.getNewReleases',
                         params    : params
                     },
                     callback);
                 },
                 getPastEvents : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'user.getPastEvents',
+                        action  : 'lastfm.user.getPastEvents',
                         params    : params
                     },
                     callback);
                 },
                 getPersonalTags : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'user.getPersonalTags',
+                        action  : 'lastfm.user.getPersonalTags',
                         params    : params
                     },
                     callback);
                 },
                 getPlaylists : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'user.getPlaylists',
+                        action  : 'lastfm.user.getPlaylists',
                         params    : params
                     },
                     callback);
                 },
                 getRecentStations : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'user.getRecentStations',
+                        action  : 'lastfm.user.getRecentStations',
                         params    : params
                     },
                     callback);
                 },
                 getRecentTracks : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'user.getRecentTracks',
+                        action  : 'lastfm.user.getRecentTracks',
                         params  : params
                     },
                     callback);
                 },
                 getRecommendedArtists : function(params, session, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'user.getRecommendedArtists',
+                        action      : 'lastfm.user.getRecommendedArtists',
                         session     : session,
                         params      : params
                     },
@@ -894,7 +894,7 @@ var lastfm = {
                 },
                 getRecommendedEvents : function(params, session, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'user.getRecommendedEvents',
+                        action  : 'lastfm.user.getRecommendedEvents',
                         session     : session,
                         params  : params
                     },
@@ -902,70 +902,70 @@ var lastfm = {
                 },
                 getShouts : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'user.getShouts',
+                        action  : 'lastfm.user.getShouts',
                         params  : params
                     },
                     callback);
                 },
                 getTopAlbums : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'user.getTopAlbums',
+                        action  : 'lastfm.user.getTopAlbums',
                         params  : params
                     },
                     callback);
                 },
                 getTopArtists : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'user.getTopArtists',
+                        action  : 'lastfm.user.getTopArtists',
                         params    : params
                     },
                     callback);
                 },
                 getTopTags : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'user.getTopTags',
+                        action  : 'lastfm.user.getTopTags',
                         params    : params
                     },
                     callback);
                 },
                 getTopTracks : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'user.getTopTracks',
+                        action  : 'lastfm.user.getTopTracks',
                         params    : params
                     },
                     callback);
                 },
                 getWeeklyAlbumChart : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'user.getWeeklyAlbumChart',
+                        action  : 'lastfm.user.getWeeklyAlbumChart',
                         params    : params
                     },
                     callback);
                 },
                 getWeeklyArtistChart : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'user.getWeeklyArtistChart',
+                        action  : 'lastfm.user.getWeeklyArtistChart',
                         params    : params
                     },
                     callback);
                 },
                 getWeeklyChartList : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'user.getWeeklyChartList',
+                        action  : 'lastfm.user.getWeeklyChartList',
                         params    : params
                     },
                     callback);
                 },
                 getWeeklyTrackChart : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'user.getWeeklyTrackChart',
+                        action  : 'lastfm.user.getWeeklyTrackChart',
                         params    : params
                     },
                     callback);
                 },
                 shout : function(params, session, callback) {
                     chrome.extension.sendMessage({
-                        action      : 'user.shout',
+                        action      : 'lastfm.user.shout',
                         session     : session,
                         params      : params
                     },
@@ -976,21 +976,21 @@ var lastfm = {
             venue : {
                 getEvents : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'venue.getEvents',
+                        action  : 'lastfm.venue.getEvents',
                         params    : params
                     },
                     callback);
                 },
                 getPastEvents : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'venue.getPastEvents',
+                        action  : 'lastfm.venue.getPastEvents',
                         params    : params
                     },
                     callback);
                 },
                 search : function(params, callback) {
                     chrome.extension.sendMessage({
-                        action  : 'venue.search',
+                        action  : 'lastfm.venue.search',
                         params    : params
                     },
                     callback);

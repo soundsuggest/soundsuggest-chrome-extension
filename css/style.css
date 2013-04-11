@@ -7,41 +7,15 @@
         infovis.whitebox.cf.js script. It uses the default CSS file
         infovis.whitebox.cf.css
         
-        Note that first the default CSS is reset.
+        The default CSS file reset.css is not used - this would cause
+        conflicts with the page that is injected with the extension.
 */
-
-@import 'reset.css';
-@import 'infovis.whitebox.cf.css';
-
 root { 
     display: block;
 }
 
-#page {
-    /*margin-left: auto;
-    margin-right: auto;*/
-    margin-left: 100px;
-    width: 1000px;
-}
-
-#header {
-    border: 1px solid #eee;
-    padding: 5px 5px 5px 5px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    font-weight: bolder;
-}
-
-#header h1 {
-    font-size: larger;
-}
-
-#header h2 {
-    font-size: large;
-}
-
-#content {
-    width: 1000px;
+#soundsuggest {
+    width: 948px;
     height: 500px;
 }
 
@@ -52,7 +26,7 @@ root {
 
 #users {
     margin-left: 10px;
-    width: 230px;
+    width: 220px;
     float: left;
 }
 
@@ -114,14 +88,4 @@ root {
 
 .item-info p {
     padding-bottom: 5px;
-}
-
-#footer {
-    border: 1px solid #eee;
-    padding: 5px 5px 5px 5px;
-    margin-top: 10px;
-}
-
-#footer p {
-    padding: 5px 5px 5px 5px;
 }
