@@ -28,7 +28,7 @@ var DATA_SERVICE = 'https://x8-esoteric-code-c.appspot.com/';
 var SESSION_KEY  = '';
 var USERNAME     = '';
 var TOKEN        = '';
-var DEBUG        = false;
+var DEBUG        = true;
 
 if (DEBUG) console.log("Global variables loaded.");
 
@@ -77,13 +77,15 @@ function lastfmAction(action, request, sendResponse) {
     if (action === 'recommender.load') {
         USERNAME = request.params.username;
         chrome.storage.local.get(USERNAME, function(value) {
-            d3.json(DATA_SERVICE + "?key=" + value[USERNAME] + "&user=" + USERNAME, function(error, data) {
+            var dataservice_url = DATA_SERVICE + "?key=" + value[USERNAME] + "&user=" + USERNAME;
+            d3.json(dataservice_url, function(error, data) {
                 sendResponse(data);
             });
         });
         
     } else if (action === 'recommender.add') {
         var artistname = request.params.artist;
+        var SESSION_KEY = request.session.key;
         LAST_FM.library.addArtist({
             artist  : artistname,
             api_key : API_KEY
@@ -108,20 +110,20 @@ function lastfmAction(action, request, sendResponse) {
         TOKEN = request.params.token;
         USERNAME = request.params.username;
         LAST_FM.auth.getSession({
-                token: TOKEN
-            }, {
-                success: function(data_sess) {
-                    SESSION_KEY = data_sess.session.key;
-                    var dataObj = {}; dataObj[USERNAME] = SESSION_KEY;
-                    chrome.storage.local.set(dataObj, function() {
-                        console.log('Value [' + SESSION_KEY + '] was saved with key [\'' + USERNAME + '\'].');
-                        sendResponse({ key : SESSION_KEY });
-                    });
-                },
-                error : function(data_error) {
-                    console.error(data_error.error + " : " + data_error.message);
-                }
-            });
+            token: TOKEN
+        }, {
+            success: function(data_sess) {
+                SESSION_KEY = data_sess.session.key;
+                var dataObj = {}; dataObj[USERNAME] = SESSION_KEY;
+                chrome.storage.local.set(dataObj, function() {
+                    if (DEBUG) console.log('Value [' + SESSION_KEY + '] was saved with key [\'' + USERNAME + '\'].');
+                    sendResponse({ key : SESSION_KEY });
+                });
+            },
+            error : function(data_error) {
+                console.error(data_error.error + " : " + data_error.message);
+            }
+        });
     } else if (action === 'artist.getinfo') {
         LAST_FM.artist.getInfo({
             artist    : request.params.artist,

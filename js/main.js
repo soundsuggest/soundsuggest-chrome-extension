@@ -4,7 +4,7 @@ var SESSION_KEY;
 var USERNAME;
 var TOKEN;
 var API_KEY = '828c109e6a54fffedad5177b194f7107';
-var DEBUG   = false;
+var DEBUG   = true;
 
 jQuery(document).ready(function() {
     if (DEBUG) console.log("main.js :: document ready.");
@@ -190,7 +190,6 @@ startSpinner = function() {
 function addRecommendation(e) {
     if (DEBUG) console.log("main.js#addRecommendation");
     var artist = e.target.children[0].innerHTML;
-    alert('add artist : ' + artist);
     chrome.extension.sendMessage({
         action      : 'lastfm.recommender.add',
         session     : SESSION_KEY,
