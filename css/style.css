@@ -54,6 +54,63 @@ root {
     border: 1px solid #eee;
 }
 
+.soundsuggest-button {
+    -webkit-background-clip: border-box;
+    -webkit-background-origin: padding-box;
+    -webkit-background-size: auto;
+    -webkit-border-image: none;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: url(http://cdn.lst.fm/flatness/buttons/8/add_left.png);
+    background-origin: padding-box;
+    background-size: auto;
+    border-bottom-color: rgb(255, 255, 255);
+    border-bottom-style: none;
+    border-bottom-width: 0px;
+    border-left-color: rgb(255, 255, 255);
+    border-left-style: none;
+    border-left-width: 0px;
+    border-right-color: rgb(255, 255, 255);
+    border-right-style: none;
+    border-right-width: 0px;
+    border-top-color: rgb(255, 255, 255);
+    border-top-style: none;
+    border-top-width: 0px;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'Lucida Grande', Arial, Helvetica, Verdana, sans-serif;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: bold;
+    height: 14px;
+    line-height: 14px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    outline-color: rgb(255, 255, 255);
+    outline-style: none;
+    outline-width: 0px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    padding-bottom: 5px;
+    padding-left: 25px;
+    padding-right: 5px;
+    padding-top: 2px;
+    text-align: right;
+    text-decoration: none;
+    text-shadow: rgb(22, 53, 81) 0px -1px 1px;
+    vertical-align: top;
+    width: 107px;
+    zoom: 1;
+}
+
+.soundsuggest-button-parameter {
+    display: none;
+}
+
 #soundsuggest-controls-ul {
     list-style-type: none;
 }
@@ -75,12 +132,12 @@ root {
     list-style: none;
 }
 
-.user-activeuser {
-    background: #1f77b4;
+#users .user-activeuser {
+    background-color: #1f77b4;
     color: #eee;
 }
 
-.user {
+#users .user {
     padding: 5px 5px 5px 5px;
     margin-bottom: 5px;
     border: 1px solid #eee;
@@ -90,22 +147,22 @@ root {
     border-radius: 20px;
 }
 
-.user:hover {
+#users .user:hover {
     background: #d62728;;
     color: #fff;
 }
 
-.user-clicked {
+#users .user-clicked {
     background: #d62728;;
     color: #fff;
 }
 
-.user-item-mouseover {
+#users .user-item-mouseover {
     background: #d62728;;
     color: #fff;
 }
 
-.user-item-clicked {
+#users .user-item-clicked {
     background: #d62728;;
     color: #fff;
 }
@@ -116,19 +173,23 @@ root {
     float: left;
 }
 
-.item-info {
+#item-info .item-info {
     padding: 5px 5px 5px 5px;
     border: 1px solid #eee;
 }
 
-.item-info h3 {
+#item-info .item-info h3 {
     font-weight: bold;
     font-size: medium;
     margin-bottom: 10px;
 }
 
-.item-info p {
+#item-info .item-info p {
     padding-bottom: 5px;
+}
+
+#item-info-description {
+    margin-bottom: 10px;
 }
 
 #user-info {
@@ -137,17 +198,17 @@ root {
     float: left;
 }
 
-.user-info {
+#user-info .user-info {
     padding: 5px 5px 5px 5px;
     border: 1px solid #eee;
 }
 
-.user-info h3 {
+#user-info .user-info h3 {
     font-weight: bold;
     font-size: medium;
     margin-bottom: 10px;
 }
 
-.user-info p {
+#user-info .user-info p {
     padding-bottom: 5px;
 }

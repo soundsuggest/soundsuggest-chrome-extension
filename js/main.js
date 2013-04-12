@@ -4,8 +4,7 @@ var SESSION_KEY;
 var USERNAME;
 var TOKEN;
 var API_KEY = '828c109e6a54fffedad5177b194f7107';
-var DEBUG   = true;
-var HIDDEN  = false;
+var DEBUG   = false;
 
 jQuery(document).ready(function() {
     if (DEBUG) console.log("main.js :: document ready.");
@@ -115,7 +114,7 @@ getSession = function(action) {
     chrome.extension.sendMessage({
         action  : 'storage.get',
         params  : {
-            key : 'SESSION_KEY'
+            key : USERNAME
         }
     },
     function (a) {
@@ -125,8 +124,9 @@ getSession = function(action) {
             TOKEN = $.url().param('token');
             if (! TOKEN) window.location = 'http://www.last.fm/api/auth/?api_key=' + API_KEY + '&cb=' + window.location;
             lastfm.api.chrome.auth.getSession({
-                token   : TOKEN,
-                api_key : API_KEY
+                token      : TOKEN,
+                username   : USERNAME,
+                api_key    : API_KEY
             }, function(data) {
                 SESSION_KEY = data.key;
                 if (DEBUG) console.log('SESSION_KEY == ' + SESSION_KEY);
@@ -184,11 +184,13 @@ startSpinner = function() {
  * Adds a given artist recommendation to the active user's library
  * and refreshes the visualization.
  * </p>
- * @param {type} artist
+ * @param {Event} e
  * @returns {undefined}
  */
-addRecommendation = function(artist) {
+function addRecommendation(e) {
     if (DEBUG) console.log("main.js#addRecommendation");
+    var artist = e.target.children[0].innerHTML;
+    alert('add artist : ' + artist);
     chrome.extension.sendMessage({
         action      : 'lastfm.recommender.add',
         session     : SESSION_KEY,
@@ -215,22 +217,52 @@ itemInfo = function(itemname, isrecommendation, user) {
         artist    : itemname,
         user      : user
     }, function(data) {
-            var bio = data.artist.bio.summary;
-            jQuery('#item-info-description')
-                .append(bio);
-            if (isrecommendation) {
-                d3.select('#item-info-controls')
-                    .append('p')
-                    .classed('buttons', true)
-                    .attr('onclick', 'addRecommendation("' + itemname + '");')
-                    .append('a')
-                    .classed('lfmButton lfmBigButton lfmAddButton', true)
-                    .append('strong')
-                    .text('Add to Your Library');
-            }
-        });
+        var bio = data.artist.bio.summary;
+        jQuery('#item-info-description')
+            .append(bio);
+        if (isrecommendation) {
+            var div = d3.select('#item-info-controls')
+                .append('div')
+                .classed('soundsuggest-button', true)
+                .attr('id', 'soundsuggest-button-add')
+                .text('Add to Your Library');
+            div.append('div')
+                .classed('soundsuggest-button-parameter', true)
+                .text(itemname);
+            document.querySelector('#soundsuggest-button-add').addEventListener('click', addRecommendation);
+        }
+    });
 };
 
 userInfo = function(userName, isActiveUser, activeuser) {
     if (DEBUG) console.log("main.js#userInfo");
+    var html = '';
+    var userinfo;
+    if (! isActiveUser) {
+        lastfm.api.chrome.user.getInfo({
+            user      : userName
+        }, function(response1) {
+            userinfo = response1;
+            lastfm.api.chrome.tasteometer.compare({
+                value1  : activeuser,
+                value2  : userName,
+                type1   : 'user',
+                type2   : 'user'
+            }, function(response2) {
+                
+                var score = Number(response2.comparison.result.score) * 100;
+                
+                html += '<p>The similarity score between you and ' + userName
+                        + ' equals ' + score.toFixed(2)
+                        + '%.</p>';
+                html += '<p>Click <a href="' + userinfo.user.url
+                        + '" target="_blank" title="' + userinfo.user.name
+                        + '\'s profile">here</a> to visit the full profile.</p>';
+                jQuery('#user-info-description')
+                    .append(html);
+            });
+        });
+    } else {
+        // Active user's profile.
+    }
 };

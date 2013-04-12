@@ -27,7 +27,8 @@ var LAST_FM      = new LastFM({
 var DATA_SERVICE = 'https://x8-esoteric-code-c.appspot.com/';
 var SESSION_KEY  = '';
 var USERNAME     = '';
-var DEBUG        = true;
+var TOKEN        = '';
+var DEBUG        = false;
 
 if (DEBUG) console.log("Global variables loaded.");
 
@@ -75,8 +76,8 @@ function lastfmAction(action, request, sendResponse) {
     if (DEBUG) console.log("background.js#lastfmAction");
     if (action === 'recommender.load') {
         USERNAME = request.params.username;
-        chrome.storage.local.get('SESSION_KEY', function(value) {
-            d3.json(DATA_SERVICE + "?key=" + value['SESSION_KEY'] + "&user=" + USERNAME, function(error, data) {
+        chrome.storage.local.get(USERNAME, function(value) {
+            d3.json(DATA_SERVICE + "?key=" + value[USERNAME] + "&user=" + USERNAME, function(error, data) {
                 sendResponse(data);
             });
         });
@@ -104,14 +105,16 @@ function lastfmAction(action, request, sendResponse) {
             }
         });
     } else if (action === 'auth.getsession') {
+        TOKEN = request.params.token;
+        USERNAME = request.params.username;
         LAST_FM.auth.getSession({
-                token: request.params.token
+                token: TOKEN
             }, {
                 success: function(data_sess) {
                     SESSION_KEY = data_sess.session.key;
-                    var dataObj = {}; dataObj['SESSION_KEY'] = SESSION_KEY;
+                    var dataObj = {}; dataObj[USERNAME] = SESSION_KEY;
                     chrome.storage.local.set(dataObj, function() {
-                        console.log('Value [' + SESSION_KEY + '] was saved with key [\'SESSION_KEY\'].');
+                        console.log('Value [' + SESSION_KEY + '] was saved with key [\'' + USERNAME + '\'].');
                         sendResponse({ key : SESSION_KEY });
                     });
                 },
@@ -119,10 +122,37 @@ function lastfmAction(action, request, sendResponse) {
                     console.error(data_error.error + " : " + data_error.message);
                 }
             });
-    }  else if (action === 'artist.getinfo') {
+    } else if (action === 'artist.getinfo') {
         LAST_FM.artist.getInfo({
             artist    : request.params.artist,
             user      : request.params.user
+        },
+        {
+            success: function(data) {
+                sendResponse(data);
+            },
+            error: function(data) {
+                console.error(data.error + " " + data.message);
+            }
+        });
+    } else if (action === 'user.getinfo') {
+        LAST_FM.user.getInfo({
+            user      : request.params.user
+        },
+        {
+            success: function(data) {
+                sendResponse(data);
+            },
+            error: function(data) {
+                console.error(data.error + " " + data.message);
+            }
+        });
+    } else if (action === 'tasteometer.compare') {
+        LAST_FM.tasteometer.compare({
+            value1  : request.params.value1,
+            value2  : request.params.value2,
+            type1   : request.params.type1,
+            type2   : request.params.type2
         },
         {
             success: function(data) {

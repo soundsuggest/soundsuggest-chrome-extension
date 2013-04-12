@@ -2,7 +2,7 @@ function Whitebox() {
     
     this.destroy = function() {
         d3.select(".item-info").remove();
-        d3.select("#users ul").remove();
+        jQuery("#users").html('');
         d3.select('svg').remove();
         return null;
     };
