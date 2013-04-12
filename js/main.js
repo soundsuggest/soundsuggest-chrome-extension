@@ -8,13 +8,10 @@ var DEBUG   = true;
 var HIDDEN  = false;
 
 jQuery(document).ready(function() {
-    if (DEBUG) console.log("Starting Chrome Extension.");
+    if (DEBUG) console.log("main.js :: document ready.");
     getUsername();
     createLayout();
-    if (DEBUG) console.log("Layout created.");
     startSpinner();
-    if (DEBUG) console.log("Spinner created.");
-    if (DEBUG) console.log("Loading session data.");
     getSession();
 });
 
@@ -30,30 +27,35 @@ createLayout = function() {
     if (DEBUG) console.log("main.js#createLayout");
     jQuery('<div class="soundsuggest" id="soundsuggest"></div>')
         .insertAfter('h1.heading');
-    jQuery('#soundsuggest')
-        .append('<div id="soundsuggest-header"></div>');
-    jQuery('#soundsuggest-header')
-        .append('<h2 class="header">SoundSuggest</h2>');
-    d3.select('#soundsuggest-header')
-        .append('button')
-        .text('show/hide')
-        .attr('id', 'toggle-soundsuggest-content')
-        .on('click', toggle_hide);
-    jQuery('#soundsuggest')
-        .append('<div id="soundsuggest-content"></div>');
-    jQuery('#soundsuggest-content')
-        .append('<div class="soundsuggest-chart" id="chart"></div>');
-    jQuery('#soundsuggest-content')
-        .append('<div class="soundsuggest-users" id="users"></div>');
-    jQuery('#soundsuggest-content')
-        .append('<div class="soundsuggest-item-info" id="item-info"></div>');
-    jQuery('#soundsuggest-content')
-        .append('<div class="soundsuggest-user-info" id="user-info"></div>');
-    jQuery('#chart')
-        .append('<div id="spinner"></div>');
+    
+    var header  = '<div id="soundsuggest-header">';
+    var content = '<div id="soundsuggest-content">';
+    var footer  = '<div id="soundsuggest-footer">';
+    
+    header += '<h2>SoundSuggest - Visualization of Music Suggestions</h2>';
+    header += '<button id="toggle-soundsuggest-content">show/hide</button>';
+    
+    content += '<div id="chart"><div id="spinner"></div></div>';
+    content += '<div id="soundsuggest-controls">';
+    content += '    <ul id="soundsuggest-controls-ul">';
+    content += '        <li><a href="javascript:" id="open-help">Help</a></li>';
+    content += '    </ul>';
+    content += '</div>';
+    content += '<div id="users"></div>';
+    content += '<div id="item-info"></div>';
+    content += '<div id="user-info"></div>';
+    
+    footer  += '';
     
     jQuery('#soundsuggest')
-        .append('<div id="soundsuggest-footer"></div>');
+        .append(header + '</div>');
+    jQuery('#soundsuggest')
+        .append(content + '</div>');
+    jQuery('#soundsuggest')
+        .append(footer + '</div>');
+    
+    d3.select('#toggle-soundsuggest-content')
+        .on('click', toggle_hide);
 };
 
 /**
@@ -148,6 +150,7 @@ getUsername = function() {
  * @returns {undefined}
  */
 startSpinner = function() {
+    if (DEBUG) console.log("main.js#startSpinner");
     SPINNER = new Spinner({
         lines: 13,
         length: 20,
@@ -199,6 +202,7 @@ toggle_hide = function() {
 };
 
 itemInfo = function(itemname, isrecommendation, user) {
+    if (DEBUG) console.log("main.js#itemInfo");
     lastfm.api.chrome.artist.getInfo({
         artist    : itemname,
         user      : user
@@ -220,5 +224,9 @@ itemInfo = function(itemname, isrecommendation, user) {
 };
 
 userInfo = function(userName, isActiveUser, activeuser) {
-    
+    if (DEBUG) console.log("main.js#userInfo");
+};
+
+show_help = function() {
+    $(".fancybox").fancybox();
 };

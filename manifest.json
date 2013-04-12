@@ -21,12 +21,16 @@
             ],
             "css" :
             [
-                "css/infovis.whitebox.cf.css",
+                "css/fancybox/jquery.fancybox.css",
+                "css/infovis/infovis.whitebox.cf.css",
+                "css/help.css",
                 "css/style.css"
             ],
             "js" :
             [
                 "js/lib/jquery/jquery-1.8.3.js",
+                "js/lib/jquery/jquery.mousewheel-3.0.6.pack.js",
+                "js/lib/fancybox/jquery.fancybox.pack.js",
                 "js/lib/purl/purl.js",
                 "js/lib/d3/d3.v3.min.js",
                 "js/lib/spin/spin.min.js",
