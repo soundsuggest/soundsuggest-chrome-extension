@@ -120,7 +120,7 @@ function lastfmAction(action, request, sendResponse) {
                 }
             });
     }  else if (action === 'artist.getinfo') {
-        lastfm.artist.getInfo({
+        LAST_FM.artist.getInfo({
             artist    : request.params.artist,
             user      : request.params.user
         },

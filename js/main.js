@@ -56,6 +56,14 @@ createLayout = function() {
     
     d3.select('#toggle-soundsuggest-content')
         .on('click', toggle_hide);
+    
+    $("#open-help").click(function() {
+        $.fancybox.open({
+            href : 'http://soundsuggest.wordpress.com/application/help/',
+            type : 'iframe',
+            padding : 5
+        });
+    });
 };
 
 /**
@@ -225,8 +233,4 @@ itemInfo = function(itemname, isrecommendation, user) {
 
 userInfo = function(userName, isActiveUser, activeuser) {
     if (DEBUG) console.log("main.js#userInfo");
-};
-
-show_help = function() {
-    $(".fancybox").fancybox();
 };

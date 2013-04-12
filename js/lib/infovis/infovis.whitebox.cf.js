@@ -168,9 +168,46 @@ function Whitebox() {
         }
 
         function createUserList(data) {
-            var ul = d3.select("#users").append("ul");
-            ul.selectAll("li")
-                .data(data)
+            var neighbours = [];
+            var activeuser = [];
+            
+            data.forEach(function (item) {
+                if (! item.active) neighbours.push(item);
+                else activeuser.push(item);
+            });
+            
+            d3.select("#users").append("h3")
+                .attr('id', 'users-active-user')
+                .text('Active user');
+            var ul1 = d3.select("#users").append("ul");
+            ul1.selectAll("li")
+                .data(activeuser)
+                .enter()
+                .append("li")
+                .attr("class", function(user) {
+                    var itemClasses = "";
+                    userMap[user.name].items.forEach(function (item) {
+                        itemClasses += " user-owns-" + item + " ";
+                    });
+                    return "user " + ((user.active)?" user-activeuser ":" ") + itemClasses;
+                })
+                .attr("id", function(user) {
+                    return "user-" + user.name;
+                })
+                .text(function(user) {
+                    return user.name;
+                })
+                .on("click", clickUser)
+                .on("mouseover", mouseoverUser)
+                .on("mouseout", mouseoutUser);
+            
+            
+            d3.select("#users").append("h3")
+                .attr('id', 'users-neighbours')
+                .text('Neighbours');
+            var ul2 = d3.select("#users").append("ul");
+            ul2.selectAll("li")
+                .data(neighbours)
                 .enter()
                 .append("li")
                 .attr("class", function(user) {
