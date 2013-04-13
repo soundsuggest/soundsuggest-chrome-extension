@@ -58,6 +58,7 @@ createLayout = function() {
     content += '<div id="soundsuggest-controls">';
     content += '    <ul id="soundsuggest-controls-ul">';
     content += '        <li><a href="javascript:" id="open-help" class="soundsuggest-button">Help</a></li>';
+    content += '        <li><a href="javascript:" id="soundsuggest-refresh" class="soundsuggest-button">Refresh</a></li>';
     content += '    </ul>';
     content += '</div>';
     content += '<div id="users"></div>';
@@ -93,7 +94,7 @@ createLayout = function() {
  */
 loadVisualization = function() {
     if (DEBUG) console.log("main.js#loadVisualization");
-    /*chrome.extension.sendMessage({
+    chrome.extension.sendMessage({
         action: 'lastfm.recommender.load',
         params: {
             username: USERNAME
@@ -103,7 +104,7 @@ loadVisualization = function() {
         SPINNER.stop();
         WHITEBOX = new Whitebox();
         WHITEBOX.create(data);
-    });*/
+    });
 };
 
 /**
@@ -256,9 +257,10 @@ itemInfo = function(itemname, isrecommendation, user) {
         d3.select('#item-info-controls')
                 .append('a')
                 .attr('id', 'soundsuggest-button-open')
+                .classed('soundsuggest-button', true)
                 .attr('href', 'javascript:')
                 .text('See Full Profile');
-        $("#open-help").click(function() {
+        $("#soundsuggest-button-open").click(function() {
             $.fancybox.open({
                 href: data.artist.url,
                 type: 'iframe',

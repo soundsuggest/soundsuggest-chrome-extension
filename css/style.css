@@ -26,12 +26,12 @@ root {
 }
 
 #soundsuggest-header h2 {
-    width: 848px;
+    width: 866px;
     float: left;
 }
 
 #soundsuggest-header #toggle-soundsuggest-content {
-    width: 96px;
+    width: 70px;
 }
 
 #soundsuggest-content {
