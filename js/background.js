@@ -28,7 +28,7 @@ var DATA_SERVICE = 'https://x8-esoteric-code-c.appspot.com/';
 var SESSION_KEY  = '';
 var USERNAME     = '';
 var TOKEN        = '';
-var DEBUG        = true;
+var DEBUG        = false;
 
 if (DEBUG) console.log("Global variables loaded.");
 

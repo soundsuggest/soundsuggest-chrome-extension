@@ -55,5 +55,12 @@
         },
         "default_title": "SoundSuggest"
     },
-    "content_security_policy" : "script-src 'self' https://ws.audioscrobbler.com/2.0/ https://x8-esoteric-code-c.appspot.com/; object-src 'self'"
+    "content_security_policy" : "script-src 'self' https://ws.audioscrobbler.com/2.0/ https://x8-esoteric-code-c.appspot.com/; object-src 'self'",
+    "web_accessible_resources":
+    [
+        "data/img/fancybox/blank.gif",
+        "data/img/fancybox/fancybox_loading.gif",
+        "data/img/fancybox/fancybox_overlay.png",
+        "data/img/fancybox/fancybox_sprite.png"
+    ]
 }
