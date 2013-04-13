@@ -54,17 +54,18 @@ function doAction(request, sender, sendResponse) {
 function storageAction(action, request, sendResponse) {
     if (DEBUG) console.log("background.js#storageAction");
     if (action === 'set') {
-        if (DEBUG) console.log('Storage action storage.set');
+        if (DEBUG) console.log("background.js#storageAction#set");
         var dataObj = {}; dataObj[request.params.key] = request.data.value;
         chrome.storage.local.set(dataObj, function() {
             if (DEBUG) console.log('Value [' + request.params.value + '] was saved with key [' + request.params.key + '].');
             sendResponse({ success : true });
         });
     } else if (action === 'get') {
-        if (DEBUG) console.log('Storage action storage.get');
+        if (DEBUG) console.log("background.js#storageAction#get");
+        USERNAME = request.params.key;
         chrome.storage.local.get(request.params.key, function(value) {
-            if (DEBUG) console.log('Value [' + value[request.params.key] + '] was retrieved with key [' + request.params.key + '].');
-            sendResponse({ value : value[request.params.key] });
+            if (DEBUG) console.log('Value [' + value[USERNAME] + '] was retrieved with key [' + USERNAME + '].');
+            sendResponse({ value : value[USERNAME] });
         });
     } else {
         console.error('Undefined storage action.');
@@ -75,38 +76,39 @@ function storageAction(action, request, sendResponse) {
 function lastfmAction(action, request, sendResponse) {
     if (DEBUG) console.log("background.js#lastfmAction");
     if (action === 'recommender.load') {
+        if (DEBUG) console.log("background.js#lastfmAction#recommender.load");
         USERNAME = request.params.username;
         chrome.storage.local.get(USERNAME, function(value) {
-            var dataservice_url = DATA_SERVICE + "?key=" + value[USERNAME] + "&user=" + USERNAME;
-            d3.json(dataservice_url, function(error, data) {
+            $.getJSON(DATA_SERVICE, {
+                key  : value[USERNAME],
+                user : USERNAME
+            }).done(function(data) {
                 sendResponse(data);
             });
         });
-        
     } else if (action === 'recommender.add') {
+        if (DEBUG) console.log("background.js#lastfmAction#recommender.add");
         var artistname = request.params.artist;
-        var SESSION_KEY = request.session.key;
-        LAST_FM.library.addArtist({
-            artist  : artistname,
-            api_key : API_KEY
-        },
-        {
-            key : SESSION_KEY
-        },
-        {
-            success: function(data) {
-                console.log(data);
-                sendResponse({
-                    session     : SESSION_KEY,
-                    username    : USERNAME,
-                    added       : artistname
-                });
-            },
-            error: function(data_error) {
-                console.error(data_error.error + " : " + data_error.message);
-            }
+        USERNAME = request.params.username;
+        chrome.storage.local.get(USERNAME, function(value) {
+            LAST_FM.library.addArtist({
+                artist  : artistname,
+                api_key : API_KEY
+            }, {
+                key : value[USERNAME]
+            }, {
+                success: function(data) {
+                    sendResponse({
+                        added : artistname
+                    });
+                },
+                error: function(data_error) {
+                    console.error(data_error.error + " : " + data_error.message);
+                }
+            });
         });
     } else if (action === 'auth.getsession') {
+        if (DEBUG) console.log("background.js#lastfmAction#auth.getsession");
         TOKEN = request.params.token;
         USERNAME = request.params.username;
         LAST_FM.auth.getSession({
@@ -125,6 +127,7 @@ function lastfmAction(action, request, sendResponse) {
             }
         });
     } else if (action === 'artist.getinfo') {
+        if (DEBUG) console.log("background.js#lastfmAction#artist.getinfo");
         LAST_FM.artist.getInfo({
             artist    : request.params.artist,
             user      : request.params.user
@@ -138,6 +141,7 @@ function lastfmAction(action, request, sendResponse) {
             }
         });
     } else if (action === 'user.getinfo') {
+        if (DEBUG) console.log("background.js#lastfmAction#user.getinfo");
         LAST_FM.user.getInfo({
             user      : request.params.user
         },
@@ -150,6 +154,7 @@ function lastfmAction(action, request, sendResponse) {
             }
         });
     } else if (action === 'tasteometer.compare') {
+        if (DEBUG) console.log("background.js#lastfmAction#tasteometer.compare");
         LAST_FM.tasteometer.compare({
             value1  : request.params.value1,
             value2  : request.params.value2,

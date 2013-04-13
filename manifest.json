@@ -1,6 +1,6 @@
 {
     "name"              : "SoundSuggest",
-    "version"           : "1.2",
+    "version"           : "1.4",
     "manifest_version"  : 2,
     "description"       : "Last.fm API recommendations.",
     "background"        :
@@ -23,7 +23,6 @@
             [
                 "css/fancybox/jquery.fancybox.css",
                 "css/infovis/infovis.whitebox.cf.css",
-                "css/help.css",
                 "css/style.css"
             ],
             "js" :

@@ -3,7 +3,6 @@ var WHITEBOX;
 var SESSION_KEY;
 var USERNAME;
 var TOKEN;
-var API_KEY = '828c109e6a54fffedad5177b194f7107';
 var DEBUG   = true;
 
 jQuery(document).ready(function() {
@@ -121,17 +120,21 @@ getSession = function(action) {
         SESSION_KEY = a.value;
         if (DEBUG) console.log('SESSION_KEY == ' + SESSION_KEY);
         if (! SESSION_KEY) {
+            
             TOKEN = $.url().param('token');
-            if (! TOKEN) window.location = 'http://www.last.fm/api/auth/?api_key=' + API_KEY + '&cb=' + window.location;
-            lastfm.api.chrome.auth.getSession({
-                token      : TOKEN,
-                username   : USERNAME,
-                api_key    : API_KEY
-            }, function(data) {
-                SESSION_KEY = data.key;
-                if (DEBUG) console.log('SESSION_KEY == ' + SESSION_KEY);
-                loadVisualization();
-            });
+            if (! TOKEN) {
+                window.location = 'http://www.last.fm/api/auth/?api_key=828c109e6a54fffedad5177b194f7107&cb=' + window.location;
+            } else {
+                if (DEBUG) console.log('lastfm.api.chrome.auth.getSession');
+                lastfm.api.chrome.auth.getSession({
+                    token      : TOKEN,
+                    username   : USERNAME
+                }, function(data) {
+                    SESSION_KEY = data.key;
+                    if (DEBUG) console.log('SESSION_KEY == ' + SESSION_KEY);
+                    loadVisualization();
+                });
+            }
         } else {
             loadVisualization();
         }
@@ -142,12 +145,13 @@ getSession = function(action) {
  * <p>
  * Initializes the global parameter <code>USERNAME</code>.
  * </p>
- * @returns {undefined}
+ * @returns {String} username
  */
 getUsername = function() {
     if (DEBUG) console.log("main.js#getUsername");
     USERNAME = $('#idBadgerUser').attr('href').split("user/")[1];
     if (DEBUG) console.log('USERNAME == ' + USERNAME);
+    return USERNAME;
 };
 
 /**
@@ -190,24 +194,25 @@ startSpinner = function() {
 function addRecommendation(e) {
     if (DEBUG) console.log("main.js#addRecommendation");
     var artist = e.target.children[0].innerHTML;
+    if (DEBUG) console.log("main.js#addRecommendation :: adding " + artist);
     chrome.extension.sendMessage({
         action      : 'lastfm.recommender.add',
-        session     : SESSION_KEY,
         params      : {
-            artist : artist
+            artist      : artist,
+            username    : USERNAME
         }
     },
     function(data) {
-        if (DEBUG) console.log(data);
+        if (DEBUG) console.log('main.js#addRecommendation :: data.added : ' + data.added);
         WHITEBOX.destroy();
+        startSpinner();
         loadVisualization();
     });
 };
 
 toggle_hide = function() {
     if (DEBUG) console.log("main.js#toggle_hide");
-    jQuery('#soundsuggest-content')
-        .toggle();
+    jQuery('#soundsuggest-content').toggle();
 };
 
 itemInfo = function(itemname, isrecommendation, user) {
