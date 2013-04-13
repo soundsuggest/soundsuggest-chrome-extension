@@ -58,7 +58,7 @@ createLayout = function() {
     content += '<div id="soundsuggest-controls">';
     content += '    <ul id="soundsuggest-controls-ul">';
     content += '        <li><a href="javascript:" id="open-help" class="soundsuggest-button">Help</a></li>';
-    content += '        <li><a href="javascript:" id="soundsuggest-refresh" class="soundsuggest-button">Refresh</a></li>';
+    //content += '        <li><a href="javascript:" id="soundsuggest-refresh" class="soundsuggest-button">Refresh</a></li>';
     content += '    </ul>';
     content += '</div>';
     content += '<div id="users"></div>';
@@ -253,13 +253,13 @@ itemInfo = function(itemname, isrecommendation, user) {
     }, function(data) {
         var bio = data.artist.bio.summary;
         jQuery('#item-info-description')
-                .append(bio);
+            .append(bio);
         d3.select('#item-info-controls')
-                .append('a')
-                .attr('id', 'soundsuggest-button-open')
-                .classed('soundsuggest-button', true)
-                .attr('href', 'javascript:')
-                .text('See Full Profile');
+            .append('a')
+            .attr('id', 'soundsuggest-button-open')
+            .classed('soundsuggest-button', true)
+            .attr('href', 'javascript:')
+            .text('See Full Profile');
         $("#soundsuggest-button-open").click(function() {
             $.fancybox.open({
                 href: data.artist.url,
@@ -268,7 +268,7 @@ itemInfo = function(itemname, isrecommendation, user) {
             });
         });
         
-        // Code doesn't work for some reason.
+        // Code for 'addRecommendation' doesn't work for some reason.
         /*
         if (isrecommendation) {
             var div = d3.select('#item-info-controls')
@@ -313,13 +313,23 @@ userInfo = function(userName, isActiveUser, activeuser) {
                 var score = Number(response2.comparison.result.score) * 100;
 
                 html += '<p>The similarity score between you and ' + userName
-                        + ' equals ' + score.toFixed(2)
-                        + '%.</p>';
-                html += '<p>Click <a href="' + userinfo.user.url
-                        + '" target="_blank" title="' + userinfo.user.name
-                        + '\'s profile">here</a> to visit the full profile.</p>';
+                        + ' equals <strong>' + score.toFixed(2)
+                        + '%</strong>.</p>';
                 jQuery('#user-info-description')
-                        .append(html);
+                    .append(html);
+                d3.select('#user-info-controls')
+                    .append('a')
+                    .attr('id', 'soundsuggest-button-open')
+                    .classed('soundsuggest-button', true)
+                    .attr('href', 'javascript:')
+                    .text('See Full Profile');
+                $("#soundsuggest-button-open").click(function() {
+                    $.fancybox.open({
+                        href: userinfo.user.url,
+                        type: 'iframe',
+                        padding: 5
+                    });
+                });
             });
         });
     } else {
