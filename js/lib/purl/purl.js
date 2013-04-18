@@ -3,7 +3,7 @@
  * Developed and maintanined by Mark Perkins, mark@allmarkedup.com
  * Source repository: https://github.com/allmarkedup/jQuery-URL-Parser
  * Licensed under an MIT-style license. See https://github.com/allmarkedup/jQuery-URL-Parser/blob/master/LICENSE for details.
- */ 
+ */
 
 ;(function(factory) {
 	if (typeof define === 'function' && define.amd) {

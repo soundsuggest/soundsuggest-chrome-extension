@@ -79,10 +79,16 @@ function lastfmAction(action, request, sendResponse) {
         if (DEBUG) console.log("background.js#lastfmAction#recommender.load");
         USERNAME = request.params.username;
         chrome.storage.local.get(USERNAME, function(value) {
-            $.getJSON(DATA_SERVICE, {
-                key  : value[USERNAME],
-                user : USERNAME
-            }).done(function(data) {
+            lastfm_data({
+                user    : USERNAME,
+                lastfm  : LAST_FM,
+                key     : value[USERNAME],
+                limit_neighbours : 20,
+                limit_recommendations : 15,
+                limit_similar : 5,
+                limit_top_artists : 15,
+                debug              : true
+            }, function(data) {
                 sendResponse(data);
             });
         });
