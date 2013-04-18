@@ -83,11 +83,11 @@ function lastfmAction(action, request, sendResponse) {
                 user    : USERNAME,
                 lastfm  : LAST_FM,
                 key     : value[USERNAME],
-                limit_neighbours : 20,
-                limit_recommendations : 15,
+                limit_neighbours : 5,
+                limit_recommendations : 5,
                 limit_similar : 5,
-                limit_top_artists : 15,
-                debug              : true
+                limit_top_artists : 5,
+                debug              : false
             }, function(data) {
                 sendResponse(data);
             });

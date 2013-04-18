@@ -162,7 +162,6 @@ function artistsRecursive1(index_artist, callback) {
     }, {
         success : function(data) {
             var similarArtists = '';
-            index_artist++;
             for (var i = 0; i < Number(data.similarartists.artist.length); i++) {
                 similarArtists += data.similarartists.artist[i].name + ',';
             }
@@ -176,6 +175,7 @@ function artistsRecursive1(index_artist, callback) {
 function artistsRecursive2(similarArtists, index_artist, index_neighbour, callback) {
     if (Number(index_neighbour) === Number(NEIGHBOURS.neighbours.user.length)) {
         // ITERATED THOURGH ALL NEIGHBOURS, start over for new artist.
+        index_artist++;
         artistsRecursive1(index_artist, callback);
         return;
     }
@@ -187,11 +187,9 @@ function artistsRecursive2(similarArtists, index_artist, index_neighbour, callba
         value2 : similarArtists
     }, {
         success : function(data) {
-            if (data) {
-                if (Number(data.comparison.result.score) > Number(THRESHOLD)) {
-                    artistDATA[ARTISTS[index_artist]].push(NEIGHBOURS.neighbours.user[index_neighbour].name);
-                    userDATA[NEIGHBOURS.neighbours.user[index_neighbour].name].push(ARTISTS[index_artist]);
-                }
+            if (Number(data.comparison.result.score) > Number(THRESHOLD)) {
+                artistDATA[ARTISTS[index_artist]].push(NEIGHBOURS.neighbours.user[index_neighbour].name);
+                userDATA[NEIGHBOURS.neighbours.user[index_neighbour].name].push(ARTISTS[index_artist]);
             }
             index_neighbour++;
             artistsRecursive2(similarArtists, index_artist, index_neighbour, callback);

@@ -64,6 +64,10 @@ path.arc {
     stroke-width: 2px;
 }
 
+.node-item-mouseover {
+    fill: #d62728;
+}
+
 .user-item-mouseover {
     color: #d62728;
 }

@@ -58,7 +58,10 @@ createLayout = function() {
     content += '<div id="soundsuggest-controls">';
     content += '    <ul id="soundsuggest-controls-ul">';
     content += '        <li><a href="javascript:" id="open-help" class="soundsuggest-button">Help</a></li>';
-    //content += '        <li><a href="javascript:" id="soundsuggest-refresh" class="soundsuggest-button">Refresh</a></li>';
+    content += '        <li><a href="javascript:" id="soundsuggest-clear" class="soundsuggest-button">Clear Selection</a></li>';
+    content += '        <li><a href="javascript:" id="soundsuggest-settings" class="soundsuggest-button">Settings</a></li>';
+    content += '        <li><a href="javascript:" id="soundsuggest-choose-artists" class="soundsuggest-button">Choose artists</a></li>';
+    content += '        <li><a href="javascript:" id="soundsuggest-choose-friends" class="soundsuggest-button">Choose friends</a></li>';
     content += '    </ul>';
     content += '</div>';
     content += '<div id="users"></div>';

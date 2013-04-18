@@ -267,7 +267,7 @@ function Whitebox() {
             svg.selectAll("path.link.source-" + d.key)
                 .classed("link-item-clicked", true);
             svg.select("#node-" + d.key)
-                .classed("item-clicked", true);
+                .classed("node-item-clicked item-clicked", true);
             itemInfoDiv(d.key, d.recommendation);
             jQuery(".user-owns-" + d.key)
                 .addClass("user-item-clicked");
