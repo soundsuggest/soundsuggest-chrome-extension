@@ -78,6 +78,8 @@ createLayout = function() {
             .on('click', toggle_hide);
     d3.select('#soundsuggest-clear')
             .on('click', clear_selection);
+    d3.select('#soundsuggest-settings')
+            .on('click', settings);
 
     $("#open-help").click(function() {
         $.fancybox.open({
@@ -251,12 +253,14 @@ toggle_hide = function() {
 itemInfo = function(itemname, isrecommendation, user) {
     if (DEBUG) console.log("main.js#itemInfo");
     lastfm.api.chrome.artist.getInfo({
-        artist  : itemname,
-        user    : user
+        artist      : itemname,
+        username    : user
     }, function(data) {
         var bio = data.artist.bio.summary;
+        var playcount = 'You have listened to this artist <strong>'
+                + data.artist.stats.userplaycount + '</strong> times.';
         jQuery('#item-info-description')
-            .append(bio);
+            .append('<p>' + bio + '</p><p>' + playcount + '</p>');
         d3.select('#item-info-controls')
             .append('a')
             .attr('id', 'soundsuggest-button-open')
@@ -264,21 +268,6 @@ itemInfo = function(itemname, isrecommendation, user) {
             .attr('href', data.artist.url)
             .attr('target', '_blank')
             .text('See Full Profile');
-        
-        // Code for 'addRecommendation' doesn't work for some reason.
-        /*
-        if (isrecommendation) {
-            var div = d3.select('#item-info-controls')
-                .append('div')
-                .classed('soundsuggest-button', true)
-                .attr('id', 'soundsuggest-button-add')
-                .text('Add to Your Library');
-            div.append('div')
-                .classed('soundsuggest-button-parameter', true)
-                .text(itemname);
-            document.querySelector('#soundsuggest-button-add').addEventListener('click', addRecommendation);
-        }
-        */
     });
 };
 
@@ -304,14 +293,46 @@ userInfo = function(userName, isActiveUser, activeuser) {
                 value1  : activeuser,
                 value2  : userName,
                 type1   : 'user',
-                type2   : 'user'
+                type2   : 'user',
+                limit   : 5
             }, function(response2) {
+            
+                function a(obj) {
+                    return '<em><a href="' + obj.url
+                            + '" target="_blank" title="'
+                            + obj.name + '">' + obj.name + '</a></em>';
+                }
 
                 var score = Number(response2.comparison.result.score) * 100;
 
-                html += '<p>The similarity score between you and ' + userName
+                html += '<p>The similarity score between you and <strong>'
+                        + userName + '</strong>'
                         + ' equals <strong>' + score.toFixed(2)
                         + '%</strong>.</p>';
+                
+                html += '<p>';
+                var incommon = response2.comparison.result.artists.artist;
+                if (Number(incommon.length) !== Number(0)) {
+                    if (Number(incommon.length) > Number(1)) {
+                        var artists = '';
+                        for (var i = 0; i < incommon.length - 2; i++) {
+                            artists += a(incommon[i]) + ', ';
+                        }
+                        artists += a(incommon[incommon.length - 2])
+                                + ' and ' + a(incommon[incommon.length - 1]);
+                        html += 'Artists you have in common with <strong>'
+                             + userName + '</strong> include: ' + artists;
+                    } else {
+                        html += 'You have one artist in common with <strong>'
+                             + userName + '</strong>, namely: '
+                             + a(incommon[0]) + '.';
+                    }
+                } else {
+                    html += 'You have no artists in common with <strong>'
+                         + userName + '</strong>.';
+                }
+                html += '</p>';
+                
                 jQuery('#user-info-description')
                     .append(html);
                 d3.select('#user-info-controls')
@@ -330,4 +351,8 @@ userInfo = function(userName, isActiveUser, activeuser) {
 
 clear_selection = function () {
     WHITEBOX.clearSelection();
+};
+
+settings = function () {
+    
 };

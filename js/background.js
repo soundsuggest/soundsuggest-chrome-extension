@@ -136,7 +136,7 @@ function lastfmAction(action, request, sendResponse) {
         if (DEBUG) console.log("background.js#lastfmAction#artist.getinfo");
         LAST_FM.artist.getInfo({
             artist    : request.params.artist,
-            user      : request.params.user
+            username  : request.params.username
         },
         {
             success: function(data) {

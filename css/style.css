@@ -26,11 +26,13 @@ root {
 }
 
 #soundsuggest-header h2 {
-    width: 866px;
+    width: 860px;
     float: left;
+    padding: 0px;
 }
 
 #soundsuggest-header #toggle-soundsuggest-content {
+    margin-top: 2px;
     width: 70px;
 }
 
@@ -69,10 +71,11 @@ a.soundsuggest-button:visited {
     cursor: pointer;
     background-color: #222;
     color: #eee;
-    padding: 2px;
+    padding: 2px 5px 2px 5px;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
+    font-weight: bold;
 }
 
 .soundsuggest-button-parameter {
