@@ -1,12 +1,26 @@
 function Whitebox() {
     
+    /**
+     * <p>
+     * Clears the SVG element under #chart, as well as the .item-info and
+     * #users elements.
+     * </p>
+     * @returns {unresolved}
+     */
     this.destroy = function() {
         d3.select(".item-info").remove();
         jQuery("#users").html('');
         d3.select('svg').remove();
-        return null;
+        return;
     };
     
+    /**
+     * <p>
+     * Creates a new SVG visualization using the D3.js library.
+     * </p>
+     * @param {Object} data
+     * @returns {Whitebox.create}
+     */
     this.create = function(data) {
     
         var w = 500,
@@ -291,6 +305,10 @@ function Whitebox() {
         function decodeItemName(artistname) {
             return artistname.toString().replace(/_/g, " ");
         }
+    
+        function encodeItemName(artistname) {
+            return artistname.toString().replace(/ /g, "_");
+        }
         
         function itemDeselect(d) {
             svg.selectAll(".node-item-clicked")
@@ -404,5 +422,39 @@ function Whitebox() {
                 userSelect(user);
             }
         }
+        
+        return;
+    };
+
+    /**
+     * <p>
+     * Clears all the selections from the visualization.
+     * </p>
+     * @returns {undefined}
+     */
+    this.clearSelection = function() {
+        var svg = d3.select ('#chart svg');
+        
+        svg.selectAll(".node-item-clicked")
+            .classed("node-item-clicked", false);
+        svg.selectAll(".link-item-clicked")
+            .classed("link-item-clicked", false);
+        svg.selectAll(".item-clicked")
+            .classed("item-clicked", false);
+        jQuery(".user-item-clicked")
+            .removeClass("user-item-clicked");
+        jQuery(".item-info")
+            .remove();
+        
+        svg.selectAll(".link-user-clicked")
+            .classed("link-user-clicked", false);
+        svg.selectAll(".node-user-clicked")
+            .classed("node-user-clicked", false);
+        jQuery(".user-clicked")
+            .removeClass("user-clicked");
+        jQuery(".user-info")
+            .remove();
+    
+        return;
     };
 };

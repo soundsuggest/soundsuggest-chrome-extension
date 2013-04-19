@@ -60,8 +60,6 @@ createLayout = function() {
     content += '        <li><a href="javascript:" id="open-help" class="soundsuggest-button">Help</a></li>';
     content += '        <li><a href="javascript:" id="soundsuggest-clear" class="soundsuggest-button">Clear Selection</a></li>';
     content += '        <li><a href="javascript:" id="soundsuggest-settings" class="soundsuggest-button">Settings</a></li>';
-    content += '        <li><a href="javascript:" id="soundsuggest-choose-artists" class="soundsuggest-button">Choose artists</a></li>';
-    content += '        <li><a href="javascript:" id="soundsuggest-choose-friends" class="soundsuggest-button">Choose friends</a></li>';
     content += '    </ul>';
     content += '</div>';
     content += '<div id="users"></div>';
@@ -78,6 +76,8 @@ createLayout = function() {
 
     d3.select('#toggle-soundsuggest-content')
             .on('click', toggle_hide);
+    d3.select('#soundsuggest-clear')
+            .on('click', clear_selection);
 
     $("#open-help").click(function() {
         $.fancybox.open({
@@ -261,15 +261,9 @@ itemInfo = function(itemname, isrecommendation, user) {
             .append('a')
             .attr('id', 'soundsuggest-button-open')
             .classed('soundsuggest-button', true)
-            .attr('href', 'javascript:')
+            .attr('href', data.artist.url)
+            .attr('target', '_blank')
             .text('See Full Profile');
-        $("#soundsuggest-button-open").click(function() {
-            $.fancybox.open({
-                href: data.artist.url,
-                type: 'iframe',
-                padding: 5
-            });
-        });
         
         // Code for 'addRecommendation' doesn't work for some reason.
         /*
@@ -324,18 +318,16 @@ userInfo = function(userName, isActiveUser, activeuser) {
                     .append('a')
                     .attr('id', 'soundsuggest-button-open')
                     .classed('soundsuggest-button', true)
-                    .attr('href', 'javascript:')
+                    .attr('href', userinfo.user.url)
+                    .attr('target', '_blank')
                     .text('See Full Profile');
-                $("#soundsuggest-button-open").click(function() {
-                    $.fancybox.open({
-                        href: userinfo.user.url,
-                        type: 'iframe',
-                        padding: 5
-                    });
-                });
             });
         });
     } else {
         // Active user's profile.
     }
+};
+
+clear_selection = function () {
+    WHITEBOX.clearSelection();
 };
