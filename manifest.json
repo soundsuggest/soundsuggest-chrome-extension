@@ -23,6 +23,9 @@
             [
                 "css/fancybox/jquery.fancybox.css",
                 "css/infovis/infovis.whitebox.cf.css",
+                "css/infovis/colours.blue.css",
+                "css/infovis/colours.green.css",
+                "css/infovis/colours.red.css",
                 "css/style.css"
             ],
             "js" :

@@ -103,39 +103,14 @@ a.soundsuggest-button:visited {
     list-style: none;
 }
 
-#users .user-activeuser {
-    background-color: #1f77b4;
-    color: #eee;
-}
-
 #users .user {
-    padding: 5px 5px 5px 5px;
+    padding: 2px 5px 2px 5px;
     margin-bottom: 5px;
     border: 1px solid #eee;
-    -moz-border-radius: 20px;
-    -webkit-border-radius: 20px;
-    -khtml-border-radius: 20px;
-    border-radius: 20px;
-}
-
-#users .user:hover {
-    background: #d62728;;
-    color: #fff;
-}
-
-#users .user-clicked {
-    background: #d62728;;
-    color: #fff;
-}
-
-#users .user-item-mouseover {
-    background: #d62728;;
-    color: #fff;
-}
-
-#users .user-item-clicked {
-    background: #d62728;;
-    color: #fff;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    border-radius: 5px;
 }
 
 #item-info {

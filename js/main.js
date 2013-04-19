@@ -57,7 +57,7 @@ createLayout = function() {
     content += '<div id="chart"><div id="spinner"></div></div>';
     content += '<div id="soundsuggest-controls">';
     content += '    <ul id="soundsuggest-controls-ul">';
-    content += '        <li><a href="javascript:" id="open-help" class="soundsuggest-button">Help</a></li>';
+    content += '        <li><a href="http://soundsuggest.wordpress.com/application/help/" target="_blank" id="open-help" class="soundsuggest-button">Help</a></li>';
     content += '        <li><a href="javascript:" id="soundsuggest-clear" class="soundsuggest-button">Clear Selection</a></li>';
     content += '        <li><a href="javascript:" id="soundsuggest-settings" class="soundsuggest-button">Settings</a></li>';
     content += '    </ul>';
@@ -80,14 +80,6 @@ createLayout = function() {
             .on('click', clear_selection);
     d3.select('#soundsuggest-settings')
             .on('click', settings);
-
-    $("#open-help").click(function() {
-        $.fancybox.open({
-            href: 'http://soundsuggest.wordpress.com/application/help/',
-            type: 'iframe',
-            padding: 5
-        });
-    });
 };
 
 /**
@@ -108,7 +100,13 @@ loadVisualization = function() {
     function(data) {
         SPINNER.stop();
         WHITEBOX = new Whitebox();
-        WHITEBOX.create(data);
+        WHITEBOX.setColours({
+            active      : 'green',
+            mouseover   : 'blue',
+            clicked     : 'green'
+        });
+        WHITEBOX.setData(data);
+        WHITEBOX.create();
     });
 };
 

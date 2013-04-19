@@ -1,4 +1,30 @@
-function Whitebox() {
+function Whitebox(data, colours) {
+    
+    this.USERS      = ((data)?data.users:[]);
+    this.ITEMS      = ((data)?data.items:[]);
+    this.COLOURS    = colours    ||
+    {
+        active : '',
+        clicked : '',
+        mouseover : ''
+    };
+
+    /**
+     * @param {Object} params
+     * @returns {undefined}
+     */
+    this.setColours = function(params) {
+        this.COLOURS['mouseover']  = params.mouseover + '-mouseover';
+        this.COLOURS['clicked']    = params.clicked + '-clicked';
+        this.COLOURS['active']     = params.active + '-active';
+        return;
+    };
+    
+    this.setData = function (data) {
+        this.ITEMS = data.items;
+        this.USERS = data.users;
+        return;
+    };
     
     /**
      * <p>
@@ -18,11 +44,9 @@ function Whitebox() {
      * <p>
      * Creates a new SVG visualization using the D3.js library.
      * </p>
-     * @param {Object} data
      * @returns {Whitebox.create}
      */
-    this.create = function(data) {
-    
+    this.create = function() {
         var w = 500,
         h = w,
         rx = w / 2,
@@ -56,7 +80,7 @@ function Whitebox() {
                 .append("svg:g")
                 .attr("transform", "translate(" + rx + "," + ry + ")");
 
-        data.users.forEach(function(user) {
+        this.USERS.forEach(function(user) {
             userMap[user.name] = {
                 active  : user.active,
                 items   : [],
@@ -118,10 +142,10 @@ function Whitebox() {
             }
         };
 
-        createGraph(data.items);
-        createUserList(data.users);
+        createGraph(this.ITEMS, this.COLOURS);
+        createUserList(this.USERS, this.COLOURS);
 
-        function createGraph(items) {
+        function createGraph(items, colours) {
             var nodes = cluster.nodes(packages.root(items)),
                 links = packages.edges(nodes),
                 splines = bundle(links);
@@ -130,7 +154,12 @@ function Whitebox() {
                     .data(links)
                     .enter().append("svg:path")
                     .attr("class", function(d) {
-                        return "link source-" + d.source.key + " target-" + d.target.key + " link-owner-" + d.owner + ((d.active)?" link-activeuser":"");
+                        return "link source-" + d.source.key
+                                + " target-" + d.target.key
+                                + " link-owner-" + d.owner
+                                + ((d.active)?(" link-activeuser " + colours['active']):"")
+                                + " " + colours['mouseover']
+                                + " " + colours['clicked'];
                     })
                     .attr("d", function(d, i) {
                         return line(splines[i]);
@@ -147,7 +176,8 @@ function Whitebox() {
                         d.owners.forEach(function(i) {
                             users += " node-owner-" + i;
                         });
-                        return "node" + users;
+                        return "node" + users + " "
+                            + colours['mouseover'] + " " + colours['clicked'];
                     })
                     .attr("id", function(d) {
                         return "node-" + d.key;
@@ -181,7 +211,7 @@ function Whitebox() {
             });
         }
 
-        function createUserList(data) {
+        function createUserList(data, colours) {
             var neighbours = [];
             var activeuser = [];
             
@@ -203,7 +233,9 @@ function Whitebox() {
                     userMap[user.name].items.forEach(function (item) {
                         itemClasses += " user-owns-" + item + " ";
                     });
-                    return "user " + ((user.active)?" user-activeuser ":" ") + itemClasses;
+                    return "user user-activeuser " + colours['active']
+                            + " " + itemClasses + " "
+                            + colours['mouseover'] + " " + colours['clicked'];
                 })
                 .attr("id", function(user) {
                     return "user-" + user.name;
@@ -229,7 +261,8 @@ function Whitebox() {
                     userMap[user.name].items.forEach(function (item) {
                         itemClasses += " user-owns-" + item + " ";
                     });
-                    return "user " + ((user.active)?" user-activeuser ":" ") + itemClasses;
+                    return "user " + itemClasses + " "
+                        + colours['mouseover'] + " " + colours['clicked'];
                 })
                 .attr("id", function(user) {
                     return "user-" + user.name;
