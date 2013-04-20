@@ -412,7 +412,11 @@ userInfo = function(userName, isActiveUser, activeuser) {
 };
 
 clear_selection = function () {
-    if (WHITEBOX) WHITEBOX.clearSelection();
+    if (DATA_LOADED) {
+        if (WHITEBOX) WHITEBOX.clearSelection();
+    } else {
+        alert('Please wait until the data has finished loading before changing any settings.');
+    }
 };
 
 open_settings = function () {

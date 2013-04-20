@@ -30,10 +30,10 @@ var USERNAME        = '';
 var TOKEN           = '';
 var DEBUG           = false;
 var DATA_SETTINGS   = {
-    limit_neighbours : 5,
-    limit_recommendations : 5,
-    limit_similar : 5,
-    limit_top_artists : 5,
+    limit_neighbours : 10,
+    limit_recommendations : 10,
+    limit_similar : 10,
+    limit_top_artists : 10,
     threshold : Number(0.1)
 };
 
