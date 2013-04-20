@@ -7,7 +7,7 @@
  * Part of the SoundSuggest project. For more info consult:
  * http://soundsuggest.wordpress.com/ . Written by
  * Joris Schelfaut.
- **************************************************************************** */
+ * ****************************************************************************/
 
 // LISTENERS :
 // -----------
@@ -16,19 +16,26 @@ chrome.extension.onMessage.addListener(doAction);
 
 // GLOBAL VARIABLES AND CONSTANTS :
 // --------------------------------
-var API_KEY      = '828c109e6a54fffedad5177b194f7107';
-var API_SECRET   = '7c2f09e6eb84e8a6183c59e0bc574f70';
-var LAST_FM      = new LastFM({
+var API_KEY         = '828c109e6a54fffedad5177b194f7107';
+var API_SECRET      = '7c2f09e6eb84e8a6183c59e0bc574f70';
+var LAST_FM         = new LastFM({
     apiKey      : API_KEY,
     apiSecret   : API_SECRET,
     cache       : new LastFMCache(),
     apiUrl      : 'https://ws.audioscrobbler.com/2.0/'
 });
-var DATA_SERVICE = 'https://x8-esoteric-code-c.appspot.com/';
-var SESSION_KEY  = '';
-var USERNAME     = '';
-var TOKEN        = '';
-var DEBUG        = false;
+var DATA_SERVICE    = 'https://x8-esoteric-code-c.appspot.com/';
+var SESSION_KEY     = '';
+var USERNAME        = '';
+var TOKEN           = '';
+var DEBUG           = false;
+var DATA_SETTINGS   = {
+    limit_neighbours : 5,
+    limit_recommendations : 5,
+    limit_similar : 5,
+    limit_top_artists : 5,
+    threshold : Number(0.1)
+};
 
 if (DEBUG) console.log("Global variables loaded.");
 
@@ -38,7 +45,7 @@ function checkForValidUrl(tabId, changeInfo, tab) {
     if (tab.url.indexOf('last.fm/home') > -1) {
         chrome.pageAction.show(tabId);
     }
-};
+}
 
 function doAction(request, sender, sendResponse) {
     if (DEBUG) console.log("background.js#doAction");
@@ -49,13 +56,13 @@ function doAction(request, sender, sendResponse) {
         lastfmAction(action[1] + "." + action[2], request, sendResponse);
     }
     return true;
-};
+}
 
 function storageAction(action, request, sendResponse) {
     if (DEBUG) console.log("background.js#storageAction");
     if (action === 'set') {
         if (DEBUG) console.log("background.js#storageAction#set");
-        var dataObj = {}; dataObj[request.params.key] = request.data.value;
+        var dataObj = {}; dataObj[request.params.key] = request.params.value;
         chrome.storage.local.set(dataObj, function() {
             if (DEBUG) console.log('Value [' + request.params.value + '] was saved with key [' + request.params.key + '].');
             sendResponse({ success : true });
@@ -71,25 +78,82 @@ function storageAction(action, request, sendResponse) {
         console.error('Undefined storage action.');
     }
     return true;
-};
+}
 
 function lastfmAction(action, request, sendResponse) {
     if (DEBUG) console.log("background.js#lastfmAction");
     if (action === 'recommender.load') {
         if (DEBUG) console.log("background.js#lastfmAction#recommender.load");
+        
+        // USERNAME :
         USERNAME = request.params.username;
+        
+        // RETRIEVE THE SESSION KEY
         chrome.storage.local.get(USERNAME, function(value) {
-            lastfm_data({
-                user    : USERNAME,
-                lastfm  : LAST_FM,
-                key     : value[USERNAME],
-                limit_neighbours : 5,
-                limit_recommendations : 5,
-                limit_similar : 5,
-                limit_top_artists : 5,
-                debug              : false
-            }, function(data) {
-                sendResponse(data);
+            
+            DATA_SETTINGS.key = value[USERNAME];
+            DATA_SETTINGS.user = USERNAME;
+            DATA_SETTINGS.lastfm = LAST_FM;
+            
+            // RETRIEVE STORED SETTINGS
+            chrome.storage.local.get('soundsuggest_settings_data_' + USERNAME, function(value) {
+                var stored_settings = value['soundsuggest_settings_data_' + USERNAME];
+                
+                var limit_neighbours1;
+                var limit_recommendations1;
+                var limit_similar1;
+                var limit_top_artists1;
+                var threshold1;
+                if (request.params.settings) {
+                    limit_neighbours1 = request.params.settings.limit_neighbours;
+                    limit_recommendations1 = request.params.settings.limit_recommendations ;
+                    limit_similar1 = request.params.settings.limit_similar;
+                    limit_top_artists1 = request.params.settings.limit_top_artists;
+                    threshold1 = request.params.settings.threshold;
+                }
+                
+                var limit_neighbours2;
+                var limit_recommendations2;
+                var limit_similar2;
+                var limit_top_artists2;
+                var threshold2;
+                if (stored_settings) {
+                    limit_neighbours2 = stored_settings.limit_neighbours;
+                    limit_recommendations2 = stored_settings.limit_recommendations;
+                    limit_similar2 = stored_settings.limit_similar;
+                    limit_top_artists2 = stored_settings.limit_top_artists;
+                    threshold2 = stored_settings.threshold;
+                }
+                
+                DATA_SETTINGS.limit_neighbours =
+                        limit_neighbours1
+                        || limit_neighbours2
+                        || DATA_SETTINGS.limit_neighbours;
+                DATA_SETTINGS.limit_recommendations =
+                        limit_recommendations1
+                        || limit_recommendations2
+                        || DATA_SETTINGS.limit_recommendations;
+                DATA_SETTINGS.limit_similar =
+                        limit_similar1
+                        || limit_similar2
+                        || DATA_SETTINGS.limit_similar;
+                DATA_SETTINGS.limit_top_artists = 
+                        limit_top_artists1
+                        || limit_top_artists2
+                        || DATA_SETTINGS.limit_top_artists;
+                DATA_SETTINGS.threshold =
+                        threshold1
+                        || threshold2
+                        || DATA_SETTINGS.threshold;
+
+                var dataObj = {}; dataObj['soundsuggest_settings_data_' + USERNAME] = DATA_SETTINGS;
+                
+                // UPDATE THE SETTINGS
+                chrome.storage.local.set(dataObj, function() {
+                    lastfm_data(DATA_SETTINGS, function(data) {
+                        sendResponse(data);
+                    });
+                });
             });
         });
     } else if (action === 'recommender.add') {
@@ -179,4 +243,4 @@ function lastfmAction(action, request, sendResponse) {
         console.error('Undefined last.fm action.');
     }
     return true;
-};
+}

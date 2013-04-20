@@ -1,21 +1,18 @@
-var RECOMMENDATIONS         = [];
-var TOP_ARTISTS             = [];
-var NEIGHBOURS              = [];
-var ARTISTS                 = [];
-var ACTIVE_USER             = [];
+var RECOMMENDATIONS;
+var TOP_ARTISTS;
+var NEIGHBOURS;
+var ARTISTS;
+var ACTIVE_USER;
 var LIMIT_TOP_ARTISTS       = 10;
 var LIMIT_RECOMMENDATIONS   = 10;
 var LIMIT_NEIGHBOURS        = 10;
 var LIMIT_SIMILAR           = 5;
-var dataSTRUCTURE           = {
-    items : new Array(),
-    users : new Array()
-};
-var INDEX_NEIGHBOUR         = 0;
-var INDEX_ARTIST            = 0;
+var dataSTRUCTURE;
+var INDEX_NEIGHBOUR;
+var INDEX_ARTIST;
 var SESSION_KEY;
-var userDATA                = {};
-var artistDATA              = {};
+var userDATA;
+var artistDATA;
 var THRESHOLD               = Number(0.1);
 var LAST_FM                 = {};
 var DEBUG                   = false;
@@ -35,6 +32,19 @@ lastfm_data = function(params, callback) {
     THRESHOLD               = Number(params.threshold) || Number(0.1);
     DEBUG                   = params.debug || false;
     SESSION_KEY             = params.key;
+    
+    INDEX_NEIGHBOUR         = 0;
+    INDEX_ARTIST            = 0;
+    RECOMMENDATIONS         = [];
+    TOP_ARTISTS             = [];
+    NEIGHBOURS              = [];
+    ARTISTS                 = [];
+    dataSTRUCTURE           = {
+        items : new Array(),
+        users : new Array()
+    };
+    userDATA                = {};
+    artistDATA              = {};
     
     algorithm1(callback);
 };

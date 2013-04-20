@@ -225,11 +225,9 @@ a.soundsuggest-button:visited {
 }
 
 #soundsuggest-settings-colours {
+    border-top: #ccc thin solid;
+    padding-top: 10px;
     padding-bottom: 10px;
-}
-
-#soundsuggest-settings-colours td {
-    
 }
 
 #soundsuggest-settings-controls {
@@ -243,4 +241,13 @@ a.soundsuggest-button:visited {
 #soundsuggest-settings-controls a {
     margin-left: 10px;
     float: right;
+}
+
+#soundsuggest-settings-content td {
+    padding-top: 5px;
+    padding-right: 5px;
+}
+
+.settings-table-row-info {
+    font-style: italic;
 }

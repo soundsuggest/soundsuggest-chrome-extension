@@ -57,12 +57,6 @@ var COLOURS = {
  */
 var DATA_LOADED = false;
 
-/**
- * The data retrieved from the Last.fm API.
- * @type Object
- */
-var DATA = {};
-
 jQuery(document).ready(function() {
     if (DEBUG) console.log("main.js :: document ready.");
     getUsername();
@@ -121,25 +115,54 @@ createLayout = function() {
  * Loads the JSON data and instantiates a Whitebox object that
  * creates the visualization.
  * </p>
+ * @param {Object} settings
+ * @param {Object} colours
  * @returns {undefined}
  */
-loadVisualization = function() {
+loadVisualization = function(settings, colours) {
     if (DEBUG) console.log("main.js#loadVisualization");
-    chrome.extension.sendMessage({
-        action: 'lastfm.recommender.load',
-        params: {
-            username: USERNAME
-        }
-    },
-    function(data) {
-        DATA = data;
-        SPINNER.stop();
-        WHITEBOX = new Whitebox();
-        WHITEBOX.setColours(COLOURS);
-        WHITEBOX.setData(data);
-        WHITEBOX.create();
-        DATA_LOADED = true;
-    });
+    if (! colours) {
+        chrome.extension.sendMessage({
+            action: 'storage.get',
+            params: {
+                key : 'soundsuggest-colours-' + USERNAME
+            }
+        },
+        function(a) {
+            COLOURS = a.value || COLOURS;
+            chrome.extension.sendMessage({
+                action: 'lastfm.recommender.load',
+                params: {
+                    username: USERNAME,
+                    settings : settings || {}
+                }
+            },
+            function(data) {
+                SPINNER.stop();
+                WHITEBOX = new Whitebox();
+                WHITEBOX.setColours(COLOURS);
+                WHITEBOX.setData(data);
+                WHITEBOX.create();
+                DATA_LOADED = true;
+            });
+        });
+    } else {
+        chrome.extension.sendMessage({
+            action: 'lastfm.recommender.load',
+            params: {
+                username : USERNAME,
+                settings : settings || {}
+            }
+        },
+        function(data) {
+            SPINNER.stop();
+            WHITEBOX = new Whitebox();
+            WHITEBOX.setColours(colours);
+            WHITEBOX.setData(data);
+            WHITEBOX.create();
+            DATA_LOADED = true;
+        });
+    }
 };
 
 /**
@@ -403,7 +426,7 @@ open_settings = function () {
         html += '   <h4>Data</h4>';
         html += '   <table>';
         html += '       <tr>';
-        html += '           <td>';
+        html += '           <td class="settings-table-row-info">';
         html += '               Number of neighbours : ';
         html += '           </td>';
         html += '           <td>';
@@ -411,7 +434,7 @@ open_settings = function () {
         html += '           </td>';
         html += '       </tr>';
         html += '       <tr>';
-        html += '           <td>';
+        html += '           <td class="settings-table-row-info">';
         html += '               Number of top artists from the active user\'s profile : ';
         html += '           </td>';
         html += '           <td>';
@@ -419,8 +442,16 @@ open_settings = function () {
         html += '           </td>';
         html += '       </tr>';
         html += '       <tr>';
-        html += '           <td>';
+        html += '           <td class="settings-table-row-info">';
         html += '               Number of recommendations : ';
+        html += '           </td>';
+        html += '           <td>';
+        html += '               <div id="soundsuggest-settings-slider-recommendations"></div>';
+        html += '           </td>';
+        html += '       </tr>';
+        html += '       <tr>';
+        html += '           <td class="settings-table-row-info">';
+        html += '               Threshold : ';
         html += '           </td>';
         html += '           <td>';
         html += '               <div id="soundsuggest-settings-slider-recommendations"></div>';
@@ -437,7 +468,7 @@ open_settings = function () {
         html += '   <h4>Colours</h4>';
         html += '   <table>';
         html += '   <tr>';
-        html += '       <td>';
+        html += '       <td class="settings-table-row-info">';
         html += '           Active user and active user\'s items : ';
         html += '       </td>';
         html += '       <td>';
@@ -449,7 +480,7 @@ open_settings = function () {
         html += '       </td>';
         html += '   </tr>';
         html += '   <tr>';
-        html += '       <td>';
+        html += '       <td class="settings-table-row-info">';
         html += '           Highlight for clicking on an item or user : ';
         html += '       </td>';
         html += '       <td>';
@@ -461,7 +492,7 @@ open_settings = function () {
         html += '       </td>';
         html += '   </tr>';
         html += '   <tr>';
-        html += '       <td>';
+        html += '       <td class="settings-table-row-info">';
         html += '           Highlight for hovering over an item or user : ';
         html += '       </td>';
         html += '       <td>';
@@ -507,6 +538,7 @@ open_settings = function () {
             .append(html);
     
         // SLIDERS :
+        // http://jqueryui.com/slider/#steps
         
         
         // CONTROLS :
@@ -527,18 +559,30 @@ cancel_settings = function () {
 };
 
 save_settings = function () {
-    // Retrieve the relevant parameters
     COLOURS.active      = jQuery('#colour-select-active-user').find(':selected').val();
     COLOURS.clicked     = jQuery('#colour-select-clicked').find(':selected').val();
     COLOURS.mouseover   = jQuery('#colour-select-mouseover').find(':selected').val();
     
-    WHITEBOX.destroy();
-    WHITEBOX.setColours(COLOURS);
-    WHITEBOX.create();
-    
-    // Close the settings menu.
-    jQuery('#soundsuggest-overlay-shadow')
-        .remove()
-        .delay(800)
-        .fadeIn(400);
+    chrome.extension.sendMessage({
+        action: 'storage.set',
+        params: {
+            key : 'soundsuggest-colours-' + USERNAME,
+            value : COLOURS
+        }
+    },
+    function(a) {
+        jQuery('#soundsuggest-overlay-shadow')
+            .remove()
+            .delay(800)
+            .fadeIn(400);
+        WHITEBOX.destroy();
+        DATA_LOADED = false;
+        startSpinner();
+        loadVisualization({
+            limit_neighbours : 3,
+            limit_top_artists : 3,
+            limit_recommendations : 3,
+            threshold : Number(0.1)
+        }, COLOURS);
+    });
 };
