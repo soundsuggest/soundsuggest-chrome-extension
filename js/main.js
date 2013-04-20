@@ -1,3 +1,15 @@
+/* *****************************************************************************
+ * main.js
+ * 
+ * Injects a new HTML layout into the http://www.last.fm/home/recs web page.
+ * Method definitions for creating the visualization and providing interaction
+ * with it.
+ * 
+ * Part of the SoundSuggest project. For more info consult:
+ * http://soundsuggest.wordpress.com/ . Written by
+ * Joris Schelfaut.
+ * ****************************************************************************/
+
 /**
  * Instantiation of the Spinner class.
  * @type Spinner
@@ -28,6 +40,28 @@ var TOKEN;
  * @type Boolean
  */
 var DEBUG = false;
+
+/**
+ * The colours of each element in the visualization.
+ * @type Object
+ */
+var COLOURS = {
+    active      : 'green',
+    mouseover   : 'blue',
+    clicked     : 'red'
+};
+
+/**
+ * Whether or not the data and visualization has completed loading.
+ * @type Boolean
+ */
+var DATA_LOADED = false;
+
+/**
+ * The data retrieved from the Last.fm API.
+ * @type Object
+ */
+var DATA = {};
 
 jQuery(document).ready(function() {
     if (DEBUG) console.log("main.js :: document ready.");
@@ -79,7 +113,7 @@ createLayout = function() {
     d3.select('#soundsuggest-clear')
             .on('click', clear_selection);
     d3.select('#soundsuggest-settings')
-            .on('click', settings);
+            .on('click', open_settings);
 };
 
 /**
@@ -98,15 +132,13 @@ loadVisualization = function() {
         }
     },
     function(data) {
+        DATA = data;
         SPINNER.stop();
         WHITEBOX = new Whitebox();
-        WHITEBOX.setColours({
-            active      : 'green',
-            mouseover   : 'blue',
-            clicked     : 'red'
-        });
+        WHITEBOX.setColours(COLOURS);
         WHITEBOX.setData(data);
         WHITEBOX.create();
+        DATA_LOADED = true;
     });
 };
 
@@ -255,10 +287,14 @@ itemInfo = function(itemname, isrecommendation, user) {
         username    : user
     }, function(data) {
         var bio = data.artist.bio.summary;
-        var playcount = 'You have listened to this artist <strong>'
-                + data.artist.stats.userplaycount + '</strong> times.';
+        var playcount = '';
+        
+        if (! isrecommendation) {
+            playcount += '<p>You have listened to this artist <strong>'
+                + data.artist.stats.userplaycount + '</strong> times.</p>';
+        }
         jQuery('#item-info-description')
-            .append('<p>' + bio + '</p><p>' + playcount + '</p>');
+            .append('<p>' + bio + '</p>' + playcount);
         d3.select('#item-info-controls')
             .append('a')
             .attr('id', 'soundsuggest-button-open')
@@ -348,9 +384,161 @@ userInfo = function(userName, isActiveUser, activeuser) {
 };
 
 clear_selection = function () {
-    WHITEBOX.clearSelection();
+    if (WHITEBOX) WHITEBOX.clearSelection();
 };
 
-settings = function () {
+open_settings = function () {
     
+    function settings_header() {
+        var html = '';
+        html += '<div id="soundsuggest-settings-header">';
+        html += '   <h3>SoundSuggest Settings</h3>';
+        html += '</div>';
+        return html;
+    }
+    
+    function settings_data() {
+        var html = '';
+        html += '<div id="soundsuggest-settings-data">';
+        html += '   <h4>Data</h4>';
+        html += '   <table>';
+        html += '       <tr>';
+        html += '           <td>';
+        html += '               Number of neighbours : ';
+        html += '           </td>';
+        html += '           <td>';
+        html += '               <div id="soundsuggest-settings-slider-neighbours"></div>';
+        html += '           </td>';
+        html += '       </tr>';
+        html += '       <tr>';
+        html += '           <td>';
+        html += '               Number of top artists from the active user\'s profile : ';
+        html += '           </td>';
+        html += '           <td>';
+        html += '               <div id="soundsuggest-settings-slider-topartists"></div>';
+        html += '           </td>';
+        html += '       </tr>';
+        html += '       <tr>';
+        html += '           <td>';
+        html += '               Number of recommendations : ';
+        html += '           </td>';
+        html += '           <td>';
+        html += '               <div id="soundsuggest-settings-slider-recommendations"></div>';
+        html += '           </td>';
+        html += '       </tr>';
+        html += '   </table>';
+        html += '</div>';
+        return html;
+    }
+
+    function settings_colours() {
+        var html = '';
+        html += '<div id="soundsuggest-settings-colours">';
+        html += '   <h4>Colours</h4>';
+        html += '   <table>';
+        html += '   <tr>';
+        html += '       <td>';
+        html += '           Active user and active user\'s items : ';
+        html += '       </td>';
+        html += '       <td>';
+        html += '           <select id="colour-select-active-user">';
+        html += '               <option value="blue" ' + ((COLOURS.active === 'blue')?'selected':'') + '>Blue</option>';
+        html += '               <option value="green" ' + ((COLOURS.active === 'green')?'selected':'') + '>Green</option>';
+        html += '               <option value="red" ' + ((COLOURS.active === 'red')?'selected':'') + '>Red</option>';
+        html += '           </select>';
+        html += '       </td>';
+        html += '   </tr>';
+        html += '   <tr>';
+        html += '       <td>';
+        html += '           Highlight for clicking on an item or user : ';
+        html += '       </td>';
+        html += '       <td>';
+        html += '           <select id="colour-select-clicked">';
+        html += '               <option value="blue" ' + ((COLOURS.clicked === 'blue')?'selected':'') + '>Blue</option>';
+        html += '               <option value="green" ' + ((COLOURS.clicked === 'green')?'selected':'') + '>Green</option>';
+        html += '               <option value="red" ' + ((COLOURS.clicked === 'red')?'selected':'') + '>Red</option>';
+        html += '           </select>';
+        html += '       </td>';
+        html += '   </tr>';
+        html += '   <tr>';
+        html += '       <td>';
+        html += '           Highlight for hovering over an item or user : ';
+        html += '       </td>';
+        html += '       <td>';
+        html += '           <select id="colour-select-mouseover">';
+        html += '               <option value="blue" ' + ((COLOURS.mouseover === 'blue')?'selected':'') + '>Blue</option>';
+        html += '               <option value="green" ' + ((COLOURS.mouseover === 'green')?'selected':'') + '>Green</option>';
+        html += '               <option value="red" ' + ((COLOURS.mouseover === 'red')?'selected':'') + '>Red</option>';
+        html += '           </select>';
+        html += '       </td>';
+        html += '   </tr>';
+        html += '   </table>';
+        html += '</div>';
+        return html;
+    }
+    
+    function settings_controls() {
+        var html = '';
+        html += '<div id="soundsuggest-settings-controls">';
+        html += '   <a href="javascript:" id="soundsuggest-settings-save" class="soundsuggest-button">';
+        html += '       Save';
+        html += '   </a>';
+        html += '   <a href="javascript:" id="soundsuggest-settings-cancel" class="soundsuggest-button">';
+        html += '       Cancel';
+        html += '   </a>';
+        html += '</div>';
+        return html;
+    }
+    
+    if (DATA_LOADED) {
+        var html = '';
+        html += '<div id="soundsuggest-overlay-shadow">';
+        html += '   <div id="soundsuggest-overlay">';
+        html += '       ' + settings_header();
+        html += '       <div id="soundsuggest-settings-content">';
+        html += '           <p>The current settings are selected. Change them as desired here :</p>';
+        html += '           ' + settings_data();
+        html += '           ' + settings_colours();
+        html += '       </div>';
+        html += '       ' + settings_controls();
+        html += '   </div>';
+        html += '</div>';
+        jQuery('#soundsuggest')
+            .append(html);
+    
+        // SLIDERS :
+        
+        
+        // CONTROLS :
+        d3.select('#soundsuggest-settings-save')
+            .on('click', save_settings);
+        d3.select('#soundsuggest-settings-cancel')
+                .on('click', cancel_settings);
+    } else {
+        alert('Please wait until the data has finished loading before changing any settings.');
+    }
+};
+
+cancel_settings = function () {
+    jQuery('#soundsuggest-overlay-shadow')
+        .remove()
+        .delay(800)
+        .fadeIn(400);
+};
+
+save_settings = function () {
+    // Retrieve the relevant parameters
+    COLOURS.active      = jQuery('#colour-select-active-user').find(':selected').val();
+    COLOURS.clicked     = jQuery('#colour-select-clicked').find(':selected').val();
+    COLOURS.mouseover   = jQuery('#colour-select-mouseover').find(':selected').val();
+    
+    WHITEBOX.destroy();
+    WHITEBOX.setColours(COLOURS);
+    WHITEBOX.create();
+    
+    // Close the settings menu.
+    jQuery('#soundsuggest-overlay-shadow')
+        .remove()
+        .delay(800)
+        .fadeIn(400);
 };

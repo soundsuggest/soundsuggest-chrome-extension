@@ -15,13 +15,9 @@
             [
                 "*://www.last.fm/home/recs*"
             ],
-            "exclude_matches" :
-            [
-                
-            ],
+            "exclude_matches" : [],
             "css" :
             [
-                "css/fancybox/jquery.fancybox.css",
                 "css/infovis/infovis.whitebox.cf.css",
                 "css/infovis/colours.active.css",
                 "css/infovis/colours.clicked.css",
@@ -31,8 +27,6 @@
             "js" :
             [
                 "js/lib/jquery/jquery-1.8.3.js",
-                "js/lib/jquery/jquery.mousewheel-3.0.6.pack.js",
-                "js/lib/fancybox/jquery.fancybox.pack.js",
                 "js/lib/purl/purl.js",
                 "js/lib/d3/d3.v3.min.js",
                 "js/lib/spin/spin.min.js",
@@ -58,12 +52,6 @@
         },
         "default_title": "SoundSuggest"
     },
-    "content_security_policy" : "script-src 'self' https://ws.audioscrobbler.com/2.0/ https://x8-esoteric-code-c.appspot.com/; object-src 'self'",
-    "web_accessible_resources":
-    [
-        "data/img/fancybox/blank.gif",
-        "data/img/fancybox/fancybox_loading.gif",
-        "data/img/fancybox/fancybox_overlay.png",
-        "data/img/fancybox/fancybox_sprite.png"
-    ]
+    "content_security_policy" : "script-src 'self' https://ws.audioscrobbler.com/2.0/; object-src 'self'",
+    "web_accessible_resources": []
 }
