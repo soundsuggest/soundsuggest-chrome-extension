@@ -22,6 +22,10 @@
     stroke: #1f77b4;
 }
 
+.link.target.blue-clicked.blue-mouseover {
+    stroke: #1f77b4;
+}
+
 .node-item-mouseover.blue-mouseover {
     fill: #1f77b4;
 }

@@ -4,9 +4,9 @@ function Whitebox(data, colours) {
     this.ITEMS      = ((data)?data.items:[]);
     this.COLOURS    = colours    ||
     {
-        active : '',
-        clicked : '',
-        mouseover : ''
+        active : 'active-blue',
+        clicked : 'clicked-red',
+        mouseover : 'clicked-red'
     };
 
     /**

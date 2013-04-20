@@ -12,14 +12,6 @@
     cursor: pointer;
 }
 
-.user:hover {
-    color: #d62728;
-}
-
-.user-activeuser {
-    color: #1f77b4;
-}
-
 svg {
     background-color: #eee;
 }
@@ -33,10 +25,6 @@ path.arc {
     cursor: pointer;
 }
 
-.node:hover {
-    fill: #d62728;
-}
-
 .link {
     fill: none;
     stroke: #666699;
@@ -45,18 +33,9 @@ path.arc {
 }
 
 .link-activeuser {
-    stroke: #1f77b4;
     fill: none;
     stroke-opacity: 1;
     stroke-width: 2px;
-}
-
-.node.target {
-    fill: #d62728 !important;
-}
-
-.link.source {
-    stroke: #d62728;
 }
 
 .link.source, .link.target {
@@ -64,67 +43,16 @@ path.arc {
     stroke-width: 2px;
 }
 
-.node-item-mouseover {
-    fill: #d62728;
-}
-
-.user-item-mouseover {
-    color: #d62728;
-}
-
 .link-item-clicked {
     stroke-opacity: 1;
     stroke-width: 2px;
-    stroke: #d62728;
-}
-
-.node-item-clicked {
-    fill: #d62728 !important;
-}
-
-.user-item-clicked {
-    color: #d62728;
-}
-
-.user-clicked {
-    color: #d62728;
 }
 
 .link-user-clicked {
     stroke-opacity: 1;
     stroke-width: 2px;
-    stroke: #d62728;
-}
-
-.node-user-clicked {
-    fill: #d62728 !important;
 }
 
 button {
     cursor: pointer;
-}
-
-#users .user-activeuser {
-    background-color: #1f77b4;
-    color: #eee;
-}
-/* overrides active */
-#users .user:hover {
-    background: #d62728;;
-    color: #fff;
-}
-
-#users .user-clicked {
-    background: #d62728;;
-    color: #fff;
-}
-
-#users .user-item-mouseover {
-    background: #d62728;
-    color: #fff;
-}
-
-#users .user-item-clicked {
-    background: #d62728;;
-    color: #fff;
 }

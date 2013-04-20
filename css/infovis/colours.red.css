@@ -22,6 +22,10 @@
     stroke: #d62728;
 }
 
+.link.target.red-clicked.red-mouseover {
+    stroke: #d62728;
+}
+
 .node-item-mouseover.red-mouseover {
     fill: #d62728;
 }

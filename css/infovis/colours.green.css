@@ -22,6 +22,10 @@ node.target.green-mouseover.green-clicked{
     stroke: #67b77e;
 }
 
+.link.target.green-clicked.green-mouseover {
+    stroke: #67b77e;
+}
+
 .node-item-mouseover.green-mouseover {
     fill: #67b77e;
 }
