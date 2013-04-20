@@ -51,6 +51,11 @@ var COLOURS = {
     clicked     : 'red'
 };
 
+var LIMIT_NEIGHBOURS        = 10;
+var LIMIT_TOPARTISTS        = 10;
+var LIMIT_RECOMMENDATIONS   = 10;
+var THRESHOLD               = Number(0.1);
+
 /**
  * Whether or not the data and visualization has completed loading.
  * @type Boolean
@@ -427,41 +432,41 @@ open_settings = function () {
         html += '   <table>';
         html += '       <tr>';
         html += '           <td class="settings-table-row-info">';
-        html += '               Number of neighbours : ';
+        html += '               Number of neighbours : <strong id="soundsuggest-amount-neighbours"></strong>';
         html += '           </td>';
-        html += '           <td>';
+        html += '           <td class="settings-table-row-slider">';
         html += '               <div id="soundsuggest-settings-slider-neighbours"></div>';
         html += '           </td>';
         html += '       </tr>';
         html += '       <tr>';
         html += '           <td class="settings-table-row-info">';
-        html += '               Number of top artists from the active user\'s profile : ';
+        html += '               Number of top artists from the active user\'s profile : <strong id="soundsuggest-amount-topartists"></strong>';
         html += '           </td>';
-        html += '           <td>';
+        html += '           <td class="settings-table-row-slider">';
         html += '               <div id="soundsuggest-settings-slider-topartists"></div>';
         html += '           </td>';
         html += '       </tr>';
         html += '       <tr>';
         html += '           <td class="settings-table-row-info">';
-        html += '               Number of recommendations : ';
+        html += '               Number of recommendations : <strong id="soundsuggest-amount-recommendations"></strong>';
         html += '           </td>';
-        html += '           <td>';
+        html += '           <td class="settings-table-row-slider">';
         html += '               <div id="soundsuggest-settings-slider-recommendations"></div>';
         html += '           </td>';
         html += '       </tr>';
         html += '       <tr>';
         html += '           <td class="settings-table-row-info">';
-        html += '               Threshold : ';
+        html += '               Threshold : <strong id="soundsuggest-amount-threshold"></strong>';
         html += '           </td>';
-        html += '           <td>';
-        html += '               <div id="soundsuggest-settings-slider-recommendations"></div>';
+        html += '           <td class="settings-table-row-slider">';
+        html += '               <div id="soundsuggest-settings-slider-threshold"></div>';
         html += '           </td>';
         html += '       </tr>';
         html += '   </table>';
         html += '</div>';
         return html;
     }
-
+    
     function settings_colours() {
         var html = '';
         html += '<div id="soundsuggest-settings-colours">';
@@ -536,12 +541,51 @@ open_settings = function () {
         html += '</div>';
         jQuery('#soundsuggest')
             .append(html);
+        
+        jQuery("#soundsuggest-settings-slider-neighbours").slider({
+            value:10,
+            min: 5,
+            max: 50,
+            step: 5,
+            slide: function(event, ui) {
+                jQuery('#soundsuggest-amount-neighbours').html(ui.value);
+                LIMIT_NEIGHBOURS = ui.value;
+            }
+        });
     
-        // SLIDERS :
-        // http://jqueryui.com/slider/#steps
+        jQuery("#soundsuggest-settings-slider-topartists").slider({
+            value:10,
+            min: 5,
+            max: 50,
+            step: 5,
+            slide: function(event, ui) {
+                jQuery('#soundsuggest-amount-topartists').html(ui.value);
+                LIMIT_TOPARTISTS = ui.value;
+            }
+        });
         
+        jQuery("#soundsuggest-settings-slider-recommendations").slider({
+            value:10,
+            min: 5,
+            max: 50,
+            step: 5,
+            slide: function(event, ui) {
+                jQuery('#soundsuggest-amount-recommendations').html(ui.value);
+                LIMIT_RECOMMENDATIONS = ui.value;
+            }
+        });
         
-        // CONTROLS :
+        jQuery("#soundsuggest-settings-slider-threshold").slider({
+            value:0.1,
+            min: 0.1,
+            max: 1,
+            step: 0.1,
+            slide: function(event, ui) {
+                jQuery('#soundsuggest-amount-threshold').html(ui.value);
+                THRESHOLD = ui.value;
+            }
+        });
+        
         d3.select('#soundsuggest-settings-save')
             .on('click', save_settings);
         d3.select('#soundsuggest-settings-cancel')
@@ -579,10 +623,10 @@ save_settings = function () {
         DATA_LOADED = false;
         startSpinner();
         loadVisualization({
-            limit_neighbours : 3,
-            limit_top_artists : 3,
-            limit_recommendations : 3,
-            threshold : Number(0.1)
+            limit_neighbours : LIMIT_NEIGHBOURS,
+            limit_top_artists : LIMIT_TOPARTISTS,
+            limit_recommendations : LIMIT_RECOMMENDATIONS,
+            threshold : THRESHOLD
         }, COLOURS);
     });
 };

@@ -18,6 +18,7 @@
             "exclude_matches" : [],
             "css" :
             [
+                "css/jquery-ui/jquery-ui-1.10.2.custom.css",
                 "css/infovis/infovis.whitebox.cf.css",
                 "css/infovis/colours.active.css",
                 "css/infovis/colours.clicked.css",
@@ -26,7 +27,8 @@
             ],
             "js" :
             [
-                "js/lib/jquery/jquery-1.8.3.js",
+                "js/lib/jquery/jquery-1.9.1.js",
+                "js/lib/jquery/jquery-ui-1.10.2.custom.min.js",
                 "js/lib/purl/purl.js",
                 "js/lib/d3/d3.v3.min.js",
                 "js/lib/spin/spin.min.js",
@@ -53,5 +55,13 @@
         "default_title": "SoundSuggest"
     },
     "content_security_policy" : "script-src 'self' https://ws.audioscrobbler.com/2.0/; object-src 'self'",
-    "web_accessible_resources": []
+    "web_accessible_resources" :
+    [
+        "data/img/jquery-ui/ui-bg_highlight-soft_100_eeeeee_1x100.png",
+        "data/img/jquery-ui/ui-bg_glass_100_f6f6f6_1x400.png",
+        "data/img/jquery-ui/ui-bg_gloss-wave_35_f6a828_500x100.png",
+        "data/img/jquery-ui/ui-bg_glass_100_fdf5ce_1x400.png",
+        "data/img/jquery-ui/ui-bg_glass_65_ffffff_1x400.png",
+        "data/img/jquery-ui/"
+    ]
 }

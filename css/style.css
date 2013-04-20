@@ -250,4 +250,10 @@ a.soundsuggest-button:visited {
 
 .settings-table-row-info {
     font-style: italic;
+    padding-right: 50px;
+    width: 350px;
+}
+
+.settings-table-row-slider {
+    width: 100px;
 }
