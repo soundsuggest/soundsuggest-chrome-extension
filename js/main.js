@@ -547,7 +547,7 @@ open_settings = function () {
             .append(html);
         
         jQuery("#soundsuggest-settings-slider-neighbours").slider({
-            value:10,
+            value:LIMIT_NEIGHBOURS,
             min: 5,
             max: 50,
             step: 5,
@@ -558,7 +558,7 @@ open_settings = function () {
         });
     
         jQuery("#soundsuggest-settings-slider-topartists").slider({
-            value:10,
+            value: LIMIT_TOPARTISTS,
             min: 5,
             max: 50,
             step: 5,
@@ -569,7 +569,7 @@ open_settings = function () {
         });
         
         jQuery("#soundsuggest-settings-slider-recommendations").slider({
-            value:10,
+            value: LIMIT_RECOMMENDATIONS,
             min: 5,
             max: 50,
             step: 5,
@@ -580,7 +580,7 @@ open_settings = function () {
         });
         
         jQuery("#soundsuggest-settings-slider-threshold").slider({
-            value:0.1,
+            value: THRESHOLD,
             min: 0.1,
             max: 1,
             step: 0.1,
