@@ -1,0 +1,125 @@
+.user.blue-mouseover:hover {
+    color: #1f77b4;
+}
+
+.user.green-mouseover:hover {
+    color: #67b77e;
+}
+
+.user.red-mouseover:hover {
+    color: #d62728;
+}
+
+.node.red-mouseover:hover {
+    fill: #d62728;
+}
+
+.node.blue-mouseover:hover {
+    fill: #1f77b4;
+}
+
+.node.green-mouseover:hover {
+    fill: #67b77e;
+}
+
+.node.target.red-mouseover {
+    fill: #d62728 !important;
+}
+
+.node.source.red-mouseover {
+    fill: #d62728 !important;
+}
+
+.link.source.red-mouseover {
+    stroke: #d62728;
+}
+
+.link.target.red-mouseover {
+    stroke: #d62728;
+}
+
+.node-item-mouseover.red-mouseover {
+    fill: #d62728;
+}
+
+.user-item-mouseover.red-mouseover {
+    color: #d62728;
+}
+
+.node.target.blue-mouseover {
+    fill: #1f77b4 !important;
+}
+
+.node.source.blue-mouseover {
+    fill: #1f77b4 !important;
+}
+
+.link.source.blue-mouseover {
+    stroke: #1f77b4;
+}
+
+.link.target.blue-mouseover {
+    stroke: #1f77b4;
+}
+
+.node-item-mouseover.blue-mouseover {
+    fill: #1f77b4;
+}
+
+.user-item-mouseover.blue-mouseover {
+    color: #1f77b4;
+}
+
+.node.target.green-mouseover {
+    fill: #67b77e !important;
+}
+
+.node.source.green-mouseover {
+    fill: #67b77e !important;
+}
+
+.link.source.green-mouseover {
+    stroke: #67b77e;
+}
+
+.link.target.green-mouseover {
+    stroke: #67b77e;
+}
+
+.node-item-mouseover.green-mouseover {
+    fill: #67b77e;
+}
+
+.user-item-mouseover.green-mouseover {
+    color: #67b77e;
+}
+
+#users .user.blue-mouseover:hover {
+    background: #1f77b4;;
+    color: #fff;
+}
+
+#users .user.red-mouseover:hover {
+    background: #d62728;;
+    color: #fff;
+}
+
+#users .user.green-mouseover:hover {
+    background: #67b77e;;
+    color: #fff;
+}
+
+#users .user-item-mouseover.red-mouseover {
+    background: #d62728;
+    color: #fff;
+}
+
+#users .user-item-mouseover.blue-mouseover {
+    background: #1f77b4;
+    color: #fff;
+}
+
+#users .user-item-mouseover.green-mouseover {
+    background: #67b77e;
+    color: #fff;
+}

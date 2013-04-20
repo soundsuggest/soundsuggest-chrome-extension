@@ -1,0 +1,38 @@
+.user-activeuser.green-active {
+    color: #67b77e;
+}
+
+.user-activeuser.blue-active {
+    color: #1f77b4;
+}
+
+.user-activeuser.red-active {
+    color: #d62728;
+}
+
+.link-activeuser.blue-active {
+    stroke: #1f77b4;
+}
+
+.link-activeuser.green-active {
+    stroke: #67b77e;
+}
+
+.link-activeuser.red-active {
+    stroke: #d62728;
+}
+
+#users .user-activeuser.red-active {
+    background-color: #d62728;
+    color: #eee;
+}
+
+#users .user-activeuser.green-active {
+    background-color: #67b77e;
+    color: #eee;
+}
+
+#users .user-activeuser.blue-active {
+    background-color: #1f77b4;
+    color: #eee;
+}
