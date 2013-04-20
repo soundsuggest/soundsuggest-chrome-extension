@@ -432,7 +432,7 @@ open_settings = function () {
         html += '   <table>';
         html += '       <tr>';
         html += '           <td class="settings-table-row-info">';
-        html += '               Number of neighbours : <strong id="soundsuggest-amount-neighbours"></strong>';
+        html += '               Number of neighbours : <strong id="soundsuggest-amount-neighbours">' + LIMIT_NEIGHBOURS + '</strong>';
         html += '           </td>';
         html += '           <td class="settings-table-row-slider">';
         html += '               <div id="soundsuggest-settings-slider-neighbours"></div>';
@@ -440,7 +440,7 @@ open_settings = function () {
         html += '       </tr>';
         html += '       <tr>';
         html += '           <td class="settings-table-row-info">';
-        html += '               Number of top artists from the active user\'s profile : <strong id="soundsuggest-amount-topartists"></strong>';
+        html += '               Number of top artists from the active user\'s profile : <strong id="soundsuggest-amount-topartists">' + LIMIT_TOPARTISTS + '</strong>';
         html += '           </td>';
         html += '           <td class="settings-table-row-slider">';
         html += '               <div id="soundsuggest-settings-slider-topartists"></div>';
@@ -448,7 +448,7 @@ open_settings = function () {
         html += '       </tr>';
         html += '       <tr>';
         html += '           <td class="settings-table-row-info">';
-        html += '               Number of recommendations : <strong id="soundsuggest-amount-recommendations"></strong>';
+        html += '               Number of recommendations : <strong id="soundsuggest-amount-recommendations">' + LIMIT_RECOMMENDATIONS + '</strong>';
         html += '           </td>';
         html += '           <td class="settings-table-row-slider">';
         html += '               <div id="soundsuggest-settings-slider-recommendations"></div>';
@@ -456,7 +456,7 @@ open_settings = function () {
         html += '       </tr>';
         html += '       <tr>';
         html += '           <td class="settings-table-row-info">';
-        html += '               Threshold : <strong id="soundsuggest-amount-threshold"></strong>';
+        html += '               Threshold : <strong id="soundsuggest-amount-threshold">' + THRESHOLD + '</strong>';
         html += '           </td>';
         html += '           <td class="settings-table-row-slider">';
         html += '               <div id="soundsuggest-settings-slider-threshold"></div>';
