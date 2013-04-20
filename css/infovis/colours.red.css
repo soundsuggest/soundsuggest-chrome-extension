@@ -14,15 +14,19 @@
     stroke: #d62728;
 }
 
-.node.target.red-clicked.red-mouseover {
+.node.target.red-mouseover {
     fill: #d62728 !important;
 }
 
-.link.source.red-clicked.red-mouseover {
+.node.source.red-mouseover {
+    fill: #d62728 !important;
+}
+
+.link.source.red-mouseover {
     stroke: #d62728;
 }
 
-.link.target.red-clicked.red-mouseover {
+.link.target.red-mouseover {
     stroke: #d62728;
 }
 

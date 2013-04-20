@@ -103,7 +103,7 @@ loadVisualization = function() {
         WHITEBOX.setColours({
             active      : 'green',
             mouseover   : 'blue',
-            clicked     : 'green'
+            clicked     : 'red'
         });
         WHITEBOX.setData(data);
         WHITEBOX.create();

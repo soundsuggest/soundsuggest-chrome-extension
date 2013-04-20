@@ -14,15 +14,19 @@
     stroke: #1f77b4;
 }
 
-.node.target.blue-clicked.blue-mouseover {
+.node.target.blue-mouseover {
     fill: #1f77b4 !important;
 }
 
-.link.source.blue-clicked.blue-mouseover {
+.node.source.blue-mouseover {
+    fill: #1f77b4 !important;
+}
+
+.link.source.blue-mouseover {
     stroke: #1f77b4;
 }
 
-.link.target.blue-clicked.blue-mouseover {
+.link.target.blue-mouseover {
     stroke: #1f77b4;
 }
 
@@ -79,6 +83,6 @@
 }
 
 #users .user-item-clicked.blue-clicked {
-    background: #1f77b4;;
+    background: #1f77b4;
     color: #fff;
 }

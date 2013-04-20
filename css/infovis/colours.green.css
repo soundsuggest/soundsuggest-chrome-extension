@@ -14,15 +14,19 @@
     stroke: #67b77e;
 }
 
-node.target.green-mouseover.green-clicked{
+.node.target.green-mouseover {
     fill: #67b77e !important;
 }
 
-.link.source.green-clicked.green-mouseover {
+.node.source.green-mouseover {
+    fill: #67b77e !important;
+}
+
+.link.source.green-mouseover {
     stroke: #67b77e;
 }
 
-.link.target.green-clicked.green-mouseover {
+.link.target.green-mouseover {
     stroke: #67b77e;
 }
 
@@ -79,6 +83,6 @@ node.target.green-mouseover.green-clicked{
 }
 
 #users .user-item-clicked.green-clicked {
-    background: #67b77e;;
+    background: #67b77e;
     color: #fff;
 }
