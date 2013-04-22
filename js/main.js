@@ -615,7 +615,7 @@ open_settings = function () {
         jQuery("#soundsuggest-settings-slider-threshold").slider({
             value: THRESHOLD,
             min: 0.1,
-            max: 1,
+            max: 0.9,
             step: 0.1,
             slide: function(event, ui) {
                 jQuery('#soundsuggest-amount-threshold').html(ui.value);
