@@ -32,7 +32,7 @@ var DEBUG           = false;
 var DATA_SETTINGS   = {
     limit_neighbours : 10,
     limit_recommendations : 10,
-    limit_similar : 10,
+    limit_similar : 5,
     limit_top_artists : 10,
     threshold : Number(0.1)
 };
@@ -229,7 +229,8 @@ function lastfmAction(action, request, sendResponse) {
             value1  : request.params.value1,
             value2  : request.params.value2,
             type1   : request.params.type1,
-            type2   : request.params.type2
+            type2   : request.params.type2,
+            limit   : request.params.limit || 5
         },
         {
             success: function(data) {

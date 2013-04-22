@@ -120,56 +120,18 @@ createLayout = function() {
  * Loads the JSON data and instantiates a Whitebox object that
  * creates the visualization.
  * </p>
+ * <p>
+ * If no settings are given, retrieve the stored settings;
+ * if no settings have been stored, use the defaults. Else,
+ * use the given settings.
+ * </p>
  * @param {Object} settings
  * @param {Object} colours
  * @returns {undefined}
  */
 loadVisualization = function(settings, colours) {
     if (DEBUG) console.log("main.js#loadVisualization");
-    if (! colours) {
-        chrome.extension.sendMessage({
-            action: 'storage.get',
-            params: {
-                key : 'soundsuggest-colours-' + USERNAME
-            }
-        },
-        function(a) {
-            COLOURS = a.value || COLOURS;
-            
-            chrome.extension.sendMessage({
-                action: 'storage.get',
-                params: {
-                    key : 'soundsuggest_settings_data_' + USERNAME
-                }
-            },
-            function(a) {
-                
-                var settings_data = a.value;
-                if (settings_data) {
-                    LIMIT_NEIGHBOURS        = settings_data.limit_neighbours || LIMIT_NEIGHBOURS;
-                    LIMIT_TOPARTISTS        = settings_data.limit_top_artists || LIMIT_TOPARTISTS;
-                    LIMIT_RECOMMENDATIONS   = settings_data.limit_recommendations || LIMIT_RECOMMENDATIONS;
-                    THRESHOLD               = settings_data.threshold || THRESHOLD;
-                }
-                
-                chrome.extension.sendMessage({
-                    action: 'lastfm.recommender.load',
-                    params: {
-                        username: USERNAME,
-                        settings : settings || {}
-                    }
-                },
-                function(data) {
-                    SPINNER.stop();
-                    WHITEBOX = new Whitebox();
-                    WHITEBOX.setColours(COLOURS);
-                    WHITEBOX.setData(data);
-                    WHITEBOX.create();
-                    DATA_LOADED = true;
-                });
-            });
-        });
-    } else {
+    if (! settings) {
         chrome.extension.sendMessage({
             action: 'storage.get',
             params: {
@@ -187,20 +149,70 @@ loadVisualization = function(settings, colours) {
             chrome.extension.sendMessage({
                 action: 'lastfm.recommender.load',
                 params: {
-                    username : USERNAME,
-                    settings : settings || {}
+                    username: USERNAME,
+                    settings : {
+                        limit_neighbours : LIMIT_NEIGHBOURS,
+                        limit_top_artists : LIMIT_TOPARTISTS,
+                        limit_recommendations : LIMIT_RECOMMENDATIONS,
+                        threshold : THRESHOLD
+                    }
                 }
             },
             function(data) {
-                SPINNER.stop();
-                WHITEBOX = new Whitebox();
-                WHITEBOX.setColours(colours);
-                WHITEBOX.setData(data);
-                WHITEBOX.create();
-                DATA_LOADED = true;
+                loadColours(data, colours);
             });
         });
+    } else {
+        chrome.extension.sendMessage({
+            action: 'lastfm.recommender.load',
+            params: {
+                username: USERNAME,
+                settings : settings
+            }
+        },
+        function(data) {
+            loadColours(data, colours);
+        });
     }
+};
+
+/**
+ * If no colour settings are given, load the settings from the stored settings,
+ * or use defaults, if nothing was stored. Else, use the given settings.
+ * @param {type} data
+ * @param {type} colours
+ * @returns {undefined}
+ */
+loadColours = function (data, colours) {
+    if (! colours) {
+        chrome.extension.sendMessage({
+            action: 'storage.get',
+            params: {
+                key : 'soundsuggest-colours-' + USERNAME
+            }
+        },
+        function(a) {
+            loadWhitebox(data, a.value);
+        });
+    } else {
+        loadWhitebox(data, colours);
+    }
+};
+
+/**
+ * Creates the Whitebox object.
+ * @param {type} data
+ * @param {type} colours
+ * @returns {undefined}
+ */
+loadWhitebox = function (data, colours) {
+    COLOURS = colours || COLOURS;
+    SPINNER.stop();
+    WHITEBOX = new Whitebox();
+    WHITEBOX.setColours(COLOURS);
+    WHITEBOX.setData(data);
+    WHITEBOX.create();
+    DATA_LOADED = true;
 };
 
 /**
