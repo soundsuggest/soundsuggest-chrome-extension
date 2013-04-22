@@ -1,101 +1,101 @@
-.link-item-clicked.red-clicked {
+svg .link-item-clicked.red-clicked {
     stroke: #d62728;
 }
 
-.node-item-clicked.red-clicked {
+svg .node-item-clicked.red-clicked {
     fill: #d62728 !important;
 }
 
-.user-item-clicked.red-clicked {
+svg .user-item-clicked.red-clicked {
     color: #d62728;
 }
 
-.user-clicked.red-clicked {
+svg .user-clicked.red-clicked {
     color: #d62728;
 }
 
-.link-user-clicked.red-clicked {
+svg .link-user-clicked.red-clicked {
     stroke: #d62728;
 }
 
-.node-user-clicked.red-clicked {
+svg .node-user-clicked.red-clicked {
     fill: #d62728 !important;
 }
 
-.link-item-clicked.blue-clicked {
+svg .link-item-clicked.blue-clicked {
     stroke: #1f77b4;
 }
 
-.node-item-clicked.blue-clicked {
+svg .node-item-clicked.blue-clicked {
     fill: #1f77b4 !important;
 }
 
-.user-item-clicked.blue-clicked {
+svg .user-item-clicked.blue-clicked {
     color: #1f77b4;
 }
 
-.user-clicked.blue-clicked {
+svg .user-clicked.blue-clicked {
     color: #1f77b4;
 }
 
-.link-user-clicked.blue-clicked {
+svg .link-user-clicked.blue-clicked {
     stroke: #1f77b4;
 }
 
-.node-user-clicked.blue-clicked {
+svg .node-user-clicked.blue-clicked {
     fill: #1f77b4 !important;
 }
 
-.link-item-clicked.green-clicked {
+svg .link-item-clicked.green-clicked {
     stroke: #67b77e;
 }
 
-.node-item-clicked.green-clicked {
+svg .node-item-clicked.green-clicked {
     fill: #67b77e !important;
 }
 
-.user-item-clicked.green-clicked {
+svg .user-item-clicked.green-clicked {
     color: #67b77e;
 }
 
-.user-clicked.green-clicked {
+svg .user-clicked.green-clicked {
     color: #67b77e;
 }
 
-.link-user-clicked.green-clicked {
+svg .link-user-clicked.green-clicked {
     stroke: #67b77e;
 }
 
-.node-user-clicked.green-clicked {
+svg .node-user-clicked.green-clicked {
     fill: #67b77e !important;
 }
 
 #users .user-clicked.red-clicked {
-    background: #d62728;;
+    background-color: #d62728;;
     color: #fff;
 }
 
 #users .user-clicked.blue-clicked {
-    background: #1f77b4;;
+    background-color: #1f77b4;;
     color: #fff;
 }
 
 #users .user-clicked.green-clicked {
-    background: #67b77e;;
+    background-color: #67b77e;;
     color: #fff;
 }
 
 #users .user-item-clicked.red-clicked {
-    background: #d62728;;
+    background-color: #d62728;;
     color: #fff;
 }
 
 #users .user-item-clicked.blue-clicked {
-    background: #1f77b4;
+    background-color: #1f77b4;
     color: #fff;
 }
 
 #users .user-item-clicked.green-clicked {
-    background: #67b77e;
+    background-color: #67b77e;
     color: #fff;
 }
