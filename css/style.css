@@ -90,13 +90,13 @@ root {
     margin-left: 10px;
     width: 212px;
     float: left;
-    height: 448px;
-    overflow-y: scroll;
 }
 
 #item-info .item-info {
     padding: 5px 5px 5px 5px;
     border: 1px solid #eee;
+    height: 448px;
+    overflow-y: scroll;
 }
 
 #item-info .item-info h3 {
@@ -117,13 +117,13 @@ root {
     margin-left: 10px;
     width: 212px;
     float: left;
-    height: 448px;
-    overflow-y: scroll;
 }
 
 #user-info .user-info {
     padding: 5px 5px 5px 5px;
     border: 1px solid #eee;
+    height: 448px;
+    overflow-y: scroll;
 }
 
 #user-info .user-info h3 {
