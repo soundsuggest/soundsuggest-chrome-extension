@@ -75,6 +75,8 @@ root {
     margin-left: 10px;
     /* width = (total_width - 500 - 2 * (margin-left + borderwidth * 2 + padding * 2)) / 2 */
     width: 202px;
+    height: 448px;
+    overflow-y: scroll;
     float: left;
     border: 1px solid #eee;
     padding: 5px;
@@ -88,6 +90,8 @@ root {
     margin-left: 10px;
     width: 212px;
     float: left;
+    height: 448px;
+    overflow-y: scroll;
 }
 
 #item-info .item-info {
@@ -113,6 +117,8 @@ root {
     margin-left: 10px;
     width: 212px;
     float: left;
+    height: 448px;
+    overflow-y: scroll;
 }
 
 #user-info .user-info {

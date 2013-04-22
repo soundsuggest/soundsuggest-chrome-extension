@@ -35,7 +35,7 @@ path.arc {
 .link-activeuser {
     fill: none;
     stroke-opacity: 1;
-    stroke-width: 2px;
+    /*stroke-width: 2px;*/
 }
 
 .link.source, .link.target {

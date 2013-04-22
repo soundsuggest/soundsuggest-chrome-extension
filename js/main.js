@@ -180,7 +180,7 @@ loadVisualization = function(settings, colours) {
             var settings_data = a.value;
             if (settings_data) {
                 LIMIT_NEIGHBOURS        = settings_data.limit_neighbours || LIMIT_NEIGHBOURS;
-                LIMIT_TOPARTISTS        = settings_data.limit_topartists || LIMIT_TOPARTISTS;
+                LIMIT_TOPARTISTS        = settings_data.limit_top_artists || LIMIT_TOPARTISTS;
                 LIMIT_RECOMMENDATIONS   = settings_data.limit_recommendations || LIMIT_RECOMMENDATIONS;
                 THRESHOLD               = settings_data.threshold || THRESHOLD;
             }
