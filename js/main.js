@@ -135,37 +135,70 @@ loadVisualization = function(settings, colours) {
         },
         function(a) {
             COLOURS = a.value || COLOURS;
+            
+            chrome.extension.sendMessage({
+                action: 'storage.get',
+                params: {
+                    key : 'soundsuggest_settings_data_' + USERNAME
+                }
+            },
+            function(a) {
+                
+                var settings_data = a.value;
+                if (settings_data) {
+                    LIMIT_NEIGHBOURS        = settings_data.limit_neighbours || LIMIT_NEIGHBOURS;
+                    LIMIT_TOPARTISTS        = settings_data.limit_top_artists || LIMIT_TOPARTISTS;
+                    LIMIT_RECOMMENDATIONS   = settings_data.limit_recommendations || LIMIT_RECOMMENDATIONS;
+                    THRESHOLD               = settings_data.threshold || THRESHOLD;
+                }
+                
+                chrome.extension.sendMessage({
+                    action: 'lastfm.recommender.load',
+                    params: {
+                        username: USERNAME,
+                        settings : settings || {}
+                    }
+                },
+                function(data) {
+                    SPINNER.stop();
+                    WHITEBOX = new Whitebox();
+                    WHITEBOX.setColours(COLOURS);
+                    WHITEBOX.setData(data);
+                    WHITEBOX.create();
+                    DATA_LOADED = true;
+                });
+            });
+        });
+    } else {
+        chrome.extension.sendMessage({
+            action: 'storage.get',
+            params: {
+                key : 'soundsuggest_settings_data_' + USERNAME
+            }
+        },
+        function(a) {
+            var settings_data = a.value;
+            if (settings_data) {
+                LIMIT_NEIGHBOURS        = settings_data.limit_neighbours || LIMIT_NEIGHBOURS;
+                LIMIT_TOPARTISTS        = settings_data.limit_topartists || LIMIT_TOPARTISTS;
+                LIMIT_RECOMMENDATIONS   = settings_data.limit_recommendations || LIMIT_RECOMMENDATIONS;
+                THRESHOLD               = settings_data.threshold || THRESHOLD;
+            }
             chrome.extension.sendMessage({
                 action: 'lastfm.recommender.load',
                 params: {
-                    username: USERNAME,
+                    username : USERNAME,
                     settings : settings || {}
                 }
             },
             function(data) {
                 SPINNER.stop();
                 WHITEBOX = new Whitebox();
-                WHITEBOX.setColours(COLOURS);
+                WHITEBOX.setColours(colours);
                 WHITEBOX.setData(data);
                 WHITEBOX.create();
                 DATA_LOADED = true;
             });
-        });
-    } else {
-        chrome.extension.sendMessage({
-            action: 'lastfm.recommender.load',
-            params: {
-                username : USERNAME,
-                settings : settings || {}
-            }
-        },
-        function(data) {
-            SPINNER.stop();
-            WHITEBOX = new Whitebox();
-            WHITEBOX.setColours(colours);
-            WHITEBOX.setData(data);
-            WHITEBOX.create();
-            DATA_LOADED = true;
         });
     }
 };
