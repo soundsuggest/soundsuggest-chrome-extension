@@ -47,27 +47,27 @@ svg .node-user-clicked.blue-clicked {
 }
 
 svg .link-item-clicked.green-clicked {
-    stroke: #67b77e;
+    stroke: #318a16;
 }
 
 svg .node-item-clicked.green-clicked {
-    fill: #67b77e !important;
+    fill: #318a16 !important;
 }
 
 svg .user-item-clicked.green-clicked {
-    color: #67b77e;
+    color: #318a16;
 }
 
 svg .user-clicked.green-clicked {
-    color: #67b77e;
+    color: #318a16;
 }
 
 svg .link-user-clicked.green-clicked {
-    stroke: #67b77e;
+    stroke: #318a16;
 }
 
 svg .node-user-clicked.green-clicked {
-    fill: #67b77e !important;
+    fill: #318a16 !important;
 }
 
 #users .user-clicked.red-clicked {
@@ -81,7 +81,7 @@ svg .node-user-clicked.green-clicked {
 }
 
 #users .user-clicked.green-clicked {
-    background-color: #67b77e;;
+    background-color: #318a16;;
     color: #fff;
 }
 
@@ -96,6 +96,6 @@ svg .node-user-clicked.green-clicked {
 }
 
 #users .user-item-clicked.green-clicked {
-    background-color: #67b77e;
+    background-color: #318a16;
     color: #fff;
 }

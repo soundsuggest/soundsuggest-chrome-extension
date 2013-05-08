@@ -3,9 +3,9 @@
     Created on : 2-apr-2013, 12:00:59
     Author     : Joris Schelfaut
     Description:
-        This stylesheet corresponds to the infovis.whitebox.cf.js JavaScript script.
-        To create a custom stylesheet, add this file as an import in the
-        header of the custom CSS stylesheet.
+        This stylesheet corresponds to the infovis.whitebox.cf.js
+        JavaScript script. To create a custom stylesheet, add this file
+        as an import in the header of the custom CSS stylesheet.
 */
 
 .user {
@@ -27,7 +27,8 @@ path.arc {
 
 .link {
     fill: none;
-    stroke: #666699;
+    /*stroke: #666699;*/
+    stroke: #777;
     stroke-opacity: .4;
     pointer-events: none;
 }
@@ -40,17 +41,17 @@ path.arc {
 
 .link.source, .link.target {
     stroke-opacity: 1;
-    stroke-width: 2px;
+    stroke-width: 1.5px;
 }
 
 .link-item-clicked {
     stroke-opacity: 1;
-    stroke-width: 2px;
+    stroke-width: 1.5px;
 }
 
 .link-user-clicked {
     stroke-opacity: 1;
-    stroke-width: 2px;
+    stroke-width: 1.5px;
 }
 
 button {

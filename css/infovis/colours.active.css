@@ -1,5 +1,5 @@
 svg .user-activeuser.green-active {
-    color: #67b77e;
+    color: #318a16;
 }
 
 svg .user-activeuser.blue-active {
@@ -15,7 +15,7 @@ svg .link-activeuser.blue-active {
 }
 
 svg .link-activeuser.green-active {
-    stroke: #67b77e;
+    stroke: #318a16;
 }
 
 svg .link-activeuser.red-active {
@@ -28,7 +28,7 @@ svg .link-activeuser.red-active {
 }
 
 #users .user-activeuser.green-active {
-    background-color: #67b77e;
+    background-color: #318a16;
     color: #eee;
 }
 

@@ -3,7 +3,7 @@ svg .user.blue-mouseover:hover {
 }
 
 svg .user.green-mouseover:hover {
-    color: #67b77e;
+    color: #318a16;
 }
 
 svg .user.red-mouseover:hover {
@@ -19,7 +19,7 @@ svg .node.blue-mouseover:hover {
 }
 
 svg .node.green-mouseover:hover {
-    fill: #67b77e;
+    fill: #318a16;
 }
 
 svg .node.target.red-mouseover {
@@ -71,27 +71,27 @@ svg .user-item-mouseover.blue-mouseover {
 }
 
 svg .node.target.green-mouseover {
-    fill: #67b77e !important;
+    fill: #318a16 !important;
 }
 
 svg .node.source.green-mouseover {
-    fill: #67b77e !important;
+    fill: #318a16 !important;
 }
 
 svg .link.source.green-mouseover {
-    stroke: #67b77e;
+    stroke: #318a16;
 }
 
 svg .link.target.green-mouseover {
-    stroke: #67b77e;
+    stroke: #318a16;
 }
 
 svg .node-item-mouseover.green-mouseover {
-    fill: #67b77e;
+    fill: #318a16;
 }
 
 svg .user-item-mouseover.green-mouseover {
-    color: #67b77e;
+    color: #318a16;
 }
 
 #users .user.blue-mouseover:hover {
@@ -105,7 +105,7 @@ svg .user-item-mouseover.green-mouseover {
 }
 
 #users .user.green-mouseover:hover {
-    background-color: #67b77e;;
+    background-color: #318a16;;
     color: #fff;
 }
 
@@ -120,6 +120,6 @@ svg .user-item-mouseover.green-mouseover {
 }
 
 #users .user-item-mouseover.green-mouseover {
-    background-color: #67b77e;
+    background-color: #318a16;
     color: #fff;
 }

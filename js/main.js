@@ -503,14 +503,14 @@ open_settings = function () {
         html += '               <div id="soundsuggest-settings-slider-recommendations"></div>';
         html += '           </td>';
         html += '       </tr>';
-        html += '       <tr>';
+        /*html += '       <tr>';
         html += '           <td class="settings-table-row-info">';
         html += '               Threshold : <strong id="soundsuggest-amount-threshold">' + THRESHOLD + '</strong>';
         html += '           </td>';
         html += '           <td class="settings-table-row-slider">';
         html += '               <div id="soundsuggest-settings-slider-threshold"></div>';
         html += '           </td>';
-        html += '       </tr>';
+        html += '       </tr>';*/
         html += '   </table>';
         html += '</div>';
         return html;
@@ -624,7 +624,7 @@ open_settings = function () {
             }
         });
         
-        jQuery("#soundsuggest-settings-slider-threshold").slider({
+        /*jQuery("#soundsuggest-settings-slider-threshold").slider({
             value: THRESHOLD,
             min: 0.1,
             max: 0.9,
@@ -633,7 +633,7 @@ open_settings = function () {
                 jQuery('#soundsuggest-amount-threshold').html(ui.value);
                 THRESHOLD = ui.value;
             }
-        });
+        });*/
         
         d3.select('#soundsuggest-settings-save')
             .on('click', save_settings);
