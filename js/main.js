@@ -42,15 +42,21 @@ var TOKEN;
 var DEBUG = false;
 
 /**
- * The colours of each element in the visualization.
+ * The colours of each element in the visualization,
+ * and the tension of the edge bundling.
  * @type Object
  */
-var COLOURS = {
+var LAYOUT = {
     active      : 'green',
     mouseover   : 'blue',
-    clicked     : 'red'
+    clicked     : 'red',
+    tension     : Number(0.85)
 };
 
+/**
+ * Temporary cashing of data when changing layouts, not data.
+ * @type data
+ */
 var DATA = {};
 
 var LIMIT_NEIGHBOURS        = 10;
@@ -128,10 +134,10 @@ createLayout = function() {
  * use the given settings.
  * </p>
  * @param {Object} settings
- * @param {Object} colours
+ * @param {Object} layout
  * @returns {undefined}
  */
-loadVisualization = function(settings, colours) {
+loadVisualization = function(settings, layout) {
     if (DEBUG) console.log("main.js#loadVisualization");
     if (! settings) {
         chrome.extension.sendMessage({
@@ -161,7 +167,7 @@ loadVisualization = function(settings, colours) {
                 }
             },
             function(data) {
-                loadColours(data, colours);
+                loadLayout(data, layout);
             });
         });
     } else {
@@ -173,50 +179,56 @@ loadVisualization = function(settings, colours) {
             }
         },
         function(data) {
-            loadColours(data, colours);
+            loadLayout(data, layout);
         });
     }
 };
 
-redrawVisualization = function(colours) {
-    loadWhitebox(DATA, colours);
+/**
+ * Uses cashed data to redraw the visualization with given layout parameters.
+ * @param {type} layout
+ * @returns {undefined}
+ */
+redrawVisualization = function(layout) {
+    loadWhitebox(DATA, layout);
+    return;
 };
 
 /**
  * If no colour settings are given, load the settings from the stored settings,
  * or use defaults, if nothing was stored. Else, use the given settings.
  * @param {type} data
- * @param {type} colours
+ * @param {type} layout
  * @returns {undefined}
  */
-loadColours = function (data, colours) {
-    if (! colours) {
+loadLayout = function (data, layout) {
+    if (! layout) {
         chrome.extension.sendMessage({
             action: 'storage.get',
             params: {
-                key : 'soundsuggest-colours-' + USERNAME
+                key : 'soundsuggest-layout-' + USERNAME
             }
         },
         function(a) {
             loadWhitebox(data, a.value);
         });
     } else {
-        loadWhitebox(data, colours);
+        loadWhitebox(data, layout);
     }
 };
 
 /**
  * Creates the Whitebox object.
  * @param {type} data
- * @param {type} colours
+ * @param {type} layout
  * @returns {undefined}
  */
-loadWhitebox = function (data, colours) {
-    COLOURS = colours || COLOURS;
+loadWhitebox = function (data, layout) {
+    LAYOUT = layout || LAYOUT;
     DATA = data || DATA;
     SPINNER.stop();
     WHITEBOX = new Whitebox();
-    WHITEBOX.setColours(COLOURS);
+    WHITEBOX.setLayout(LAYOUT);
     WHITEBOX.setData(DATA);
     WHITEBOX.create();
     DATA_LOADED = true;
@@ -326,6 +338,7 @@ startSpinner = function() {
  * </p>
  * @param {Event} e
  * @returns {undefined}
+ * @deprecated not used, unresolved errors.
  */
 function addRecommendation(e) {
     if (DEBUG) console.log("main.js#addRecommendation");
@@ -519,23 +532,15 @@ open_settings = function () {
         html += '               <div id="soundsuggest-settings-slider-recommendations"></div>';
         html += '           </td>';
         html += '       </tr>';
-        /*html += '       <tr>';
-        html += '           <td class="settings-table-row-info">';
-        html += '               Threshold : <strong id="soundsuggest-amount-threshold">' + THRESHOLD + '</strong>';
-        html += '           </td>';
-        html += '           <td class="settings-table-row-slider">';
-        html += '               <div id="soundsuggest-settings-slider-threshold"></div>';
-        html += '           </td>';
-        html += '       </tr>';*/
         html += '   </table>';
         html += '</div>';
         return html;
     }
     
-    function settings_colours() {
+    function settings_layout() {
         var html = '';
         html += '<div id="soundsuggest-settings-colours">';
-        html += '   <h4>Colours</h4>';
+        html += '   <h4>Layout</h4>';
         html += '   <table>';
         html += '   <tr>';
         html += '       <td class="settings-table-row-info">';
@@ -543,9 +548,9 @@ open_settings = function () {
         html += '       </td>';
         html += '       <td>';
         html += '           <select id="colour-select-active-user">';
-        html += '               <option value="blue" ' + ((COLOURS.active === 'blue')?'selected':'') + '>Blue</option>';
-        html += '               <option value="green" ' + ((COLOURS.active === 'green')?'selected':'') + '>Green</option>';
-        html += '               <option value="red" ' + ((COLOURS.active === 'red')?'selected':'') + '>Red</option>';
+        html += '               <option value="blue" ' + ((LAYOUT.active === 'blue')?'selected':'') + '>Blue</option>';
+        html += '               <option value="green" ' + ((LAYOUT.active === 'green')?'selected':'') + '>Green</option>';
+        html += '               <option value="red" ' + ((LAYOUT.active === 'red')?'selected':'') + '>Red</option>';
         html += '           </select>';
         html += '       </td>';
         html += '   </tr>';
@@ -555,9 +560,9 @@ open_settings = function () {
         html += '       </td>';
         html += '       <td>';
         html += '           <select id="colour-select-clicked">';
-        html += '               <option value="blue" ' + ((COLOURS.clicked === 'blue')?'selected':'') + '>Blue</option>';
-        html += '               <option value="green" ' + ((COLOURS.clicked === 'green')?'selected':'') + '>Green</option>';
-        html += '               <option value="red" ' + ((COLOURS.clicked === 'red')?'selected':'') + '>Red</option>';
+        html += '               <option value="blue" ' + ((LAYOUT.clicked === 'blue')?'selected':'') + '>Blue</option>';
+        html += '               <option value="green" ' + ((LAYOUT.clicked === 'green')?'selected':'') + '>Green</option>';
+        html += '               <option value="red" ' + ((LAYOUT.clicked === 'red')?'selected':'') + '>Red</option>';
         html += '           </select>';
         html += '       </td>';
         html += '   </tr>';
@@ -567,12 +572,20 @@ open_settings = function () {
         html += '       </td>';
         html += '       <td>';
         html += '           <select id="colour-select-mouseover">';
-        html += '               <option value="blue" ' + ((COLOURS.mouseover === 'blue')?'selected':'') + '>Blue</option>';
-        html += '               <option value="green" ' + ((COLOURS.mouseover === 'green')?'selected':'') + '>Green</option>';
-        html += '               <option value="red" ' + ((COLOURS.mouseover === 'red')?'selected':'') + '>Red</option>';
+        html += '               <option value="blue" ' + ((LAYOUT.mouseover === 'blue')?'selected':'') + '>Blue</option>';
+        html += '               <option value="green" ' + ((LAYOUT.mouseover === 'green')?'selected':'') + '>Green</option>';
+        html += '               <option value="red" ' + ((LAYOUT.mouseover === 'red')?'selected':'') + '>Red</option>';
         html += '           </select>';
         html += '       </td>';
         html += '   </tr>';
+        html += '       <tr>';
+        html += '           <td class="settings-table-row-info">';
+        html += '               Tension : <strong id="soundsuggest-amount-tension">' + LAYOUT.tension + '</strong>';
+        html += '           </td>';
+        html += '           <td class="settings-table-row-slider">';
+        html += '               <div id="soundsuggest-settings-slider-tension"></div>';
+        html += '           </td>';
+        html += '       </tr>';
         html += '   </table>';
         html += '</div>';
         return html;
@@ -599,7 +612,7 @@ open_settings = function () {
         html += '       <div id="soundsuggest-settings-content">';
         html += '           <p>The current settings are selected. Change them as desired here :</p>';
         html += '           ' + settings_data();
-        html += '           ' + settings_colours();
+        html += '           ' + settings_layout();
         html += '       </div>';
         html += '       ' + settings_controls();
         html += '   </div>';
@@ -640,16 +653,16 @@ open_settings = function () {
             }
         });
         
-        /*jQuery("#soundsuggest-settings-slider-threshold").slider({
-            value: THRESHOLD,
-            min: 0.1,
-            max: 0.9,
-            step: 0.1,
+        jQuery("#soundsuggest-settings-slider-tension").slider({
+            value: LAYOUT.tension,
+            min: 0,
+            max: 1,
+            step: 0.01,
             slide: function(event, ui) {
-                jQuery('#soundsuggest-amount-threshold').html(ui.value);
-                THRESHOLD = ui.value;
+                jQuery('#soundsuggest-amount-tension').html(ui.value);
+                LAYOUT.tension = ui.value;
             }
-        });*/
+        });
         
         d3.select('#soundsuggest-settings-save')
             .on('click', save_settings);
@@ -668,15 +681,15 @@ cancel_settings = function () {
 };
 
 save_settings = function () {
-    COLOURS.active      = jQuery('#colour-select-active-user').find(':selected').val();
-    COLOURS.clicked     = jQuery('#colour-select-clicked').find(':selected').val();
-    COLOURS.mouseover   = jQuery('#colour-select-mouseover').find(':selected').val();
+    LAYOUT.active      = jQuery('#colour-select-active-user').find(':selected').val();
+    LAYOUT.clicked     = jQuery('#colour-select-clicked').find(':selected').val();
+    LAYOUT.mouseover   = jQuery('#colour-select-mouseover').find(':selected').val();
     
     chrome.extension.sendMessage({
         action: 'storage.set',
         params: {
-            key : 'soundsuggest-colours-' + USERNAME,
-            value : COLOURS
+            key : 'soundsuggest-layout-' + USERNAME,
+            value : LAYOUT
         }
     },
     function(a) {
@@ -690,14 +703,14 @@ save_settings = function () {
         if (old_limit_neighbours === LIMIT_NEIGHBOURS
                 && old_limit_topartists === LIMIT_TOPARTISTS
                 && old_limit_recommendations === LIMIT_RECOMMENDATIONS) {
-            redrawVisualization(COLOURS);
+            redrawVisualization(LAYOUT);
         } else {
             loadVisualization({
                 limit_neighbours : LIMIT_NEIGHBOURS,
                 limit_top_artists : LIMIT_TOPARTISTS,
                 limit_recommendations : LIMIT_RECOMMENDATIONS,
                 threshold : THRESHOLD
-            }, COLOURS);
+            }, LAYOUT);
         }
     });
 };

@@ -1,22 +1,23 @@
-function Whitebox(data, colours) {
+function Whitebox(data, layout) {
     
     this.USERS      = ((data)?data.users:[]);
     this.ITEMS      = ((data)?data.items:[]);
-    this.COLOURS    = colours    ||
-    {
-        active : 'active-blue',
-        clicked : 'clicked-red',
-        mouseover : 'clicked-red'
+    this.COLOURS    = {
+        active : ((layout)?layout.active:'blue'),
+        clicked : ((layout)?layout.clicked:'red'),
+        mouseover : ((layout)?layout.mouseover:'red')
     };
-
+    this.TENSION = ((layout)?layout.tension:Number(0.85));
+    
     /**
      * @param {Object} params
      * @returns {undefined}
      */
-    this.setColours = function(params) {
+    this.setLayout = function(params) {
         this.COLOURS['mouseover']  = params.mouseover + '-mouseover';
         this.COLOURS['clicked']    = params.clicked + '-clicked';
         this.COLOURS['active']     = params.active + '-active';
+        this.TENSION = params.tension;
         return;
     };
     
@@ -64,7 +65,7 @@ function Whitebox(data, colours) {
 
         var line = d3.svg.line.radial()
                 .interpolate("bundle")
-                .tension(.85)
+                .tension(this.TENSION)
                 .radius(function(d) {
                     return d.y;
                 })
@@ -142,7 +143,7 @@ function Whitebox(data, colours) {
             }
         };
 
-        createGraph(this.ITEMS, this.COLOURS);
+        createGraph(this.ITEMS, this.COLOURS, this.TENSION);
         createUserList(this.USERS, this.COLOURS);
 
         function createGraph(items, colours) {
