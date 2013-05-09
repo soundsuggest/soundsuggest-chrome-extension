@@ -1,3 +1,5 @@
+
+/* svg .user */
 svg .user.blue-mouseover:hover {
     color: #1f77b4;
 }
@@ -10,6 +12,7 @@ svg .user.red-mouseover:hover {
     color: #d62728;
 }
 
+/* svg .node : hover */
 svg .node.red-mouseover:hover {
     fill: #d62728;
 }
@@ -22,79 +25,99 @@ svg .node.green-mouseover:hover {
     fill: #318a16;
 }
 
+/* svg .node.target */
 svg .node.target.red-mouseover {
     fill: #d62728 !important;
-}
-
-svg .node.source.red-mouseover {
-    fill: #d62728 !important;
-}
-
-svg .link.source.red-mouseover {
-    stroke: #d62728;
-}
-
-svg .link.target.red-mouseover {
-    stroke: #d62728;
-}
-
-svg .node-item-mouseover.red-mouseover {
-    fill: #d62728;
-}
-
-svg .user-item-mouseover.red-mouseover {
-    color: #d62728;
-}
-
-svg .node.target.blue-mouseover {
-    fill: #1f77b4 !important;
-}
-
-svg .node.source.blue-mouseover {
-    fill: #1f77b4 !important;
-}
-
-svg .link.source.blue-mouseover {
-    stroke: #1f77b4;
-}
-
-svg .link.target.blue-mouseover {
-    stroke: #1f77b4;
-}
-
-svg .node-item-mouseover.blue-mouseover {
-    fill: #1f77b4;
-}
-
-svg .user-item-mouseover.blue-mouseover {
-    color: #1f77b4;
 }
 
 svg .node.target.green-mouseover {
     fill: #318a16 !important;
 }
 
+svg .node.target.blue-mouseover {
+    fill: #1f77b4 !important;
+}
+
+/* svg .node.source */
+svg .node.source.red-mouseover {
+    fill: #d62728 !important;
+}
+
+svg .node.source.blue-mouseover {
+    fill: #1f77b4 !important;
+}
+
 svg .node.source.green-mouseover {
     fill: #318a16 !important;
+}
+
+/* svg .link.source */
+svg .link.source.red-mouseover {
+    stroke: #d62728;
+}
+
+svg .link.source.blue-mouseover {
+    stroke: #1f77b4;
 }
 
 svg .link.source.green-mouseover {
     stroke: #318a16;
 }
 
+/* svg .link.target */
+svg .link.target.red-mouseover {
+    stroke: #d62728;
+}
+
+svg .link.target.blue-mouseover {
+    stroke: #1f77b4;
+}
+
 svg .link.target.green-mouseover {
     stroke: #318a16;
+}
+
+/* svg .node-item-mouseover */
+svg .node-item-mouseover.red-mouseover {
+    fill: #d62728;
 }
 
 svg .node-item-mouseover.green-mouseover {
     fill: #318a16;
 }
 
+svg .node-item-mouseover.blue-mouseover {
+    fill: #1f77b4;
+}
+
+/* svg .node-user-mouseover */
+svg .node-user-mouseover.blue-mouseover {
+    fill: #1f77b4;
+}
+
+svg .node-user-mouseover.green-mouseover {
+    fill: #318a16;
+}
+
+svg .node-user-mouseover.red-mouseover {
+    fill: #d62728;
+}
+
+/* svg .user-item-mouseover */
+svg .user-item-mouseover.blue-mouseover {
+    color: #1f77b4;
+}
+
+svg .user-item-mouseover.red-mouseover {
+    color: #d62728;
+}
+
 svg .user-item-mouseover.green-mouseover {
     color: #318a16;
 }
 
-#users .user.blue-mouseover:hover {
+/* #users .user : hover */
+/*#users .user.blue-mouseover:hover {
     background-color: #1f77b4;;
     color: #fff;
 }
@@ -107,8 +130,25 @@ svg .user-item-mouseover.green-mouseover {
 #users .user.green-mouseover:hover {
     background-color: #318a16;;
     color: #fff;
+}*/
+
+/* #users .user.user-mouseover */
+#users .user.user-mouseover.blue-mouseover {
+    background-color: #1f77b4;;
+    color: #fff;
 }
 
+#users .user.user-mouseover.red-mouseover {
+    background-color: #d62728;;
+    color: #fff;
+}
+
+#users .user.user-mouseover.green-mouseover {
+    background-color: #318a16;;
+    color: #fff;
+}
+
+/* #users .user-item-mouseover */
 #users .user-item-mouseover.red-mouseover {
     background-color: #d62728;
     color: #fff;

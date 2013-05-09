@@ -1,3 +1,4 @@
+/* svg .user-activeuser */
 svg .user-activeuser.green-active {
     color: #318a16;
 }
@@ -10,6 +11,7 @@ svg .user-activeuser.red-active {
     color: #d62728;
 }
 
+/* svg .link-activeuser */
 svg .link-activeuser.blue-active {
     stroke: #1f77b4;
 }
@@ -22,6 +24,20 @@ svg .link-activeuser.red-active {
     stroke: #d62728;
 }
 
+/* svg .node-activeuser */
+svg .node-activeuser.blue-active {
+    fill: #1f77b4;
+}
+
+svg .node-activeuser.green-active {
+    fill: #318a16;
+}
+
+svg .node-activeuser.red-active {
+    fill: #d62728;
+}
+
+/* #users .user-activeuser */
 #users .user-activeuser.red-active {
     background-color: #d62728;
     color: #eee;

@@ -176,8 +176,11 @@ function Whitebox(data, colours) {
                         d.owners.forEach(function(i) {
                             users += " node-owner-" + i;
                         });
+                        console.log(d.name + "[ recommendation == " + d.recommendation + "]");
                         return "node" + users + " "
-                            + colours['mouseover'] + " " + colours['clicked'];
+                            + colours['mouseover'] + " "
+                            + colours['clicked'] + " "
+                            + ((d.recommendation)?"":(" node-activeuser " + colours['active']));
                     })
                     .attr("id", function(d) {
                         return "node-" + d.key;
@@ -279,7 +282,7 @@ function Whitebox(data, colours) {
             svg.selectAll("path.link.target-" + d.key)
                     .classed("target", true)
                     .each(updateNodes("source", true));
-
+            
             svg.selectAll("path.link.source-" + d.key)
                     .classed("source", true)
                     .each(updateNodes("target", true));
@@ -292,7 +295,7 @@ function Whitebox(data, colours) {
             svg.selectAll("path.link.source-" + d.key)
                     .classed("source", false)
                     .each(updateNodes("target", false));
-
+            
             svg.selectAll("path.link.target-" + d.key)
                     .classed("target", false)
                     .each(updateNodes("source", false));
@@ -380,16 +383,32 @@ function Whitebox(data, colours) {
 
         function mouseoverUser(user) {
             svg.selectAll("path.link.link-owner-" + user.name)
-                .classed("target", true);
+                    .classed("target", true)
+                    .each(updateNodes("source", true));
+            
             svg.selectAll("path.link.link-owner-" + user.name)
-                .classed("source", true);
+                    .classed("source", true)
+                    .each(updateNodes("target", true));
+            
+            svg.select("#node-owner-" + user.name)
+                .classed("node-user-mouseover user-mouseover", true);
+        
+            jQuery("#user-" + user.name).addClass("user-mouseover");
         }
 
         function mouseoutUser(user) {
             svg.selectAll("path.link.link-owner-" + user.name)
-                .classed("target", false);
+                    .classed("source", false)
+                    .each(updateNodes("target", false));
+            
             svg.selectAll("path.link.link-owner-" + user.name)
-                .classed("source", false);
+                    .classed("target", false)
+                    .each(updateNodes("source", false));
+
+            svg.selectAll(".node-user-mouseover")
+                    .classed("node-user-mouseover", false);
+            
+            jQuery("#user-" + user.name).removeClass("user-mouseover");
         }
     
         function userSelect(user) {

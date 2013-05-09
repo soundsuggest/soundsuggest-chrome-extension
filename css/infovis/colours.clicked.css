@@ -1,75 +1,82 @@
+/* svg .link-item-clicked */
 svg .link-item-clicked.red-clicked {
     stroke: #d62728;
-}
-
-svg .node-item-clicked.red-clicked {
-    fill: #d62728 !important;
-}
-
-svg .user-item-clicked.red-clicked {
-    color: #d62728;
-}
-
-svg .user-clicked.red-clicked {
-    color: #d62728;
-}
-
-svg .link-user-clicked.red-clicked {
-    stroke: #d62728;
-}
-
-svg .node-user-clicked.red-clicked {
-    fill: #d62728 !important;
 }
 
 svg .link-item-clicked.blue-clicked {
     stroke: #1f77b4;
 }
 
-svg .node-item-clicked.blue-clicked {
-    fill: #1f77b4 !important;
-}
-
-svg .user-item-clicked.blue-clicked {
-    color: #1f77b4;
-}
-
-svg .user-clicked.blue-clicked {
-    color: #1f77b4;
-}
-
-svg .link-user-clicked.blue-clicked {
-    stroke: #1f77b4;
-}
-
-svg .node-user-clicked.blue-clicked {
-    fill: #1f77b4 !important;
-}
-
 svg .link-item-clicked.green-clicked {
     stroke: #318a16;
+}
+
+/* svg .node-item-clicked */
+svg .node-item-clicked.red-clicked {
+    fill: #d62728 !important;
+}
+
+svg .node-item-clicked.blue-clicked {
+    fill: #1f77b4 !important;
 }
 
 svg .node-item-clicked.green-clicked {
     fill: #318a16 !important;
 }
 
+/* svg .user-item-clicked */
+svg .user-item-clicked.red-clicked {
+    color: #d62728;
+}
+
+svg .user-item-clicked.blue-clicked {
+    color: #1f77b4;
+}
+
 svg .user-item-clicked.green-clicked {
     color: #318a16;
+}
+
+/* svg .user-clicked */
+svg .user-clicked.red-clicked {
+    color: #d62728;
+}
+
+svg .user-clicked.blue-clicked {
+    color: #1f77b4;
 }
 
 svg .user-clicked.green-clicked {
     color: #318a16;
 }
 
+/* svg .link-user-clicked */
+svg .link-user-clicked.red-clicked {
+    stroke: #d62728;
+}
+
+svg .link-user-clicked.blue-clicked {
+    stroke: #1f77b4;
+}
+
 svg .link-user-clicked.green-clicked {
     stroke: #318a16;
+}
+
+/* svg .node-user-clicked */
+svg .node-user-clicked.red-clicked {
+    fill: #d62728 !important;
+}
+
+svg .node-user-clicked.blue-clicked {
+    fill: #1f77b4 !important;
 }
 
 svg .node-user-clicked.green-clicked {
     fill: #318a16 !important;
 }
 
+/* #users .user-clicked */
 #users .user-clicked.red-clicked {
     background-color: #d62728;;
     color: #fff;
@@ -85,6 +92,7 @@ svg .node-user-clicked.green-clicked {
     color: #fff;
 }
 
+/* #users .user-item-clicked */
 #users .user-item-clicked.red-clicked {
     background-color: #d62728;;
     color: #fff;
