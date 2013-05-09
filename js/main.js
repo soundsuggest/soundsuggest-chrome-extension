@@ -51,6 +51,8 @@ var COLOURS = {
     clicked     : 'red'
 };
 
+var DATA = {};
+
 var LIMIT_NEIGHBOURS        = 10;
 var LIMIT_TOPARTISTS        = 10;
 var LIMIT_RECOMMENDATIONS   = 10;
@@ -176,6 +178,10 @@ loadVisualization = function(settings, colours) {
     }
 };
 
+redrawVisualization = function(colours) {
+    loadWhitebox(DATA, colours);
+};
+
 /**
  * If no colour settings are given, load the settings from the stored settings,
  * or use defaults, if nothing was stored. Else, use the given settings.
@@ -207,10 +213,11 @@ loadColours = function (data, colours) {
  */
 loadWhitebox = function (data, colours) {
     COLOURS = colours || COLOURS;
+    DATA = data || DATA;
     SPINNER.stop();
     WHITEBOX = new Whitebox();
     WHITEBOX.setColours(COLOURS);
-    WHITEBOX.setData(data);
+    WHITEBOX.setData(DATA);
     WHITEBOX.create();
     DATA_LOADED = true;
 };
@@ -464,7 +471,16 @@ clear_selection = function () {
     }
 };
 
+var old_limit_neighbours;
+var old_limit_topartists;
+var old_limit_recommendations;
+
 open_settings = function () {
+    
+    clear_selection();
+    old_limit_neighbours = LIMIT_NEIGHBOURS;
+    old_limit_topartists = LIMIT_TOPARTISTS;
+    old_limit_recommendations = LIMIT_RECOMMENDATIONS;
     
     function settings_header() {
         var html = '';
@@ -671,11 +687,17 @@ save_settings = function () {
         WHITEBOX.destroy();
         DATA_LOADED = false;
         startSpinner();
-        loadVisualization({
-            limit_neighbours : LIMIT_NEIGHBOURS,
-            limit_top_artists : LIMIT_TOPARTISTS,
-            limit_recommendations : LIMIT_RECOMMENDATIONS,
-            threshold : THRESHOLD
-        }, COLOURS);
+        if (old_limit_neighbours === LIMIT_NEIGHBOURS
+                && old_limit_topartists === LIMIT_TOPARTISTS
+                && old_limit_recommendations === LIMIT_RECOMMENDATIONS) {
+            redrawVisualization(COLOURS);
+        } else {
+            loadVisualization({
+                limit_neighbours : LIMIT_NEIGHBOURS,
+                limit_top_artists : LIMIT_TOPARTISTS,
+                limit_recommendations : LIMIT_RECOMMENDATIONS,
+                threshold : THRESHOLD
+            }, COLOURS);
+        }
     });
 };
