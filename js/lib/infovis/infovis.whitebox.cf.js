@@ -355,78 +355,19 @@ function Whitebox(data, layout) {
          * @returns {unresolved}
          */
         function filterClassName(string) {
-            // Characters :
-            string = string.toString().replace(/~/g, "");
-            string = string.toString().replace(/\!/g, "");
-            string = string.toString().replace(/@/g, "at");
-            string = string.toString().replace(/\$/g, "S");
-            string = string.toString().replace(/%/g, "");
-            string = string.toString().replace(/\^/g, "");
-            string = string.toString().replace(/&/g, "and");
-            string = string.toString().replace(/\*/g, "");
-            string = string.toString().replace(/\(/g, "");
-            string = string.toString().replace(/\)/g, "");
-            string = string.toString().replace(/\+/g, "and");
-            string = string.toString().replace(/=/g, "equals");
-            string = string.toString().replace(/,/g, "");
-            string = string.toString().replace(/\./g, "");
-            string = string.toString().replace(/\//g, "");
-            string = string.toString().replace(/\\/g, "");
-            string = string.toString().replace(/"/g, "");
-            string = string.toString().replace(/'/g, "");
-            string = string.toString().replace(/\?/g, "");
-            string = string.toString().replace(/>/g, "");
-            string = string.toString().replace(/</g, "");
-            string = string.toString().replace(/\[/g, "");
-            string = string.toString().replace(/\]/g, "");
-            string = string.toString().replace(/\|/g, "");
-            string = string.toString().replace(/`/g, "");
-            string = string.toString().replace(/#/g, "");
-            string = string.toString().replace(/:/g, "");
-            string = string.toString().replace(/€/g, "E");
-            string = string.toString().replace(/§/g, "");
-            string = string.toString().replace(/ /g, "");
-
-            // Alphabetical characters
-            // E
-            string = string.toString().replace(/é/g, "e");
-            string = string.toString().replace(/è/g, "e");
-            string = string.toString().replace(/ë/g, "e");
-            // A
-            string = string.toString().replace(/à/g, "a");
-            string = string.toString().replace(/á/g, "a");
-            string = string.toString().replace(/ä/g, "a");
-            string = string.toString().replace(/å/g, "a");
-            string = string.toString().replace(/â/g, "a");
-            // O
-            string = string.toString().replace(/ö/g, "o");
-            string = string.toString().replace(/Ö/g, "O");
-            string = string.toString().replace(/ø/g, "o");
-            string = string.toString().replace(/Ø/g, "O");
-            string = string.toString().replace(/ô/g, "o");
-            string = string.toString().replace(/ó/g, "o");
-            string = string.toString().replace(/ò/g, "o");
-            // I
-            string = string.toString().replace(/ï/g, "i");
-            string = string.toString().replace(/í/g, "i");
-            string = string.toString().replace(/ì/g, "i");
-            string = string.toString().replace(/î/g, "i");
-            // U
-            string = string.toString().replace(/ù/g, "u");
-            string = string.toString().replace(/ú/g, "u");
-            string = string.toString().replace(/ü/g, "u");
-            string = string.toString().replace(/û/g, "u");
-            // N
-            string = string.toString().replace(/ñ/g, "n");
-            // AE
-            string = string.toString().replace(/æ/g, "ae");
-            string = string.toString().replace(/Æ/g, "AE");
-            // C
-            string = string.toString().replace(/ç/g, "c");
-            // mu
-            string = string.toString().replace(/µ/g, "m");
+            String.prototype.hashCode = function() {
+                var hash = 0, i, char;
+                if (this.length == 0)
+                    return hash;
+                for (i = 0; i < this.length; i++) {
+                    char = this.charCodeAt(i);
+                    hash = ((hash << 5) - hash) + char;
+                    hash = hash & hash; // Convert to 32bit integer
+                }
+                return hash;
+            };
             
-            return string;
+            return string.hashCode();
         }
         
         function itemDeselect(d) {
