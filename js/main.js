@@ -101,6 +101,7 @@ createLayout = function() {
     content += '        <li><a href="http://soundsuggest.wordpress.com/application/help/" target="_blank" id="open-help" class="soundsuggest-button">Help</a></li>';
     content += '        <li><a href="javascript:" id="soundsuggest-clear" class="soundsuggest-button">Clear Selection</a></li>';
     content += '        <li><a href="javascript:" id="soundsuggest-settings" class="soundsuggest-button">Settings</a></li>';
+    content += '        <li><a href="javascript:" id="soundsuggest-refresh" class="soundsuggest-button">Refresh data</a></li>';
     content += '    </ul>';
     content += '</div>';
     content += '<div id="users"></div>';
@@ -121,6 +122,8 @@ createLayout = function() {
             .on('click', clear_selection);
     d3.select('#soundsuggest-settings')
             .on('click', open_settings);
+    d3.select('#soundsuggest-refresh')
+            .on('click', refresh);
 };
 
 /**
@@ -148,27 +151,34 @@ loadVisualization = function(settings, layout) {
         },
         function(a) {
             var settings_data = a.value;
+            var data = undefined;
             if (settings_data) {
                 LIMIT_NEIGHBOURS        = settings_data.limit_neighbours || LIMIT_NEIGHBOURS;
                 LIMIT_TOPARTISTS        = settings_data.limit_top_artists || LIMIT_TOPARTISTS;
                 LIMIT_RECOMMENDATIONS   = settings_data.limit_recommendations || LIMIT_RECOMMENDATIONS;
                 THRESHOLD               = settings_data.threshold || THRESHOLD;
+                data                    = settings_data.data || undefined;
             }
-            chrome.extension.sendMessage({
-                action: 'lastfm.recommender.load',
-                params: {
-                    username: USERNAME,
-                    settings : {
-                        limit_neighbours : LIMIT_NEIGHBOURS,
-                        limit_top_artists : LIMIT_TOPARTISTS,
-                        limit_recommendations : LIMIT_RECOMMENDATIONS,
-                        threshold : THRESHOLD
-                    }
-                }
-            },
-            function(data) {
+            // If there is cashed data from the last time the application was loaded.
+            if (data) {
                 loadLayout(data, layout);
-            });
+            } else {
+                chrome.extension.sendMessage({
+                    action: 'lastfm.recommender.load',
+                    params: {
+                        username: USERNAME,
+                        settings : {
+                            limit_neighbours : LIMIT_NEIGHBOURS,
+                            limit_top_artists : LIMIT_TOPARTISTS,
+                            limit_recommendations : LIMIT_RECOMMENDATIONS,
+                            threshold : THRESHOLD
+                        }
+                    }
+                },
+                function(data) {
+                    loadLayout(data, layout);
+                });
+            }
         });
     } else {
         chrome.extension.sendMessage({
@@ -678,6 +688,27 @@ cancel_settings = function () {
         .remove()
         .delay(800)
         .fadeIn(400);
+};
+
+refresh = function () {
+    WHITEBOX.destroy();
+    DATA_LOADED = false;
+    startSpinner();
+    chrome.extension.sendMessage({
+        action: 'lastfm.recommender.load',
+        params: {
+            username: USERNAME,
+            settings : {
+                limit_neighbours : LIMIT_NEIGHBOURS,
+                limit_top_artists : LIMIT_TOPARTISTS,
+                limit_recommendations : LIMIT_RECOMMENDATIONS,
+                threshold : THRESHOLD
+            }
+        }
+    },
+    function(data) {
+        loadLayout(data, LAYOUT);
+    });
 };
 
 save_settings = function () {

@@ -34,7 +34,8 @@ var DATA_SETTINGS   = {
     limit_recommendations : 10,
     limit_similar : 5,
     limit_top_artists : 10,
-    threshold : Number(0.1)
+    threshold : Number(0.1),
+    data : undefined
 };
 
 if (DEBUG) console.log("Global variables loaded.");
@@ -151,7 +152,11 @@ function lastfmAction(action, request, sendResponse) {
                 // UPDATE THE SETTINGS
                 chrome.storage.local.set(dataObj, function() {
                     lastfm_data(DATA_SETTINGS, function(data) {
-                        sendResponse(data);
+                        DATA_SETTINGS.data = data;
+                        dataObj = {}; dataObj['soundsuggest_settings_data_' + USERNAME] = DATA_SETTINGS;
+                        chrome.storage.local.set(dataObj, function() {
+                            sendResponse(data);
+                        });
                     });
                 });
             });

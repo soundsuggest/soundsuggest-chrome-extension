@@ -155,9 +155,9 @@ function Whitebox(data, layout) {
                     .data(links)
                     .enter().append("svg:path")
                     .attr("class", function(d) {
-                        return "link source-" + d.source.key
-                                + " target-" + d.target.key
-                                + " link-owner-" + d.owner
+                        return "link source-" + filterClassName(d.source.key)
+                                + " target-" + filterClassName(d.target.key)
+                                + " link-owner-" + filterClassName(d.owner)
                                 + ((d.active)?(" link-activeuser " + colours['active']):"")
                                 + " " + colours['mouseover']
                                 + " " + colours['clicked'];
@@ -175,7 +175,7 @@ function Whitebox(data, layout) {
                     .attr("class", function(d) {
                         var users = "";
                         d.owners.forEach(function(i) {
-                            users += " node-owner-" + i;
+                            users += " node-owner-" + filterClassName(i);
                         });
                         console.log(d.name + "[ recommendation == " + d.recommendation + "]");
                         return "node" + users + " "
@@ -184,7 +184,7 @@ function Whitebox(data, layout) {
                             + ((d.recommendation)?"":(" node-activeuser " + colours['active']));
                     })
                     .attr("id", function(d) {
-                        return "node-" + d.key;
+                        return "node-" + filterClassName(d.key);
                     })
                     .attr("transform", function(d) {
                         return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")";
@@ -235,14 +235,14 @@ function Whitebox(data, layout) {
                 .attr("class", function(user) {
                     var itemClasses = "";
                     userMap[user.name].items.forEach(function (item) {
-                        itemClasses += " user-owns-" + item + " ";
+                        itemClasses += " user-owns-" + filterClassName(item) + " ";
                     });
                     return "user user-activeuser " + colours['active']
                             + " " + itemClasses + " "
                             + colours['mouseover'] + " " + colours['clicked'];
                 })
                 .attr("id", function(user) {
-                    return "user-" + user.name;
+                    return "user-" + filterClassName(user.name);
                 })
                 .text(function(user) {
                     return user.name;
@@ -263,13 +263,13 @@ function Whitebox(data, layout) {
                 .attr("class", function(user) {
                     var itemClasses = "";
                     userMap[user.name].items.forEach(function (item) {
-                        itemClasses += " user-owns-" + item + " ";
+                        itemClasses += " user-owns-" + filterClassName(item) + " ";
                     });
                     return "user " + itemClasses + " "
                         + colours['mouseover'] + " " + colours['clicked'];
                 })
                 .attr("id", function(user) {
-                    return "user-" + user.name;
+                    return "user-" + filterClassName(user.name);
                 })
                 .text(function(user) {
                     return user.name;
@@ -280,47 +280,47 @@ function Whitebox(data, layout) {
         }
 
         function mouseoverItem(d) {
-            svg.selectAll("path.link.target-" + d.key)
+            svg.selectAll("path.link.target-" + filterClassName(d.key))
                     .classed("target", true)
                     .each(updateNodes("source", true));
             
-            svg.selectAll("path.link.source-" + d.key)
+            svg.selectAll("path.link.source-" + filterClassName(d.key))
                     .classed("source", true)
                     .each(updateNodes("target", true));
 
-            jQuery(".user-owns-" + d.key)
+            jQuery(".user-owns-" + filterClassName(d.key))
                 .addClass("user-item-mouseover");
         }
 
         function mouseoutItem(d) {
-            svg.selectAll("path.link.source-" + d.key)
+            svg.selectAll("path.link.source-" + filterClassName(d.key))
                     .classed("source", false)
                     .each(updateNodes("target", false));
             
-            svg.selectAll("path.link.target-" + d.key)
+            svg.selectAll("path.link.target-" + filterClassName(d.key))
                     .classed("target", false)
                     .each(updateNodes("source", false));
 
-            jQuery(".user-owns-" + d.key)
+            jQuery(".user-owns-" + filterClassName(d.key))
                 .removeClass("user-item-mouseover");
         }
         
         function updateNodes(name, value) {
             return function(d) {
                 if (value) this.parentNode.appendChild(this);
-                svg.select("#node-" + d[name].key).classed(name, value);
+                svg.select("#node-" + filterClassName(d[name].key)).classed(name, value);
             };
         }
         
         function itemSelect(d) {
-            svg.selectAll("path.link.target-" + d.key)
+            svg.selectAll("path.link.target-" + filterClassName(d.key))
                 .classed("link-item-clicked", true);
-            svg.selectAll("path.link.source-" + d.key)
+            svg.selectAll("path.link.source-" + filterClassName(d.key))
                 .classed("link-item-clicked", true);
-            svg.select("#node-" + d.key)
+            svg.select("#node-" + filterClassName(d.key))
                 .classed("node-item-clicked item-clicked", true);
             itemInfoDiv(d.key, d.recommendation);
-            jQuery(".user-owns-" + d.key)
+            jQuery(".user-owns-" + filterClassName(d.key))
                 .addClass("user-item-clicked");
         }
         
@@ -328,7 +328,7 @@ function Whitebox(data, layout) {
             var div = d3.select('#item-info')
                 .append('div')
                 .classed('item-info', true)
-                .attr('id', 'item-' + itemName);
+                .attr('id', 'item-' + filterClassName(itemName));
             div.append('h3')
                 .classed("item-recommendation", isRecommendation)
                 .text(decodeItemName(itemName));
@@ -345,6 +345,88 @@ function Whitebox(data, layout) {
     
         function encodeItemName(artistname) {
             return artistname.toString().replace(/ /g, "_");
+        }
+    
+        /**
+         * <p>Valid characters: "-?[_a-zA-Z]+[_a-zA-Z0-9-]*"</p>
+         * <p>Other ones: "~!@$%^&*()_+-=,./';:"?><[]\{}|`#"</p>
+         * <p>Regex characters: [\^$.|?*+()</p>
+         * @param {type} string
+         * @returns {unresolved}
+         */
+        function filterClassName(string) {
+            // Characters :
+            string = string.toString().replace(/~/g, "");
+            string = string.toString().replace(/\!/g, "");
+            string = string.toString().replace(/@/g, "at");
+            string = string.toString().replace(/\$/g, "S");
+            string = string.toString().replace(/%/g, "");
+            string = string.toString().replace(/\^/g, "");
+            string = string.toString().replace(/&/g, "and");
+            string = string.toString().replace(/\*/g, "");
+            string = string.toString().replace(/\(/g, "");
+            string = string.toString().replace(/\)/g, "");
+            string = string.toString().replace(/\+/g, "and");
+            string = string.toString().replace(/=/g, "equals");
+            string = string.toString().replace(/,/g, "");
+            string = string.toString().replace(/\./g, "");
+            string = string.toString().replace(/\//g, "");
+            string = string.toString().replace(/\\/g, "");
+            string = string.toString().replace(/"/g, "");
+            string = string.toString().replace(/'/g, "");
+            string = string.toString().replace(/\?/g, "");
+            string = string.toString().replace(/>/g, "");
+            string = string.toString().replace(/</g, "");
+            string = string.toString().replace(/\[/g, "");
+            string = string.toString().replace(/\]/g, "");
+            string = string.toString().replace(/\|/g, "");
+            string = string.toString().replace(/`/g, "");
+            string = string.toString().replace(/#/g, "");
+            string = string.toString().replace(/:/g, "");
+            string = string.toString().replace(/€/g, "E");
+            string = string.toString().replace(/§/g, "");
+            string = string.toString().replace(/ /g, "");
+
+            // Alphabetical characters
+            // E
+            string = string.toString().replace(/é/g, "e");
+            string = string.toString().replace(/è/g, "e");
+            string = string.toString().replace(/ë/g, "e");
+            // A
+            string = string.toString().replace(/à/g, "a");
+            string = string.toString().replace(/á/g, "a");
+            string = string.toString().replace(/ä/g, "a");
+            string = string.toString().replace(/å/g, "a");
+            string = string.toString().replace(/â/g, "a");
+            // O
+            string = string.toString().replace(/ö/g, "o");
+            string = string.toString().replace(/Ö/g, "O");
+            string = string.toString().replace(/ø/g, "o");
+            string = string.toString().replace(/Ø/g, "O");
+            string = string.toString().replace(/ô/g, "o");
+            string = string.toString().replace(/ó/g, "o");
+            string = string.toString().replace(/ò/g, "o");
+            // I
+            string = string.toString().replace(/ï/g, "i");
+            string = string.toString().replace(/í/g, "i");
+            string = string.toString().replace(/ì/g, "i");
+            string = string.toString().replace(/î/g, "i");
+            // U
+            string = string.toString().replace(/ù/g, "u");
+            string = string.toString().replace(/ú/g, "u");
+            string = string.toString().replace(/ü/g, "u");
+            string = string.toString().replace(/û/g, "u");
+            // N
+            string = string.toString().replace(/ñ/g, "n");
+            // AE
+            string = string.toString().replace(/æ/g, "ae");
+            string = string.toString().replace(/Æ/g, "AE");
+            // C
+            string = string.toString().replace(/ç/g, "c");
+            // mu
+            string = string.toString().replace(/µ/g, "m");
+            
+            return string;
         }
         
         function itemDeselect(d) {
@@ -374,7 +456,7 @@ function Whitebox(data, layout) {
                     .remove();
                 
                 itemSelect(d);
-            } else if (svg.select("#node-" + d.key).classed("item-clicked")) {
+            } else if (svg.select("#node-" + filterClassName(d.key)).classed("item-clicked")) {
                 itemDeselect(d);
             } else {
                 itemDeselect(d);
@@ -383,50 +465,54 @@ function Whitebox(data, layout) {
         }
 
         function mouseoverUser(user) {
-            svg.selectAll("path.link.link-owner-" + user.name)
+            svg.selectAll("path.link.link-owner-" + filterClassName(user.name))
                     .classed("target", true)
                     .each(updateNodes("source", true));
             
-            svg.selectAll("path.link.link-owner-" + user.name)
+            svg.selectAll("path.link.link-owner-" + filterClassName(user.name))
                     .classed("source", true)
                     .each(updateNodes("target", true));
             
-            svg.select("#node-owner-" + user.name)
+            svg.select("#node-owner-" + filterClassName(user.name))
                 .classed("node-user-mouseover user-mouseover", true);
         
-            jQuery("#user-" + user.name).addClass("user-mouseover");
+            jQuery("#user-" + filterClassName(user.name)).addClass("user-mouseover");
         }
 
         function mouseoutUser(user) {
-            svg.selectAll("path.link.link-owner-" + user.name)
+            svg.selectAll("path.link.link-owner-" + filterClassName(user.name))
                     .classed("source", false)
                     .each(updateNodes("target", false));
             
-            svg.selectAll("path.link.link-owner-" + user.name)
+            svg.selectAll("path.link.link-owner-" + filterClassName(user.name))
                     .classed("target", false)
                     .each(updateNodes("source", false));
 
             svg.selectAll(".node-user-mouseover")
                     .classed("node-user-mouseover", false);
             
-            jQuery("#user-" + user.name).removeClass("user-mouseover");
+            jQuery("#user-" + filterClassName(user.name)).removeClass("user-mouseover");
         }
     
         function userSelect(user) {
-            svg.selectAll(".link-owner-" + user.name)
+            svg.selectAll(".link-owner-" + filterClassName(user.name))
                 .classed("link-user-clicked", true);
-            svg.selectAll(".node-owner-" + user.name)
+            svg.selectAll(".node-owner-" + filterClassName(user.name))
                 .classed("node-user-clicked", true);
-            jQuery("#user-" + user.name)
+            jQuery("#user-" + filterClassName(user.name))
                 .addClass("user-clicked");
             userInfoDiv(user.name, user.active);
+        }
+    
+        function decodeUserName(username) {
+            return username;
         }
         
         function userInfoDiv(userName, isActiveUser) {
             var div = d3.select('#user-info')
                 .append('div')
                 .classed('user-info', true)
-                .attr('id', 'user-info-' + decodeUserName(userName));
+                .attr('id', 'user-info-' + filterClassName(userName));
             div.append('h3')
                 .classed("user-info-active", isActiveUser)
                 .text(decodeUserName(userName));
@@ -434,11 +520,7 @@ function Whitebox(data, layout) {
                 .attr('id', 'user-info-description');
             div.append('div')
                 .attr('id', 'user-info-controls');
-            userInfo(decodeUserName(userName), isActiveUser, activeuser);
-        }
-        
-        function decodeUserName(username) {
-            return username;
+            userInfo(userName, isActiveUser, activeuser);
         }
         
         function userDeselect(user) {
@@ -468,7 +550,7 @@ function Whitebox(data, layout) {
                     .remove();
 
                 userSelect(user);
-            } else if (jQuery("#user-" + user.name).hasClass("user-clicked")) {
+            } else if (jQuery("#user-" + filterClassName(user.name)).hasClass("user-clicked")) {
                 userDeselect(user);
             } else {
                 userDeselect(user);
