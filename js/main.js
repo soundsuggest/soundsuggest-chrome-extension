@@ -389,7 +389,7 @@ itemInfo = function(itemname, isrecommendation, user) {
         artist      : itemname,
         username    : user
     }, function(data) {
-        var bio = data.artist.bio.summary;
+        var bio = ((isrecommendation)?('<p>' + data.artist.bio.summary + '</p>'):'');
         var playcount = '';
         
         if (! isrecommendation) {
@@ -397,7 +397,7 @@ itemInfo = function(itemname, isrecommendation, user) {
                 + data.artist.stats.userplaycount + '</strong> times.</p>';
         }
         jQuery('#item-info-description')
-            .append('<p>' + bio + '</p>' + playcount);
+            .append(bio + playcount);
         d3.select('#item-info-controls')
             .append('a')
             .attr('id', 'soundsuggest-button-open')
